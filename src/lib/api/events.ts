@@ -12,6 +12,7 @@ export type EventResponseData = {
 	choices: string[];
 	electoral_system: string;
 	share_token: string;
+	show_results: boolean;
 };
 
 export type EventCreateResponseData = EventResponseData & {
@@ -48,6 +49,14 @@ export class EventsAPI extends BaseAPI {
 
 	openEvent = async (eventID: number, host_token: string) => {
 		return this.post(`/${eventID}/open?host_token=${host_token}`);
+	};
+
+	showResults = async (eventID: number, host_token: string) => {
+		return this.post(`/${eventID}/show-results?host_token=${host_token}`);
+	};
+
+	hideResults = async (eventID: number, host_token: string) => {
+		return this.post(`/${eventID}/hide-results?host_token=${host_token}`);
 	};
 
 	listBallots = async (eventID: number, token: string) => {
