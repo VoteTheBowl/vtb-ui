@@ -1,15 +1,15 @@
 <script lang="ts">
-	import type { BallotContext, EventContext } from '$lib/types';
+	import type { SubmissionContext, EventContext } from '$lib/types';
 	import { P, Radio } from 'flowbite-svelte';
 	import { getContext } from 'svelte';
 	let selectedChoice: string = $state('');
 
 	let eventContext: EventContext = getContext('event-data');
-	let ballotContext: BallotContext = getContext('ballot-data');
+	let submissionContext: SubmissionContext = getContext('ballot-data');
 
 	$effect(() => {
-		ballotContext.submission = { choice: selectedChoice };
-		ballotContext.submissionIsValid = selectedChoice !== '';
+		submissionContext.submission = { choice: selectedChoice };
+		submissionContext.submissionIsValid = selectedChoice !== '';
 	});
 </script>
 

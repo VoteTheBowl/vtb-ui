@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { BallotContext, EventContext } from '$lib/types';
+	import type { SubmissionContext, EventContext } from '$lib/types';
 	import { P, Star } from 'flowbite-svelte';
 	import { RefreshOutline } from 'flowbite-svelte-icons';
 	import { getContext, onMount } from 'svelte';
@@ -8,14 +8,14 @@
 	let ratings: StarSubmission = $state([]);
 
 	let eventContext: EventContext = getContext('event-data');
-	let ballotContext: BallotContext = getContext('ballot-data');
+	let submissionContext: SubmissionContext = getContext('ballot-data');
 
 	function onRatingClick(choice: string, rating: number) {
 		const selectedChoice = ratings.find((r) => r.choice === choice);
 		if (selectedChoice) {
 			selectedChoice.rating = rating;
 		}
-		ballotContext.submission = ratings;
+		submissionContext.submission = ratings;
 	}
 
 	onMount(() => {
@@ -23,8 +23,8 @@
 		if (eventContext.event) {
 			ratings = eventContext.event.choices.map((choice) => ({ choice, rating: 0 }));
 		}
-		ballotContext.submission = ratings;
-		ballotContext.submissionIsValid = true;
+		submissionContext.submission = ratings;
+		submissionContext.submissionIsValid = true;
 	});
 </script>
 
@@ -42,7 +42,7 @@
 					<div class="relative flex items-center">
 						{#if ratingObj.rating > 0}
 							<button
-								class="absolute right-full flex cursor-pointer items-center justify-center p-2 pt-1.5 pb-0.5"
+								class="absolute right-full flex cursor-pointer items-center justify-center p-2 pb-0.5 pt-1.5"
 								onclick={() => onRatingClick(choice, 0)}
 							>
 								<RefreshOutline class="h-5 w-5 shrink-0" />

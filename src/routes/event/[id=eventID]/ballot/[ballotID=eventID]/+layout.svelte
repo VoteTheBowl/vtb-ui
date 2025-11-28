@@ -1,23 +1,35 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import { EventsAPI } from '$lib/api/events';
+	import { BallotAPI, EventsAPI } from '$lib/api/events';
 	import { voterTokenStorage } from '$lib/token-util';
 	import { onMount, setContext } from 'svelte';
-	import type { EventContext } from '$lib/types';
+	import type { BallotContext, EventContext } from '$lib/types';
+	import { resolve } from '$app/paths';
+	import { goto } from '$app/navigation';
 
 	const { children } = $props();
 
 	const eventID = $derived(Number(page.params.id));
+	const ballotID = $derived(Number(page.params.ballotID));
+
 	const eventContext: EventContext = $state({
 		event: null
 	});
+	const ballotContext: BallotContext = $state({
+		ballot: null
+	});
+
 	setContext('event-data', eventContext);
+	setContext('ballot-data', ballotContext);
 
 	onMount(async () => {
-		const api = new EventsAPI();
+		const eventAPI = new EventsAPI();
+		const ballotAPI = new BallotAPI();
+
 		const token = voterTokenStorage.getToken(eventID);
 
-		eventContext.event = await api.getEvent(eventID, token);
+		ballotContext.ballot = await ballotAPI.getBallot(ballotID, token);
+		eventContext.event = await eventAPI.getEvent(eventID, token);
 	});
 </script>
 

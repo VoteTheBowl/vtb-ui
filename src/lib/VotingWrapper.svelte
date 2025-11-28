@@ -2,7 +2,7 @@
 	import { Button, Modal } from 'flowbite-svelte';
 	import { setContext } from 'svelte';
 	import votingSystems from '$lib/voting-system/config';
-	import type { BallotContext } from '$lib/types';
+	import type { SubmissionContext } from '$lib/types';
 	import { BallotAPI } from '$lib/api/events';
 	import { ExclamationCircleOutline } from 'flowbite-svelte-icons';
 
@@ -18,18 +18,18 @@
 		onSubmitVote: () => void;
 	} = $props();
 	const config = $derived(votingSystems.find((value) => value.id === votingSystemID));
-	const ballotContext: BallotContext = $state({
+	const submissionContext: SubmissionContext = $state({
 		submission: {},
 		submissionIsValid: false
 	});
 	let openConfirmationModal = $state(false);
 
-	setContext('ballot-data', ballotContext);
+	setContext('ballot-data', submissionContext);
 
 	const submitVote = async () => {
 		const ballotAPI = new BallotAPI();
 
-		await ballotAPI.submitBallot(ballotID, token, ballotContext.submission);
+		await ballotAPI.submitBallot(ballotID, token, submissionContext.submission);
 		onSubmitVote();
 	};
 </script>
@@ -40,7 +40,10 @@
 	Config Error!
 {/if}
 
-<Button disabled={!ballotContext.submissionIsValid} onclick={() => (openConfirmationModal = true)}>
+<Button
+	disabled={!submissionContext.submissionIsValid}
+	onclick={() => (openConfirmationModal = true)}
+>
 	Submit Vote
 </Button>
 
