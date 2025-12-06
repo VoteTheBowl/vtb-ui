@@ -4,8 +4,7 @@
 	import { voterTokenStorage } from '$lib/token-util';
 	import { onMount, setContext } from 'svelte';
 	import type { BallotContext, EventContext } from '$lib/types';
-	import { resolve } from '$app/paths';
-	import { goto } from '$app/navigation';
+	import { VOTER_REFRESH_DELAY } from '$lib/const';
 
 	const { children } = $props();
 
@@ -22,14 +21,28 @@
 	setContext('event-data', eventContext);
 	setContext('ballot-data', ballotContext);
 
-	onMount(async () => {
-		const eventAPI = new EventsAPI();
+	let token: string = '';
+	let timeoutID: NodeJS.Timeout;
+
+	const getEvent = async () => {
+		if (!page.params.id) return;
+		const api = new EventsAPI();
+		eventContext.event = await api.getEvent(eventID, token);
+		clearTimeout(timeoutID);
+		timeoutID = setTimeout(getEvent, VOTER_REFRESH_DELAY);
+	};
+
+	onMount(() => {
 		const ballotAPI = new BallotAPI();
+		token = voterTokenStorage.getToken(eventID);
 
-		const token = voterTokenStorage.getToken(eventID);
+		ballotAPI.getBallot(ballotID, token).then((ballot) => {
+			ballotContext.ballot = ballot;
+		});
 
-		ballotContext.ballot = await ballotAPI.getBallot(ballotID, token);
-		eventContext.event = await eventAPI.getEvent(eventID, token);
+		getEvent();
+
+		return () => clearTimeout(timeoutID);
 	});
 </script>
 

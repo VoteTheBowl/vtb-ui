@@ -22,7 +22,9 @@
 
 <Heading tag="h2" class="my-8 text-center">Voting - {name}</Heading>
 <div class="my-4 flex flex-col items-center gap-4">
-	{#if submitted}
+	{#if !eventContext.event}
+		<p class="text-center">Loading event data...</p>
+	{:else if submitted}
 		{#if eventID && eventContext.event?.show_results === true}
 			<ResultWrapper
 				{eventID}
@@ -32,7 +34,7 @@
 		{:else}
 			<p class="text-center">You have already submitted your vote. Thank you!</p>
 		{/if}
-	{:else if eventContext.event}
+	{:else}
 		<VotingWrapper
 			{ballotID}
 			votingSystemID={eventContext.event.electoral_system}
