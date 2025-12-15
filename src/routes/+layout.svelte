@@ -3,8 +3,11 @@
 	import favicon from '$lib/assets/favicon.png';
 	import { ThemeProvider } from 'flowbite-svelte';
 	import { defaultTheme } from '$lib/themes';
+	import StorageProvider from '$lib/storage/StorageProvider.svelte';
 
 	let { children } = $props();
+
+	let loaded = $state(false);
 </script>
 
 <svelte:head>
@@ -12,9 +15,17 @@
 </svelte:head>
 
 <ThemeProvider theme={defaultTheme}>
-	<div class="justify-top flex min-h-screen w-screen flex-col items-center">
-		<div class="w-fulls h-full p-4 sm:max-w-lg">
-			{@render children?.()}
-		</div>
-	</div>
+	<StorageProvider onLoad={() => (loaded = true)}>
+		{#if !loaded}
+			<div class="flex min-h-screen w-screen flex-col items-center justify-center">
+				<p class="text-center">Loading...</p>
+			</div>
+		{:else}
+			<div class="justify-top flex min-h-screen w-screen flex-col items-center">
+				<div class="w-fulls h-full p-4 sm:max-w-lg">
+					{@render children?.()}
+				</div>
+			</div>
+		{/if}
+	</StorageProvider>
 </ThemeProvider>

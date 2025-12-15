@@ -1,14 +1,16 @@
 <script lang="ts">
 	import type { PageProps } from './$types';
 	import { goto } from '$app/navigation';
-	import { BallotAPI, EventsAPI } from '$lib/api/events';
+	import { EventsAPI } from '$lib/api/events';
 	import { Heading, Input, Label, Button, Spinner, Alert } from 'flowbite-svelte';
 	import { resolve } from '$app/paths';
-	import { voterTokenStorage } from '$lib/token-util';
 	import { onMount } from 'svelte';
 	import { APIError } from '$lib/api/base';
+	import { ErrorBallotWithEventIDNotFound, getStorageContext } from '$lib/storage/storage';
 
 	const { data }: PageProps = $props();
+
+	const storage = getStorageContext();
 
 	let voterName = $state('');
 	let loading: boolean | undefined = $state(undefined);
@@ -32,7 +34,7 @@
 			}
 		}
 
-		voterTokenStorage.saveToken(data.id, response.ballot_token);
+		storage.saveBallot(response.ballot_id, data.id, response.ballot_token);
 		await goto(resolve(`/event/${data.id}/ballot/${response.ballot_id}/vote`));
 	};
 
@@ -41,20 +43,18 @@
 		const timer = setTimeout(() => {
 			loading = true;
 		}, 200);
-		const token = voterTokenStorage.getToken(data.id);
 
-		if (token) {
-			const api = new BallotAPI();
-
-			let ballot = await api.getBallotFromToken(voterTokenStorage.getToken(data.id)!);
-
-			if (ballot) {
-				await goto(resolve(`/event/${data.id}/ballot/${ballot.id}/vote/`));
+		try {
+			const ballotID = storage.getBallotIDFromEventID(data.id);
+			await goto(resolve(`/event/${data.id}/ballot/${ballotID}/vote/`));
+		} catch (e) {
+			if (!(e instanceof ErrorBallotWithEventIDNotFound)) {
+				throw e;
 			}
+		} finally {
+			clearTimeout(timer);
+			loading = false;
 		}
-
-		clearTimeout(timer);
-		loading = false;
 	});
 </script>
 

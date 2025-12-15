@@ -3,13 +3,13 @@
 	import { Heading } from 'flowbite-svelte';
 	import { getContext, onMount } from 'svelte';
 	import type { EventContext } from '$lib/types';
-	import { voterTokenStorage } from '$lib/token-util';
 	import VotingWrapper from '$lib/VotingWrapper.svelte';
+	import { getStorageContext } from '$lib/storage/storage';
 	import { BallotAPI } from '$lib/api/events';
 
-	const eventID = $derived(Number(page.params.id));
 	const ballotID = $derived(Number(page.params.ballotID));
 	const eventContext: EventContext = getContext('event-data');
+	const storage = getStorageContext();
 
 	let submitted = $state(false);
 	let name = $state('');
@@ -19,7 +19,7 @@
 	}
 
 	onMount(async () => {
-		const token = voterTokenStorage.getToken(eventID);
+		const token = storage.getBallot(ballotID).token;
 		const api = new BallotAPI();
 
 		const ballot = await api.getBallot(ballotID, token);
@@ -36,7 +36,7 @@
 		<VotingWrapper
 			{ballotID}
 			votingSystemID={eventContext.event.electoral_system}
-			token={voterTokenStorage.getToken(eventID)}
+			token={storage.getBallot(ballotID).token}
 			{onSubmitVote}
 		/>
 	{/if}

@@ -1,13 +1,14 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import { Heading, P } from 'flowbite-svelte';
-	import { hostTokenStorage } from '$lib/token-util';
 	import { onMount, getContext, onDestroy } from 'svelte';
 	import { EventsAPI } from '$lib/api/events';
 	import type { HostContext } from '../type';
+	import { getStorageContext } from '$lib/storage/storage';
 	import { RESULTS_REFRESH_DELAY } from '$lib/const';
 
 	const eventID = $derived(Number(page.params.id));
+	const storage = getStorageContext();
 	let token: string = $state('');
 
 	const hostContext: HostContext = getContext('host-context');
@@ -26,7 +27,7 @@
 	};
 
 	onMount(async () => {
-		token = hostTokenStorage.getToken(eventID);
+		token = storage.getEvent(eventID).token;
 		getBallots();
 	});
 

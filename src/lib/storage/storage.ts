@@ -2,21 +2,21 @@ import type { CurrentStorageSchema, StorageData, StorageSchemaV1 } from './types
 import { BallotAPI, EventsAPI } from '$lib/api/events';
 import { createContext } from 'svelte';
 
-class ErrorBallotNotFound extends Error {
+export class ErrorBallotNotFound extends Error {
 	constructor(ballotID: number) {
 		super(`Ballot with ID ${ballotID} not found in storage.`);
 		this.name = 'ErrorBallotNotFound';
 	}
 }
 
-class ErrorEventNotFound extends Error {
+export class ErrorEventNotFound extends Error {
 	constructor(eventID: number) {
 		super(`Event with ID ${eventID} not found in storage.`);
 		this.name = 'ErrorEventNotFound';
 	}
 }
 
-class ErrorBallotWithEventIDNotFound extends Error {
+export class ErrorBallotWithEventIDNotFound extends Error {
 	constructor(eventID: number) {
 		super(`Ballot with Event ID ${eventID} not found in storage.`);
 		this.name = 'ErrorBallotWithEventIDNotFound';

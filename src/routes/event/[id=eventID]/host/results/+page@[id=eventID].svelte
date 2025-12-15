@@ -1,23 +1,24 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import { Button, Heading } from 'flowbite-svelte';
-	import { hostTokenStorage } from '$lib/token-util';
 	import ResultWrapper from '$lib/ResultWrapper.svelte';
 	import { onMount, setContext } from 'svelte';
 	import { EventsAPI } from '$lib/api/events';
 	import type { EventContext } from '$lib/types';
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
+	import { getStorageContext } from '$lib/storage/storage';
 
 	const eventID = $derived(Number(page.params.id));
 	let eventContext: EventContext = $state({ event: null });
 	let token: string = $state('');
+	const storage = getStorageContext();
 
 	setContext('event-data', eventContext);
 
 	onMount(async () => {
 		const api = new EventsAPI();
-		token = hostTokenStorage.getToken(eventID);
+		token = storage.getEvent(eventID).token;
 
 		eventContext.event = await api.getEvent(eventID, token);
 	});
