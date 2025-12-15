@@ -42,7 +42,7 @@
 					<div class="relative flex items-center">
 						{#if ratingObj.rating > 0}
 							<button
-								class="absolute right-full flex cursor-pointer items-center justify-center p-2 pb-0.5 pt-1.5"
+								class="absolute right-full flex cursor-pointer items-center justify-center p-2 pt-1.5 pb-0.5"
 								onclick={() => onRatingClick(choice, 0)}
 							>
 								<RefreshOutline class="h-5 w-5 shrink-0" />
