@@ -77,7 +77,8 @@ export class BaseAPI {
 			response = await this.fetch(this.baseUrl + this.endpoint + endpoint, {
 				method: 'POST',
 				headers: {
-					'Content-Type': 'application/json', ...headers
+					'Content-Type': 'application/json',
+					...headers
 				},
 				body: JSON.stringify(data)
 			});
