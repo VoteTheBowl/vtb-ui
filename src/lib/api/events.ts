@@ -35,7 +35,7 @@ export class EventsAPI extends BaseAPI {
 	endpoint: string = '/vote/event';
 
 	getEvent = async (id: number, token: string) => {
-		return this.get(`/${id}?token=${token}`) as Promise<EventResponseData>;
+		return this.get(`/${id}`, { "X-API-Key": token }) as Promise<EventResponseData>;
 	};
 
 	createEvent = async (data: EventCreateRequestData) => {
@@ -43,20 +43,20 @@ export class EventsAPI extends BaseAPI {
 	};
 
 	closeEvent = async (eventID: number, host_token: string) => {
-		return this.post(`/${eventID}/close?host_token=${host_token}`);
+		return this.post(`/${eventID}/close`, null, { "X-API-Key": host_token });
 	};
 
 	openEvent = async (eventID: number, host_token: string) => {
-		return this.post(`/${eventID}/open?host_token=${host_token}`);
+		return this.post(`/${eventID}/open`, null, { "X-API-Key": host_token });
 	};
 
 	listBallots = async (eventID: number, token: string) => {
-		return this.get(`/${eventID}/ballots?token=${token}`) as Promise<BallotResponseData[]>;
+		return this.get(`/${eventID}/ballots`, { "X-API-Key": token }) as Promise<BallotResponseData[]>;
 	};
 
 	createBallot = async (eventID: number, name: string, shareToken: string) => {
 		return this.post(
-			`/${eventID}/create-ballot?voter_name=${name}&share_token=${shareToken}`
+			`/${eventID}/create-ballot?voter_name=${name}`, null, { "X-API-Key": shareToken }
 		) as Promise<BallotCreateResponseData>;
 	};
 }
@@ -65,14 +65,14 @@ export class BallotAPI extends BaseAPI {
 	endpoint: string = '/vote/ballot';
 
 	submitBallot = async (ballotID: number, token: string, submission: unknown) => {
-		return this.post(`/${ballotID}/submit?token=${token}`, { vote: submission });
+		return this.post(`/${ballotID}/submit`, { vote: submission }, { "X-API-Key": token });
 	};
 
 	getBallot = async (ballotID: number, token: string) => {
-		return this.get(`/${ballotID}?token=${token}`) as Promise<BallotResponseData>;
+		return this.get(`/${ballotID}`, { "X-API-Key": token }) as Promise<BallotResponseData>;
 	};
 
 	getBallotFromToken = async (token: string) => {
-		return this.get(`/from-token?token=${token}`) as Promise<BallotResponseData>;
+		return this.get(`/from-token`, { "X-API-Key": token }) as Promise<BallotResponseData>;
 	};
 }

@@ -51,11 +51,14 @@ export class BaseAPI {
 
 	get = async (
 		endpoint: string,
+		headers: HeadersInit = {},
 		parseReturn: ParseReturn = 'JSON'
 	): Promise<ResponseJSON | Response> => {
 		let response = undefined;
 		try {
-			response = await this.fetch(this.baseUrl + this.endpoint + endpoint);
+			response = await this.fetch(this.baseUrl + this.endpoint + endpoint, {
+				headers
+			});
 		} catch (error) {
 			throw new APIError(response?.status, response?.statusText, (error as Error).message);
 		}
@@ -66,6 +69,7 @@ export class BaseAPI {
 	post = async (
 		endpoint: string,
 		data: unknown = null,
+		headers: HeadersInit = {},
 		parseReturn: ParseReturn = 'JSON'
 	): Promise<ResponseJSON | Response> => {
 		let response = undefined;
@@ -73,7 +77,7 @@ export class BaseAPI {
 			response = await this.fetch(this.baseUrl + this.endpoint + endpoint, {
 				method: 'POST',
 				headers: {
-					'Content-Type': 'application/json'
+					'Content-Type': 'application/json', ...headers
 				},
 				body: JSON.stringify(data)
 			});
