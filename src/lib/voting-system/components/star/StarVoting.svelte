@@ -15,7 +15,6 @@
 	ballotContext.submissionIsValid = true;
 
 	function onRatingClick(choice: string, rating: number) {
-		console.log(`Rating ${choice} with ${rating} stars`, ratings);
 		const selectedChoice = ratings.find((r) => r.choice === choice);
 		if (selectedChoice) {
 			selectedChoice.rating = rating;

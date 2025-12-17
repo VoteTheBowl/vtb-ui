@@ -1,31 +1,36 @@
 <script lang="ts">
-	import { dndzone } from 'svelte-dnd-action';
+	import { dndzone, type DndEvent, type Item } from 'svelte-dnd-action';
 	import { flip } from 'svelte/animate';
 	import { getContext } from 'svelte';
-	import type { BallotContext, EventContext } from '$lib/types';
+	import type { BallotContext } from '$lib/types';
+	import type { VotingComponentProps } from '$lib/voting-system/types';
+	import type { RankedSubmission } from './types';
+
+	let { event }: VotingComponentProps = $props();
 
 	const flipDurationMs = 200;
 
-	let eventContext: EventContext = getContext('event-data');
 	let ballotContext: BallotContext = getContext('ballot-data');
 
-	let items = eventContext.event?.choices.map((choiceStr) => {
-		return { id: choiceStr, title: choiceStr };
-	});
+	let items: Item[] = $state(
+		event.choices
+			.map((choiceStr) => {
+				return { id: choiceStr, title: choiceStr };
+			})
+			.sort(() => Math.random() - 0.5)
+	);
 
-	// Randomize order
-	items.sort(() => Math.random() - 0.5);
-
+	// svelte-ignore state_referenced_locally
 	ballotContext.submission = items.map((i) => i.id);
 	ballotContext.submissionIsValid = true;
 
-	function handleSort(e) {
+	function handleSort(e: CustomEvent<DndEvent>) {
 		items = e.detail.items;
 	}
 
-	function handleFinalize(e) {
+	function handleFinalize(e: CustomEvent<DndEvent>) {
 		items = e.detail.items;
-		ballotContext.submission = items.map((i) => i.id);
+		ballotContext.submission = items.map((i) => i.id) as RankedSubmission;
 	}
 </script>
 
@@ -33,8 +38,8 @@
 
 <section
 	use:dndzone={{ items, flipDurationMs, dropTargetStyle: { outline: 'none' } }}
-	on:consider={handleSort}
-	on:finalize={handleFinalize}
+	onconsider={handleSort}
+	onfinalize={handleFinalize}
 >
 	{#each items as item, index (item.id)}
 		<div class="choice-card" animate:flip={{ duration: flipDurationMs }}>

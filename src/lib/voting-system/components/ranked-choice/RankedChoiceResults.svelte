@@ -1,28 +1,30 @@
 <script lang="ts">
-	import type { ResultContext } from '$lib/types';
-	import { P } from 'flowbite-svelte';
-	import { getContext } from 'svelte';
-	import type { Submission } from './types';
+	import type { ResultComponentProps } from '$lib/voting-system/types';
+	import type { BallotResponseData, EventResponseData } from '$lib/api/events';
+	import type { RankedSubmission } from './types';
 
-	let eventContext: EventContext = getContext('event-data');
-	const resultContext: ResultContext = getContext('results');
+	let { event, ballots }: ResultComponentProps = $props();
 
-	const calculateWinner = (choiceData, ballotData) => {
+	const calculateWinner = (
+		choiceData: EventResponseData['choices'],
+		ballotData: BallotResponseData[]
+	) => {
 		let ballots = ballotData.map((b) => (Array.isArray(b.vote) ? [...b.vote] : []));
 		let choices = [...choiceData];
 
-		let winner = null;
-		const rounds = [];
+		const rounds: Record<string, number>[] = [];
 
 		while (true) {
 			// Tally votes
 
-			const tallies = Object.fromEntries(choices.map((choice) => [choice, 0]));
+			const tallies: Record<string, number> = Object.fromEntries(
+				choices.map((choice) => [choice, 0])
+			);
 			tallies['Exhausted'] = 0;
 
 			ballots.forEach((b) => {
 				if (b.length > 0) {
-					tallies[b[0]]++;
+					tallies[(b as RankedSubmission)[0]]++;
 				} else {
 					tallies['Exhausted']++;
 				}
@@ -50,7 +52,7 @@
 			// Purge roundLosers from the ballots (and the choice list)
 
 			ballots.forEach((b, i) => {
-				ballots[i] = b.filter((i) => !roundLosers.includes(i));
+				ballots[i] = (b as RankedSubmission).filter((i) => !roundLosers.includes(i));
 			});
 			choices = choices.filter((c) => !roundLosers.includes(c));
 
@@ -61,7 +63,7 @@
 			}
 
 			// Winner only needs to take over 50% of non-exhausted votes
-		    const validVoteCount = ballots.length - tallies['Exhausted'];
+			const validVoteCount = ballots.length - tallies['Exhausted'];
 
 			if (tallies[roundWinner] / validVoteCount > 0.5) {
 				return { roundData: rounds, overallWinner: roundWinner };
@@ -70,8 +72,8 @@
 	};
 
 	let { roundData, overallWinner } = $derived.by(() => {
-		if (resultContext.ballots.length > 0) {
-			return calculateWinner(eventContext.event.choices, resultContext.ballots);
+		if (ballots.length > 0) {
+			return calculateWinner(event.choices, ballots);
 		} else {
 			return { roundData: [], overallWinner: null };
 		}
@@ -87,11 +89,11 @@
 </h3>
 
 <div class="rounds">
-	{#each roundData as voteCount, i}
+	{#each roundData as voteCount, i (i)}
 		<div class="round">
 			<div class="round-number">Round {i + 1}</div>
 			<div class="vote-counts">
-				{#each Object.keys(voteCount) as candidate}
+				{#each Object.keys(voteCount) as candidate (candidate)}
 					<div>{candidate}: {voteCount[candidate]}</div>
 				{/each}
 			</div>
