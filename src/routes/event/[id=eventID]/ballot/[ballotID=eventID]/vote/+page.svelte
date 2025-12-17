@@ -1,41 +1,39 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import { Heading } from 'flowbite-svelte';
-	import { getContext, onMount } from 'svelte';
-	import type { EventContext } from '$lib/types';
+	import { getContext } from 'svelte';
+	import type { BallotContext, EventContext } from '$lib/types';
 	import { voterTokenStorage } from '$lib/token-util';
 	import VotingWrapper from '$lib/VotingWrapper.svelte';
-	import { BallotAPI } from '$lib/api/events';
+	import ResultWrapper from '$lib/ResultWrapper.svelte';
 
 	const eventID = $derived(Number(page.params.id));
 	const ballotID = $derived(Number(page.params.ballotID));
 	const eventContext: EventContext = getContext('event-data');
+	const ballotContext: BallotContext = getContext('ballot-data');
 
-	let submitted = $state(false);
-	let name = $state('');
+	let submitted = $derived(ballotContext.ballot?.submitted !== null);
+	let name = $derived(ballotContext.ballot?.voter_name || '');
 
 	function onSubmitVote() {
 		submitted = true;
 	}
-
-	onMount(async () => {
-		const token = voterTokenStorage.getToken(eventID);
-		const api = new BallotAPI();
-
-		const ballot = await api.getBallot(ballotID, token);
-		name = ballot.voter_name;
-		submitted = ballot.submitted !== null;
-	});
 </script>
 
 <Heading tag="h2" class="my-8 text-center">Voting - {name}</Heading>
 <div class="my-4 flex flex-col items-center gap-4">
-	{#if submitted}
-		<p class="text-center">You have already submitted your vote. Thank you!</p>
-	{:else if eventContext.event}
+	{#if !eventContext.event}
+		<p class="text-center">Loading event data...</p>
+	{:else if submitted}
+		{#if eventContext.event?.show_results === true}
+			<ResultWrapper event={eventContext.event} token={voterTokenStorage.getToken(eventID)} />
+		{:else}
+			<p class="text-center">You have already submitted your vote. Thank you!</p>
+		{/if}
+	{:else}
 		<VotingWrapper
 			{ballotID}
-			votingSystemID={eventContext.event.electoral_system}
+			event={eventContext.event}
 			token={voterTokenStorage.getToken(eventID)}
 			{onSubmitVote}
 		/>

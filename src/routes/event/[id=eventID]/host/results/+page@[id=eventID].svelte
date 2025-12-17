@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import { Button, Heading } from 'flowbite-svelte';
+	import { Button, Checkbox, Heading, Label } from 'flowbite-svelte';
 	import { hostTokenStorage } from '$lib/token-util';
 	import ResultWrapper from '$lib/ResultWrapper.svelte';
 	import { onMount, setContext } from 'svelte';
@@ -27,13 +27,35 @@
 		await api.openEvent(eventID, token);
 		await goto(resolve(`/event/${eventID}/host/dashboard`), { replaceState: true });
 	};
+
+	const toggleShowResults = async () => {
+		if (eventContext.event) {
+			const api = new EventsAPI();
+			if (eventContext.event.show_results) {
+				await api.hideResults(eventID, token);
+				eventContext.event.show_results = false;
+			} else {
+				await api.showResults(eventID, token);
+				eventContext.event.show_results = true;
+			}
+		}
+	};
 </script>
 
 <Heading tag="h2" class="my-8 text-center">Results</Heading>
 <div class="my-4 flex flex-col items-center gap-4">
 	{#if eventContext.event}
-		<ResultWrapper {eventID} votingSystemID={eventContext.event.electoral_system} {token} />
+		<ResultWrapper event={eventContext.event} {token} />
+
+		<Label class="ml-4">
+			<Checkbox
+				class="ml-2"
+				checked={eventContext.event.show_results}
+				onchange={toggleShowResults}
+			/>
+			Make results visible to participants
+		</Label>
+
+		<Button onclick={openEvent}>Re-open Event</Button>
 	{/if}
 </div>
-
-<Button onclick={openEvent}>Re-open Event</Button>
