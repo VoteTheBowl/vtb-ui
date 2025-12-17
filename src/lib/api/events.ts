@@ -52,11 +52,11 @@ export class EventsAPI extends BaseAPI {
 	};
 
 	showResults = async (eventID: number, host_token: string) => {
-		return this.post(`/${eventID}/show-results?host_token=${host_token}`);
+		return this.post(`/${eventID}/show-results`, null, { 'X-API-Key': host_token });
 	};
 
 	hideResults = async (eventID: number, host_token: string) => {
-		return this.post(`/${eventID}/hide-results?host_token=${host_token}`);
+		return this.post(`/${eventID}/hide-results`, null, { 'X-API-Key': host_token });
 	};
 
 	listBallots = async (eventID: number, token: string) => {
