@@ -45,7 +45,7 @@
 <Heading tag="h2" class="my-8 text-center">Results</Heading>
 <div class="my-4 flex flex-col items-center gap-4">
 	{#if eventContext.event}
-		<ResultWrapper {eventID} votingSystemID={eventContext.event.electoral_system} {token} />
+		<ResultWrapper event={eventContext.event} {token} />
 
 		<Label class="ml-4">
 			<Checkbox

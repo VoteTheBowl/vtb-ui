@@ -37,7 +37,7 @@
 	{:else}
 		<VotingWrapper
 			{ballotID}
-			votingSystemID={eventContext.event.electoral_system}
+			event={eventContext.event}
 			token={voterTokenStorage.getToken(eventID)}
 			{onSubmitVote}
 		/>

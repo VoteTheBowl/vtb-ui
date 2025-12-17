@@ -1,26 +1,20 @@
 <script lang="ts">
-	import type { EventContext, ResultContext } from '$lib/types';
-	import { P } from 'flowbite-svelte';
-	import { getContext } from 'svelte';
 	import type { Submission } from './types';
+	import type { BallotResponseData, EventResponseData } from '$lib/api/events';
+	import { P } from 'flowbite-svelte';
 
-	const eventContext: EventContext = getContext('event-data');
-	const resultContext: ResultContext = getContext('results');
+	let { event, ballots }: { event: EventResponseData; ballots: BallotResponseData[] } = $props();
 
 	let votes: { choice: string; count: number }[] = $derived(
-		eventContext.event?.choices.map((choice) => ({
+		event.choices.map((choice) => ({
 			choice,
-			count: resultContext.ballots.filter(
-				(ballot) => (ballot.vote as Submission)?.choice === choice
-			).length
+			count: ballots.filter((ballot) => (ballot.vote as Submission)?.choice === choice).length
 		})) || []
 	);
 </script>
 
-{#if eventContext}
-	{#each votes as vote (vote.choice)}
-		<P class="my-2">
-			{vote.choice}: {vote.count}
-		</P>
-	{/each}
-{/if}
+{#each votes as vote (vote.choice)}
+	<P class="my-2">
+		{vote.choice}: {vote.count}
+	</P>
+{/each}
