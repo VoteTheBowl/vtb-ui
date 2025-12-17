@@ -2,13 +2,14 @@
 	import { dndzone } from 'svelte-dnd-action';
 	import { flip } from 'svelte/animate';
 	import { getContext } from 'svelte';
+	import type { BallotContext, EventContext } from '$lib/types';
 
 	const flipDurationMs = 200;
 
 	let eventContext: EventContext = getContext('event-data');
 	let ballotContext: BallotContext = getContext('ballot-data');
 
-	let items = eventContext.event.choices.map((choiceStr) => {
+	let items = eventContext.event?.choices.map((choiceStr) => {
 		return { id: choiceStr, title: choiceStr };
 	});
 
