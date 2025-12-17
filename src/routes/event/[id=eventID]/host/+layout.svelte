@@ -49,7 +49,7 @@
 	<BottomNavItem href="/event/{eventID}/host/invitation" btnName="Invitation">
 		<ShareNodesOutline class="h-6 w-6" />
 	</BottomNavItem>
-	<BottomNavItem href="/event/{eventID}/host/status" btnName="Status" appBtnPosition="middle">
+	<BottomNavItem href="/event/{eventID}/host/dashboard" btnName="Dashboard" appBtnPosition="middle">
 		<GridOutline class="h-6 w-6" />
 	</BottomNavItem>
 	<BottomNavItem

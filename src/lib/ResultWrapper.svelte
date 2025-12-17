@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount, setContext } from 'svelte';
+	import { RESULTS_REFRESH_DELAY } from './const';
 	import votingSystems from '$lib/voting-system/config';
 	import { EventsAPI } from '$lib/api/events';
 	import type { ResultContext } from './types';
@@ -14,11 +15,19 @@
 
 	setContext('results', resultContext);
 
-	onMount(async () => {
-		const api = new EventsAPI();
+	let timeoutID: NodeJS.Timeout;
 
+	async function getBallots() {
+		const api = new EventsAPI();
 		resultContext.ballots = await api.listBallots(eventID, token);
-		//TODO: Add result fecth timeout.
+		clearTimeout(timeoutID);
+		timeoutID = setTimeout(getBallots, RESULTS_REFRESH_DELAY);
+	}
+
+	onMount(() => {
+		getBallots();
+
+		return () => clearTimeout(timeoutID);
 	});
 </script>
 

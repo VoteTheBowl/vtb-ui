@@ -10,8 +10,9 @@
 	let votes: { choice: string; count: number }[] = $derived(
 		eventContext.event?.choices.map((choice) => ({
 			choice,
-			count: resultContext.ballots.filter((ballot) => (ballot.vote as Submission).choice === choice)
-				.length
+			count: resultContext.ballots.filter(
+				(ballot) => (ballot.vote as Submission)?.choice === choice
+			).length
 		})) || []
 	);
 </script>

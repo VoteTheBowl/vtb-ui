@@ -1,6 +1,7 @@
 import { error } from '@sveltejs/kit';
 import type { PageLoad } from './$types';
 import { EventsAPI } from '$lib/api/events';
+import { APIError } from '$lib/api/base';
 
 export const load: PageLoad = async ({ url, fetch }) => {
 	const eventID = Number(url.searchParams.get('e'));
@@ -10,7 +11,19 @@ export const load: PageLoad = async ({ url, fetch }) => {
 		error(400, 'Invalid Share URL');
 	}
 	const api = new EventsAPI(fetch);
-	const event = await api.getEvent(eventID, shareToken);
 
-	return event;
+	try {
+		return await api.getEvent(eventID, shareToken);
+	} catch (e: unknown) {
+		if (e instanceof APIError && e.status) {
+			switch (e.status) {
+				case 403:
+					throw error(404, 'Event Not Found');
+				default:
+					throw error(e.status, e.statusText);
+			}
+		} else {
+			throw error(500, 'An unknown error occurred.');
+		}
+	}
 };

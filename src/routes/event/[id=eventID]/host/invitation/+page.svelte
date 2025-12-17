@@ -2,7 +2,7 @@
 	import { page } from '$app/state';
 	import { EventsAPI } from '$lib/api/events';
 	import QRCode from '@castlenine/svelte-qrcode';
-	import { Button, Heading, Tooltip } from 'flowbite-svelte';
+	import { Button, Heading } from 'flowbite-svelte';
 	import {
 		ClipboardCheckOutline,
 		ClipboardCleanOutline,
@@ -63,12 +63,8 @@
 		{:else}
 			<ClipboardCleanOutline class="h-6 w-6 shrink-0" />
 		{/if}
-		<span class="sr-only">
-			{copied ? 'Invitation link copied to clipboard' : 'Copy invitation to clipboard'}
-		</span>
-		{shareURL}
+		{copied ? 'Invitation copied to clipboard' : 'Copy invitation to clipboard'}
 	</Button>
-	<Tooltip>Copy to clipboard</Tooltip>
 
 	<div class="flex items-baseline">
 		<Heading tag="h3" class="mt-8">Registered Voters</Heading>

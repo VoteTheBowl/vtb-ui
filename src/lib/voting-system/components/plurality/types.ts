@@ -1,1 +1,1 @@
-export type Submission = { choice: string };
+export type Submission = { choice: string } | null;
