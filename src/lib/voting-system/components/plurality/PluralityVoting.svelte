@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { EventResponseData } from '$lib/api/events';
-	import type { BallotContext, EventContext } from '$lib/types';
+	import type { BallotContext } from '$lib/types';
 	import { P, Radio } from 'flowbite-svelte';
 	import { getContext } from 'svelte';
 
