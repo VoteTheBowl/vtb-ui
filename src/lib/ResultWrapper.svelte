@@ -1,25 +1,18 @@
 <script lang="ts">
-	import { onMount, setContext } from 'svelte';
+	import { onMount } from 'svelte';
 	import { RESULTS_REFRESH_DELAY } from './const';
 	import votingSystems from '$lib/voting-system/config';
-	import { EventsAPI } from '$lib/api/events';
-	import type { ResultContext } from './types';
+	import { EventsAPI, type BallotResponseData, type EventResponseData } from '$lib/api/events';
 
-	const {
-		eventID,
-		votingSystemID,
-		token
-	}: { eventID: number; votingSystemID: string; token: string } = $props();
-	const config = $derived(votingSystems.find((value) => value.id === votingSystemID));
-	const resultContext: ResultContext = $state({ ballots: [] });
-
-	setContext('results', resultContext);
+	const { event, token }: { event: EventResponseData; token: string } = $props();
+	const config = $derived(votingSystems.find((value) => value.id === event.electoral_system));
+	let ballots: BallotResponseData[] = $state([]);
 
 	let timeoutID: NodeJS.Timeout;
 
 	async function getBallots() {
 		const api = new EventsAPI();
-		resultContext.ballots = await api.listBallots(eventID, token);
+		ballots = await api.listBallots(event.id, token);
 		clearTimeout(timeoutID);
 		timeoutID = setTimeout(getBallots, RESULTS_REFRESH_DELAY);
 	}
@@ -32,7 +25,7 @@
 </script>
 
 {#if config}
-	<config.results />
+	<config.results {event} {ballots} />
 {:else}
 	Config Error!
 {/if}
