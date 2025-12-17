@@ -2,7 +2,7 @@
 	import { dndzone, type DndEvent, type Item } from 'svelte-dnd-action';
 	import { flip } from 'svelte/animate';
 	import { getContext } from 'svelte';
-	import type { BallotContext } from '$lib/types';
+	import type { SubmissionContext } from '$lib/types';
 	import type { VotingComponentProps } from '$lib/voting-system/types';
 	import type { RankedSubmission } from './types';
 
@@ -10,7 +10,7 @@
 
 	const flipDurationMs = 200;
 
-	let ballotContext: BallotContext = getContext('ballot-data');
+	let submissionContext: SubmissionContext = getContext('ballot-data');
 
 	let items: Item[] = $state(
 		event.choices
@@ -21,8 +21,8 @@
 	);
 
 	// svelte-ignore state_referenced_locally
-	ballotContext.submission = items.map((i) => i.id);
-	ballotContext.submissionIsValid = true;
+	submissionContext.submission = items.map((i) => i.id);
+	submissionContext.submissionIsValid = true;
 
 	function handleSort(e: CustomEvent<DndEvent>) {
 		items = e.detail.items;
@@ -30,7 +30,7 @@
 
 	function handleFinalize(e: CustomEvent<DndEvent>) {
 		items = e.detail.items;
-		ballotContext.submission = items.map((i) => i.id) as RankedSubmission;
+		submissionContext.submission = items.map((i) => i.id) as RankedSubmission;
 	}
 </script>
 

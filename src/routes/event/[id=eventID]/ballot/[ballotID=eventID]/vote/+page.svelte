@@ -25,12 +25,8 @@
 	{#if !eventContext.event}
 		<p class="text-center">Loading event data...</p>
 	{:else if submitted}
-		{#if eventID && eventContext.event?.show_results === true}
-			<ResultWrapper
-				{eventID}
-				votingSystemID={eventContext.event.electoral_system}
-				token={voterTokenStorage.getToken(eventID)}
-			/>
+		{#if eventContext.event?.show_results === true}
+			<ResultWrapper event={eventContext.event} token={voterTokenStorage.getToken(eventID)} />
 		{:else}
 			<p class="text-center">You have already submitted your vote. Thank you!</p>
 		{/if}

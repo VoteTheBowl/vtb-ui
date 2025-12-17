@@ -3,7 +3,10 @@
 	import { P, Star } from 'flowbite-svelte';
 	import { RefreshOutline } from 'flowbite-svelte-icons';
 	import type { StarSubmission } from './types';
+	import type { VotingComponentProps } from '$lib/voting-system/types';
+	import { getContext } from 'svelte';
 
+	let { event }: VotingComponentProps = $props();
 
 	let submissionContext: SubmissionContext = getContext('ballot-data');
 	let ratings: StarSubmission = $state(event.choices.map((choice) => ({ choice, rating: 0 })));
