@@ -1,25 +1,25 @@
 <script lang="ts">
-	import type { BallotContext } from '$lib/types';
+	import type { SubmissionContext } from '$lib/types';
 	import { P, Star } from 'flowbite-svelte';
 	import { RefreshOutline } from 'flowbite-svelte-icons';
-	import { getContext } from 'svelte';
 	import type { StarSubmission } from './types';
-	import type { EventResponseData } from '$lib/api/events';
+	import type { VotingComponentProps } from '$lib/voting-system/types';
+	import { getContext } from 'svelte';
 
-	let { event }: { event: EventResponseData } = $props();
+	let { event }: VotingComponentProps = $props();
 
-	let ballotContext: BallotContext = getContext('ballot-data');
+	let submissionContext: SubmissionContext = getContext('ballot-data');
 	let ratings: StarSubmission = $state(event.choices.map((choice) => ({ choice, rating: 0 })));
 
-	ballotContext.submission = ratings;
-	ballotContext.submissionIsValid = true;
+	submissionContext.submission = ratings;
+	submissionContext.submissionIsValid = true;
 
 	function onRatingClick(choice: string, rating: number) {
 		const selectedChoice = ratings.find((r) => r.choice === choice);
 		if (selectedChoice) {
 			selectedChoice.rating = rating;
 		}
-		ballotContext.submission = ratings;
+		submissionContext.submission = ratings;
 	}
 </script>
 

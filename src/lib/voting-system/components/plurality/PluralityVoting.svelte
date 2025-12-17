@@ -1,17 +1,17 @@
 <script lang="ts">
 	import type { EventResponseData } from '$lib/api/events';
-	import type { BallotContext } from '$lib/types';
+	import type { SubmissionContext } from '$lib/types';
 	import { P, Radio } from 'flowbite-svelte';
 	import { getContext } from 'svelte';
 
 	let { event }: { event: EventResponseData } = $props();
 
 	let selectedChoice: string = $state('');
-	let ballotContext: BallotContext = getContext('ballot-data');
+	let submissionContext: SubmissionContext = getContext('ballot-data');
 
 	$effect(() => {
-		ballotContext.submission = { choice: selectedChoice };
-		ballotContext.submissionIsValid = selectedChoice !== '';
+		submissionContext.submission = { choice: selectedChoice };
+		submissionContext.submissionIsValid = selectedChoice !== '';
 	});
 </script>
 
