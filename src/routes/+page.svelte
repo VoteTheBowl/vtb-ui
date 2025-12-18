@@ -3,8 +3,10 @@
 	import { EventsAPI } from '$lib/api/events';
 	import { Heading, Input, Label, Button, Select } from 'flowbite-svelte';
 	import { resolve } from '$app/paths';
-	import { hostTokenStorage } from '$lib/token-util';
 	import votingSystems from '$lib/voting-system/config';
+	import { getStorageContext } from '$lib/storage/storage';
+
+	const storage = getStorageContext();
 
 	let eventName = $state('');
 	let dishes: string[] = $state([]);
@@ -41,7 +43,7 @@
 			electoral_system: votingSystem
 		});
 
-		hostTokenStorage.saveToken(response.id, response.host_token);
+		storage.saveEvent(response.id, response.name, response.host_token);
 
 		await goto(resolve(`/event/${response.id}/host/invitation/`));
 	};

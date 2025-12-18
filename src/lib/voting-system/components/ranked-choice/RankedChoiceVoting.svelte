@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { dndzone, type DndEvent, type Item } from 'svelte-dnd-action';
 	import { flip } from 'svelte/animate';
-	import { getContext } from 'svelte';
+	import { getContext, onMount } from 'svelte';
 	import type { SubmissionContext } from '$lib/types';
 	import type { VotingComponentProps } from '$lib/voting-system/types';
 	import type { RankedSubmission } from './types';
@@ -12,17 +12,7 @@
 
 	let submissionContext: SubmissionContext = getContext('ballot-data');
 
-	let items: Item[] = $state(
-		event.choices
-			.map((choiceStr) => {
-				return { id: choiceStr, title: choiceStr };
-			})
-			.sort(() => Math.random() - 0.5)
-	);
-
-	// svelte-ignore state_referenced_locally
-	submissionContext.submission = items.map((i) => i.id);
-	submissionContext.submissionIsValid = true;
+	let items: Item[] = $state([]);
 
 	function handleSort(e: CustomEvent<DndEvent>) {
 		items = e.detail.items;
@@ -32,6 +22,16 @@
 		items = e.detail.items;
 		submissionContext.submission = items.map((i) => i.id) as RankedSubmission;
 	}
+
+	onMount(() => {
+		items = event.choices
+			.map((choiceStr) => {
+				return { id: choiceStr, title: choiceStr };
+			})
+			.sort(() => Math.random() - 0.5);
+		submissionContext.submission = items.map((i) => i.id) as RankedSubmission;
+		submissionContext.submissionIsValid = true;
+	});
 </script>
 
 <p>Drag your preferred options to the top.</p>

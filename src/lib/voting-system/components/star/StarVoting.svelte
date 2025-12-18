@@ -4,15 +4,12 @@
 	import { RefreshOutline } from 'flowbite-svelte-icons';
 	import type { StarSubmission } from './types';
 	import type { VotingComponentProps } from '$lib/voting-system/types';
-	import { getContext } from 'svelte';
+	import { getContext, onMount } from 'svelte';
 
 	let { event }: VotingComponentProps = $props();
 
 	let submissionContext: SubmissionContext = getContext('ballot-data');
-	let ratings: StarSubmission = $state(event.choices.map((choice) => ({ choice, rating: 0 })));
-
-	submissionContext.submission = ratings;
-	submissionContext.submissionIsValid = true;
+	let ratings: StarSubmission = $state([]);
 
 	function onRatingClick(choice: string, rating: number) {
 		const selectedChoice = ratings.find((r) => r.choice === choice);
@@ -21,6 +18,12 @@
 		}
 		submissionContext.submission = ratings;
 	}
+
+	onMount(() => {
+		ratings = event.choices.map((choice) => ({ choice, rating: 0 }));
+		submissionContext.submission = ratings;
+		submissionContext.submissionIsValid = true;
+	});
 </script>
 
 <P class="text-center">

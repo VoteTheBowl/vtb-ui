@@ -10,12 +10,15 @@
 	} from 'flowbite-svelte-icons';
 	import { getContext, onMount } from 'svelte';
 	import type { HostContext } from '../type';
-	import { hostTokenStorage } from '$lib/token-util';
+	import { getStorageContext } from '$lib/storage/storage';
 
 	const REFRESH_DELAY = 3000;
 
 	const hostContext: HostContext = getContext('host-context');
 	const eventID: number = $derived(Number(page.params.id));
+
+	const storage = getStorageContext();
+
 	let hostToken: string = $state('');
 	let copied = $state(false);
 	let shareURL: string = $derived(
@@ -45,7 +48,7 @@
 	};
 
 	onMount(() => {
-		hostToken = hostTokenStorage.getToken(eventID);
+		hostToken = storage.getEvent(eventID).token;
 		getBallots();
 		return () => clearTimeout(timeoutID);
 	});

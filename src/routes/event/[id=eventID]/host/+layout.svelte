@@ -12,9 +12,11 @@
 	import { EventsAPI } from '$lib/api/events';
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
-	import { hostTokenStorage } from '$lib/token-util';
+	import { getStorageContext } from '$lib/storage/storage';
 
 	let { children } = $props();
+
+	const storage = getStorageContext();
 
 	let activeUrl = $derived(page.url.pathname);
 	let eventID = $derived(Number(page.params.id));
@@ -27,7 +29,8 @@
 		if (eventID === undefined) return;
 
 		const api = new EventsAPI();
-		await api.closeEvent(eventID, hostTokenStorage.getToken(eventID));
+		const event = storage.getEvent(eventID);
+		await api.closeEvent(eventID, event.token);
 
 		goto(resolve(`/event/${eventID}/host/results/`));
 	};
@@ -35,9 +38,9 @@
 	onMount(async () => {
 		//Cannot use load function in layout, cannot access localStorage in load function
 		const api = new EventsAPI(fetch);
-		const hostToken = hostTokenStorage.getToken(eventID);
-		hostContext.event = await api.getEvent(eventID, hostToken);
-		hostContext.ballots = await api.listBallots(eventID, hostToken);
+		const event = storage.getEvent(eventID);
+		hostContext.event = await api.getEvent(eventID, event.token);
+		hostContext.ballots = await api.listBallots(eventID, event.token);
 	});
 </script>
 
