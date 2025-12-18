@@ -8,10 +8,11 @@
 	import { getStorageContext } from '$lib/storage/storage';
 	import { BallotAPI } from '$lib/api/events';
 
-	const eventID = $derived(Number(page.params.id));
 	const ballotID = $derived(Number(page.params.ballotID));
+
 	const eventContext: EventContext = getContext('event-data');
 	const ballotContext: BallotContext = getContext('ballot-data');
+
 	const storage = getStorageContext();
 
 	let submitted = $derived(ballotContext.ballot?.submitted !== null);
