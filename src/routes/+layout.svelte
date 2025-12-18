@@ -8,6 +8,15 @@
 	let { children } = $props();
 
 	let loaded = $state(false);
+	import { InfoAPI } from '$lib/api/info';
+	import { onMount } from 'svelte';
+
+	onMount(async () => {
+		console.log(
+			`App Version: ${import.meta.env.VITE_APP_VERSION}`,
+			`API Version: ${(await new InfoAPI().getVersion()).version}`
+		);
+	});
 </script>
 
 <svelte:head>

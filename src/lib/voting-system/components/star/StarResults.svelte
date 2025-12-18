@@ -1,12 +1,11 @@
 <script lang="ts">
-	import type { EventContext, ResultContext } from '$lib/types';
 	import { P, Star } from 'flowbite-svelte';
-	import { getContext } from 'svelte';
 	import type { StarSubmission } from './types';
 	import seedrandom from 'seedrandom';
+	import type { ResultComponentProps } from '$lib/voting-system/types';
+	import type { BallotResponseData } from '$lib/api/events';
 
-	const eventContext: EventContext = getContext('event-data');
-	const resultContext: ResultContext = getContext('results');
+	let { event, ballots }: ResultComponentProps = $props();
 
 	function calulateTotals(
 		submissions: StarSubmission[],
@@ -27,11 +26,11 @@
 	}
 
 	let totalRatings: { choice: string; total: number; totalFiveStars: number }[] = $derived(
-		eventContext.event?.choices
+		event.choices
 			.map((choice) => ({
 				choice,
 				...calulateTotals(
-					resultContext.ballots
+					ballots
 						.filter((ballot) => ballot.submitted)
 						.map((ballot) => ballot.vote as StarSubmission),
 					choice
@@ -40,7 +39,7 @@
 			.sort((a, b) => b.total - a.total) || []
 	);
 
-	function calculateResults(choices: string[] | undefined, ballots: ResultContext['ballots']) {
+	function calculateResults(choices: string[] | undefined, ballots: BallotResponseData[]) {
 		if (choices === undefined || choices.length === 0) return null;
 		if (ballots.length === 0) return null;
 		if (choices.length === 1) return { winner: choices[0], reasoning: '' };
@@ -151,23 +150,21 @@
 	}
 
 	let firstPlace: { winner: string; reasoning: string } | null = $derived(
-		calculateResults(eventContext.event?.choices, resultContext.ballots)
+		calculateResults(event.choices, ballots)
 	);
 	let secondPlace: { winner: string; reasoning: string } | null = $derived(
 		firstPlace
 			? calculateResults(
-					eventContext.event?.choices.filter((val) => val !== firstPlace?.winner),
-					resultContext.ballots
+					event.choices.filter((val) => val !== firstPlace?.winner),
+					ballots
 				)
 			: null
 	);
 	let thirdPlace: { winner: string; reasoning: string } | null = $derived(
 		firstPlace && secondPlace
 			? calculateResults(
-					eventContext.event?.choices.filter(
-						(val) => val !== firstPlace?.winner && val !== secondPlace?.winner
-					),
-					resultContext.ballots
+					event.choices.filter((val) => val !== firstPlace?.winner && val !== secondPlace?.winner),
+					ballots
 				)
 			: null
 	);
@@ -204,22 +201,20 @@
 	}
 </script>
 
-{#if eventContext}
-	{#each totalRatings.sort(sortRatings) as vote (vote.choice)}
-		<div class="flex flex-wrap items-center justify-center gap-2">
-			<P class="my-2">
-				{vote.choice} - {vote.total}
-			</P>
-			<Star fillPercent={100} size={20} ariaLabel="Star icon" />
-			{#if firstPlace && vote.choice === firstPlace.winner}
-				<P size="sm" class="font-bold text-green-600">(Winner) {firstPlace.reasoning}</P>
-			{/if}
-			{#if secondPlace && vote.choice === secondPlace.winner}
-				<P size="sm" class="font-bold text-blue-600">(Second Place) {secondPlace.reasoning}</P>
-			{/if}
-			{#if thirdPlace && vote.choice === thirdPlace.winner}
-				<P size="sm" class="font-bold text-yellow-600">(Third Place) {thirdPlace.reasoning}</P>
-			{/if}
-		</div>
-	{/each}
-{/if}
+{#each totalRatings.sort(sortRatings) as vote (vote.choice)}
+	<div class="flex flex-wrap items-center justify-center gap-2">
+		<P class="my-2">
+			{vote.choice} - {vote.total}
+		</P>
+		<Star fillPercent={100} size={20} ariaLabel="Star icon" />
+		{#if firstPlace && vote.choice === firstPlace.winner}
+			<P size="sm" class="font-bold text-green-600">(Winner) {firstPlace.reasoning}</P>
+		{/if}
+		{#if secondPlace && vote.choice === secondPlace.winner}
+			<P size="sm" class="font-bold text-blue-600">(Second Place) {secondPlace.reasoning}</P>
+		{/if}
+		{#if thirdPlace && vote.choice === thirdPlace.winner}
+			<P size="sm" class="font-bold text-yellow-600">(Third Place) {thirdPlace.reasoning}</P>
+		{/if}
+	</div>
+{/each}
