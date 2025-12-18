@@ -3,13 +3,13 @@
 	import favicon from '$lib/assets/favicon.png';
 	import { ThemeProvider } from 'flowbite-svelte';
 	import { defaultTheme } from '$lib/themes';
+	import { InfoAPI } from '$lib/api/info';
+	import { onMount } from 'svelte';
 	import StorageProvider from '$lib/storage/StorageProvider.svelte';
 
 	let { children } = $props();
 
 	let loaded = $state(false);
-	import { InfoAPI } from '$lib/api/info';
-	import { onMount } from 'svelte';
 
 	onMount(async () => {
 		console.log(
