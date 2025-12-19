@@ -20,6 +20,7 @@
 </script>
 
 <svelte:head>
+	<title>Vote The Bowl - Cook Off Voting Made Easy</title>
 	<link rel="icon" href={favicon} />
 </svelte:head>
 

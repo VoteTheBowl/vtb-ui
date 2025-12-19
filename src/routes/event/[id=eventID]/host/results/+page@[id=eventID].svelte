@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import { Button, Checkbox, Heading, Label } from 'flowbite-svelte';
-	import ResultWrapper from '$lib/ResultWrapper.svelte';
+	import ResultWrapper from '$lib/components/ResultWrapper.svelte';
 	import { onMount, setContext } from 'svelte';
 	import { EventsAPI } from '$lib/api/events';
 	import type { EventContext } from '$lib/types';

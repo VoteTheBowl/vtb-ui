@@ -3,8 +3,8 @@
 	import { Heading } from 'flowbite-svelte';
 	import { getContext, onMount } from 'svelte';
 	import type { BallotContext, EventContext } from '$lib/types';
-	import VotingWrapper from '$lib/VotingWrapper.svelte';
-	import ResultWrapper from '$lib/ResultWrapper.svelte';
+	import VotingWrapper from '$lib/components/VotingWrapper.svelte';
+	import ResultWrapper from '$lib/components/ResultWrapper.svelte';
 	import { getStorageContext } from '$lib/storage/storage';
 	import { BallotAPI } from '$lib/api/events';
 
