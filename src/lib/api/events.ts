@@ -64,9 +64,13 @@ export class EventsAPI extends BaseAPI {
 	};
 
 	createBallot = async (eventID: number, name: string, shareToken: string) => {
-		return this.post(`/${eventID}/create-ballot?voter_name=${name}`, null, {
-			'X-API-Key': shareToken
-		}) as Promise<BallotCreateResponseData>;
+		return this.post(
+			`/${eventID}/create-ballot`,
+			{ voter_name: name },
+			{
+				'X-API-Key': shareToken
+			}
+		) as Promise<BallotCreateResponseData>;
 	};
 }
 
