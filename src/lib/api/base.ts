@@ -88,4 +88,27 @@ export class BaseAPI {
 
 		return this.parseResponse(response, parseReturn);
 	};
+
+	patch = async (
+		endpoint: string,
+		data: unknown,
+		headers: HeadersInit = {},
+		parseReturn: ParseReturn = 'JSON'
+	): Promise<ResponseJSON | Response> => {
+		let response = undefined;
+		try {
+			response = await this.fetch(this.baseUrl + this.endpoint + endpoint, {
+				method: 'PATCH',
+				headers: {
+					'Content-Type': 'application/json',
+					...headers
+				},
+				body: JSON.stringify(data)
+			});
+		} catch (error) {
+			throw new APIError(response?.status, response?.statusText, (error as Error).message);
+		}
+
+		return this.parseResponse(response, parseReturn);
+	};
 }
