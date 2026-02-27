@@ -73,7 +73,13 @@ export class EventsAPI extends BaseAPI {
 	};
 
 	updateStatus = async (eventID: number, token: string, status: EventStatus) => {
-		return this.patch(`/${eventID}/update-status`, { status });
+		return this.patch(
+			`/${eventID}/update-status`,
+			{ status },
+			{
+				'X-API-Key': token
+			}
+		);
 	};
 }
 
