@@ -50,4 +50,6 @@
 	});
 </script>
 
-{@render children()}
+<div class="p-4">
+	{@render children()}
+</div>

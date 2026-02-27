@@ -27,14 +27,12 @@
 <ThemeProvider theme={defaultTheme}>
 	<StorageProvider onLoad={() => (loaded = true)}>
 		{#if !loaded}
-			<div class="flex min-h-screen w-screen flex-col items-center justify-center">
+			<div class="m-auto min-h-screen w-screen">
 				<p class="text-center">Loading...</p>
 			</div>
 		{:else}
-			<div class="justify-top flex min-h-screen w-screen flex-col items-center">
-				<div class="w-fulls h-full p-4 sm:max-w-lg">
-					{@render children?.()}
-				</div>
+			<div class="m-auto sm:max-w-lg">
+				{@render children?.()}
 			</div>
 		{/if}
 	</StorageProvider>
