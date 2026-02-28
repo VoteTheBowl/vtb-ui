@@ -27,7 +27,10 @@
 
 	onMount(() => {
 		let intervalID: NodeJS.Timeout;
-		getEvent().then(() => (intervalID = setInterval(getBallots, RESULTS_REFRESH_DELAY)));
+		getEvent().then(() => {
+			getBallots();
+			intervalID = setInterval(getBallots, RESULTS_REFRESH_DELAY);
+		});
 
 		return () => {
 			clearInterval(intervalID);
@@ -39,10 +42,10 @@
 	{#if event?.status == 'RE'}
 		<Registration bind:event {ballots} />
 	{:else if event?.status == 'VO'}
-		<Voting bind:event />
+		<Voting bind:event {ballots} />
 	{:else if event?.status == 'CL'}
-		<Results bind:event />
+		<Results bind:event {ballots} />
 	{:else}
-		Loading
+		Loading...
 	{/if}
 </div>

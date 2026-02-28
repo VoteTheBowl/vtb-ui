@@ -4,12 +4,7 @@
 	import { getStorageContext } from '$lib/storage/storage';
 	import QRCode from '@castlenine/svelte-qrcode';
 	import { Button, Heading } from 'flowbite-svelte';
-	import {
-		ArrowRightOutline,
-		ClipboardCheckOutline,
-		ClipboardCleanOutline,
-		RefreshOutline
-	} from 'flowbite-svelte-icons';
+	import { ClipboardCheckOutline, ClipboardCleanOutline } from 'flowbite-svelte-icons';
 
 	const {
 		event = $bindable(),
@@ -77,6 +72,4 @@
 	{/if}
 </div>
 
-<Button size="xl" color="blue" class="w-full" onclick={startVoting}>
-	Start Voting <ArrowRightOutline class="ms-2 h-5 w-5" />
-</Button>
+<Button size="xl" color="blue" class="w-full" onclick={startVoting}>Begin Voting</Button>

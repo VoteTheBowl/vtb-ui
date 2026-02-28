@@ -1,20 +1,52 @@
 <script lang="ts">
-	import type { EventResponseData } from '$lib/api/events';
-	import { Button, Heading } from 'flowbite-svelte';
-	import { ArrowLeftOutline } from 'flowbite-svelte-icons';
+	import { EventsAPI, type BallotResponseData, type EventResponseData } from '$lib/api/events';
+	import { getStorageContext } from '$lib/storage/storage';
+	import votingSystems from '$lib/voting-system/config';
+	import { Button, Checkbox, Heading, Label, P } from 'flowbite-svelte';
 
-	const { event = $bindable() }: { event: EventResponseData } = $props();
+	const {
+		event = $bindable(),
+		ballots
+	}: { event: EventResponseData; ballots: BallotResponseData[] | null } = $props();
+
+	const storage = getStorageContext();
+	const config = $derived(votingSystems.find((value) => value.id === event.electoral_system));
+
+	const openEvent = async () => {
+		const api = new EventsAPI();
+		await api.updateStatus(event.id, storage.getEvent(event.id).token, 'VO');
+		event.status = 'VO';
+	};
+
+	const toggleShowResults = async () => {
+		const api = new EventsAPI();
+		const token = storage.getEvent(event.id).token;
+		if (event.show_results) {
+			await api.hideResults(event.id, token);
+			event.show_results = false;
+		} else {
+			await api.showResults(event.id, token);
+			event.show_results = true;
+		}
+	};
 </script>
 
-<Heading tag="h2">Results ({event.name})</Heading>
+<div>
+	<Heading tag="h2" class="mb-4">Results ({event.name})</Heading>
+	<Label>
+		<Checkbox class="ml-2" checked={event.show_results} onchange={toggleShowResults} />
+		Visible to participants
+	</Label>
+</div>
 
-<Button
-	size="xl"
-	color="red"
-	class="w-full"
-	onclick={() => {
-		event.status = 'VO';
-	}}
->
-	<ArrowLeftOutline class="me-2 h-5 w-5" /> Re-open Voting
-</Button>
+<div>
+	{#if config}
+		{#if ballots}
+			<config.results {event} {ballots} />
+		{/if}
+	{:else}
+		Config Error!
+	{/if}
+</div>
+
+<Button size="sm" outline color="red" class="w-full" onclick={openEvent}>Re-open Voting</Button>
