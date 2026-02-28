@@ -27,7 +27,7 @@
 
 <div>
 	<Heading tag="h2" class="mb-4">Results ({event.name})</Heading>
-	<Label class="mb-6">
+	<Label class="mb-6 cursor-pointer">
 		<Checkbox class="ml-2" checked={event.show_results} onchange={toggleShowResults} />
 		Visible to participants
 	</Label>
