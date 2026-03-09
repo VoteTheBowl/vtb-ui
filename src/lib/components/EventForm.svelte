@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { EventsAPI } from '$lib/api/events';
-	import { Input, Label, Button, Select } from 'flowbite-svelte';
+	import { Input, Label, Button, Select, Heading } from 'flowbite-svelte';
 	import { resolve } from '$app/paths';
 	import votingSystems from '$lib/voting-system/config';
 	import { getStorageContext } from '$lib/storage/storage';
@@ -48,6 +48,8 @@
 		await goto(resolve(`/event/${response.id}`));
 	};
 </script>
+
+<Heading tag="h2" class="mb-4">Create an Event</Heading>
 
 <form class="space-y-6" onsubmit={handleSubmit}>
 	<div>

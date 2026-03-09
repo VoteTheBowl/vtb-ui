@@ -14,6 +14,5 @@
 
 	<Hr />
 
-	<Heading tag="h2">Create an Event</Heading>
 	<EventForm />
 </div>
