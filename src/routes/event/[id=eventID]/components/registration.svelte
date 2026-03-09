@@ -44,9 +44,10 @@
 <div>
 	<Heading tag="h2" class="mb-8">Registration ({event.name})</Heading>
 
-	<P>
-		Share the QR-code with voters to get them registered to vote. When atleast 2 voters have to be
-		registered to continue. If you continue users will no longer be able to register.
+	<P class="mb-4">
+		Share the QR-code with voters to allow them to register. Atleast 2 voters have to be registered
+		to <i>begin voting</i>.
+		<b>If you <i>begin voting</i>, users will no longer be able to register.</b>
 	</P>
 
 	<Button
