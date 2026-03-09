@@ -97,8 +97,4 @@ export class BallotAPI extends BaseAPI {
 	getBallot = async (ballotID: number, token: string) => {
 		return this.get(`/${ballotID}`, { 'X-API-Key': token }) as Promise<BallotResponseData>;
 	};
-
-	getBallotFromToken = async (token: string) => {
-		return this.get(`/from-token`, { 'X-API-Key': token }) as Promise<BallotResponseData>;
-	};
 }
