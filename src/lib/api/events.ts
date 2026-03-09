@@ -87,7 +87,11 @@ export class BallotAPI extends BaseAPI {
 	endpoint: string = '/vote/ballot';
 
 	submitBallot = async (ballotID: number, token: string, submission: unknown) => {
-		return this.post(`/${ballotID}/submit`, { vote: submission }, { 'X-API-Key': token });
+		return this.post(
+			`/${ballotID}/submit`,
+			{ vote: submission },
+			{ 'X-API-Key': token }
+		) as Promise<BallotResponseData>;
 	};
 
 	getBallot = async (ballotID: number, token: string) => {
