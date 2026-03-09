@@ -3,7 +3,7 @@
 	import { EventsAPI, type BallotResponseData, type EventResponseData } from '$lib/api/events';
 	import { getStorageContext } from '$lib/storage/storage';
 	import QRCode from '@castlenine/svelte-qrcode';
-	import { Button, Heading } from 'flowbite-svelte';
+	import { Button, Heading, P } from 'flowbite-svelte';
 	import { ClipboardCheckOutline, ClipboardCleanOutline } from 'flowbite-svelte-icons';
 
 	const {
@@ -42,7 +42,12 @@
 </script>
 
 <div>
-	<Heading tag="h2" class="mb-2">Registration ({event.name})</Heading>
+	<Heading tag="h2" class="mb-8">Registration ({event.name})</Heading>
+
+	<P>
+		Share the QR-code with voters to get them registered to vote. When atleast 2 voters have to be
+		registered to continue. If you continue users will no longer be able to register.
+	</P>
 
 	<Button
 		onclick={onCopyClick}

@@ -26,14 +26,19 @@
 
 <Heading tag="h2">Voting ({event.name})</Heading>
 
+<P>
+	Once all voters have submitted their ballots you can close the voting. This will calculate the
+	results and prevent voters from submitting any more votes.
+</P>
+
 {#if unsubmittedBallots !== undefined && submittedBallots !== undefined}
-	<Heading tag="h3" class="my-2 text-center">Active ({unsubmittedBallots.length})</Heading>
+	<Heading tag="h3" class="my-2 text-center">Active Ballots ({unsubmittedBallots.length})</Heading>
 	<ul class="text-center">
 		{#each unsubmittedBallots as ballot (ballot.id)}
 			<li>{ballot.voter_name}</li>
 		{/each}
 	</ul>
-	<Heading tag="h3" class="my-2 text-center">Submitted ({submittedBallots.length})</Heading>
+	<Heading tag="h3" class="my-2 text-center">Submitted Ballots ({submittedBallots.length})</Heading>
 	<ul class="text-center">
 		{#each submittedBallots as ballot (ballot.id)}
 			<li>{ballot.voter_name}</li>
