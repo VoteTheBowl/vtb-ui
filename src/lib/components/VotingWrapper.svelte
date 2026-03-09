@@ -3,7 +3,7 @@
 	import { setContext } from 'svelte';
 	import votingSystems from '$lib/voting-system/config';
 	import type { SubmissionContext } from '$lib/types';
-	import { BallotAPI, type EventResponseData } from '$lib/api/events';
+	import { BallotAPI, type BallotResponseData, type EventResponseData } from '$lib/api/events';
 	import { ExclamationCircleOutline } from 'flowbite-svelte-icons';
 
 	const {
@@ -15,7 +15,7 @@
 		ballotID: number;
 		event: EventResponseData;
 		token: string;
-		onSubmitVote: () => void;
+		onSubmitVote: (value: BallotResponseData) => void;
 	} = $props();
 	const config = $derived(votingSystems.find((value) => value.id === event.electoral_system));
 	const submissionContext: SubmissionContext = $state({
@@ -28,9 +28,8 @@
 
 	const submitVote = async () => {
 		const ballotAPI = new BallotAPI();
-
-		await ballotAPI.submitBallot(ballotID, token, submissionContext.submission);
-		onSubmitVote();
+		const ballot = await ballotAPI.submitBallot(ballotID, token, submissionContext.submission);
+		onSubmitVote(ballot);
 	};
 </script>
 
