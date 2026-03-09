@@ -26,9 +26,7 @@
 	});
 </script>
 
-<P class="text-center">
-	Rate each item from 0-5 stars. You may rate multiple items with the same number of stars.
-</P>
+<P>Rate each item from 0-5 stars. You may rate multiple items with the same number of stars.</P>
 
 <div class="items-between flex-col">
 	{#each event.choices as choice (choice)}
@@ -37,14 +35,6 @@
 			<div class="my-2 w-full flex-col items-center justify-between gap-4">
 				<P size="lg" class="font-bold">{choice}</P>
 				<div class="relative flex items-center">
-					{#if ratingObj.rating > 0}
-						<button
-							class="absolute right-full flex cursor-pointer items-center justify-center p-2 pt-1.5 pb-0.5"
-							onclick={() => onRatingClick(choice, 0)}
-						>
-							<RefreshOutline class="h-5 w-5 shrink-0" />
-						</button>
-					{/if}
 					{#each Array(5), index (index)}
 						<button
 							class="flex cursor-pointer items-center justify-center"
@@ -59,6 +49,14 @@
 							/>
 						</button>
 					{/each}
+					{#if ratingObj.rating > 0}
+						<button
+							class="flex cursor-pointer items-center justify-center p-2 pt-1.5 pb-0.5"
+							onclick={() => onRatingClick(choice, 0)}
+						>
+							<RefreshOutline class="h-5 w-5 shrink-0" />
+						</button>
+					{/if}
 				</div>
 			</div>
 		{/if}

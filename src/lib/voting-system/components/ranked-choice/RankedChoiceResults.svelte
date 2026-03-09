@@ -2,6 +2,7 @@
 	import type { ResultComponentProps } from '$lib/voting-system/types';
 	import type { BallotResponseData, EventResponseData } from '$lib/api/events';
 	import type { RankedSubmission } from './types';
+	import { P } from 'flowbite-svelte';
 
 	let { event, ballots }: ResultComponentProps = $props();
 
@@ -80,19 +81,19 @@
 	});
 </script>
 
-<h3>
+<P class="mb-4 font-bold">
 	{#if overallWinner === '__TIE_FLAG__'}
 		It's a tie!
 	{:else}
 		{overallWinner} wins!
 	{/if}
-</h3>
+</P>
 
-<div class="rounds">
+<div class="flex flex-col-reverse">
 	{#each roundData as voteCount, i (i)}
-		<div class="round">
-			<div class="round-number">Round {i + 1}</div>
-			<div class="vote-counts">
+		<div class="round mt-2 w-3xs rounded-lg bg-gray-200 p-2">
+			<div class="mb-2 text-sm font-light text-gray-600 uppercase">Round {i + 1}</div>
+			<div class="text-gray-700">
 				{#each Object.keys(voteCount) as candidate (candidate)}
 					<div>{candidate}: {voteCount[candidate]}</div>
 				{/each}
@@ -100,30 +101,3 @@
 		</div>
 	{/each}
 </div>
-
-<style>
-	.rounds {
-		display: flex;
-		flex-direction: column-reverse;
-	}
-
-	.round {
-		width: 300px;
-		margin-top: 1em;
-		padding: 1em 1.5em;
-		background-color: #efefef;
-		border-radius: 8px;
-	}
-
-	.round-number {
-		color: #585a60;
-		text-transform: uppercase;
-		font-weight: lighter;
-		font-size: 14px;
-		margin-bottom: 0.5em;
-	}
-
-	.vote-counts {
-		color: #474747;
-	}
-</style>

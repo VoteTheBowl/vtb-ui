@@ -35,7 +35,7 @@
 		}
 
 		storage.saveBallot(response.ballot_id, data.id, response.ballot_token);
-		await goto(resolve(`/event/${data.id}/ballot/${response.ballot_id}/vote`));
+		await goto(resolve(`/event/${data.id}/ballot/${response.ballot_id}/`));
 	};
 
 	onMount(async () => {
@@ -46,7 +46,7 @@
 
 		try {
 			const ballotID = storage.getBallotIDFromEventID(data.id);
-			await goto(resolve(`/event/${data.id}/ballot/${ballotID}/vote/`));
+			await goto(resolve(`/event/${data.id}/ballot/${ballotID}/`));
 		} catch (e) {
 			if (!(e instanceof ErrorBallotWithEventIDNotFound)) {
 				throw e;
@@ -58,33 +58,36 @@
 	});
 </script>
 
-{#if loading === false}
-	<Heading tag="h2" class="my-8 text-center">Register for {data.name}</Heading>
-	<form class="space-y-6" onsubmit={handleSubmit}>
-		{#if error}
-			<Alert color="red">
-				{error}
-			</Alert>
-		{/if}
-		<div>
-			<Label for="name" class="mb-2">Name</Label>
-			<Input
-				id="name"
-				placeholder="Enter your name"
-				bind:value={voterName}
-				oninput={() => {
-					error = null;
-				}}
-				required
-			/>
-		</div>
+<div class="p-4">
+	{#if loading === false}
+		<Heading tag="h1">{data.name}</Heading>
+		<Heading tag="h2" class="mb-8">Register</Heading>
+		<form class="space-y-6" onsubmit={handleSubmit}>
+			{#if error}
+				<Alert color="red">
+					{error}
+				</Alert>
+			{/if}
+			<div>
+				<Label for="name" class="mb-2">Name</Label>
+				<Input
+					id="name"
+					placeholder="Enter your name"
+					bind:value={voterName}
+					oninput={() => {
+						error = null;
+					}}
+					required
+				/>
+			</div>
 
-		<div class="flex gap-4">
-			<Button type="submit" class="flex-1 cursor-pointer" color="blue" disabled={!isFormValid}>
-				Start Voting!
-			</Button>
-		</div>
-	</form>
-{:else if loading === true}
-	<span><Spinner /> Loading...</span>
-{/if}
+			<div class="flex gap-4">
+				<Button type="submit" class="flex-1 cursor-pointer" color="blue" disabled={!isFormValid}>
+					Start Voting!
+				</Button>
+			</div>
+		</form>
+	{:else if loading === true}
+		<span><Spinner /> Loading...</span>
+	{/if}
+</div>

@@ -6,10 +6,13 @@ export type EventCreateRequestData = {
 	electoral_system: string;
 };
 
+export type EventStatus = 'RE' | 'VO' | 'CL';
+
 export type EventResponseData = {
 	id: number;
 	name: string;
 	choices: string[];
+	status: EventStatus;
 	electoral_system: string;
 	share_token: string;
 	show_results: boolean;
@@ -68,13 +71,27 @@ export class EventsAPI extends BaseAPI {
 			'X-API-Key': shareToken
 		}) as Promise<BallotCreateResponseData>;
 	};
+
+	updateStatus = async (eventID: number, token: string, status: EventStatus) => {
+		return this.patch(
+			`/${eventID}/update-status`,
+			{ status },
+			{
+				'X-API-Key': token
+			}
+		);
+	};
 }
 
 export class BallotAPI extends BaseAPI {
 	endpoint: string = '/vote/ballot';
 
 	submitBallot = async (ballotID: number, token: string, submission: unknown) => {
-		return this.post(`/${ballotID}/submit`, { vote: submission }, { 'X-API-Key': token });
+		return this.post(
+			`/${ballotID}/submit`,
+			{ vote: submission },
+			{ 'X-API-Key': token }
+		) as Promise<BallotResponseData>;
 	};
 
 	getBallot = async (ballotID: number, token: string) => {

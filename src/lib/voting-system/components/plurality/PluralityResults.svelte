@@ -13,7 +13,7 @@
 	);
 </script>
 
-{#each votes as vote (vote.choice)}
+{#each votes.sort((a, b) => b.count - a.count) as vote (vote.choice)}
 	<P class="my-2">
 		{vote.choice}: {vote.count}
 	</P>

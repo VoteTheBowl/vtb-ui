@@ -5,6 +5,7 @@
 	import type { SubmissionContext } from '$lib/types';
 	import type { VotingComponentProps } from '$lib/voting-system/types';
 	import type { RankedSubmission } from './types';
+	import { P } from 'flowbite-svelte';
 
 	let { event }: VotingComponentProps = $props();
 
@@ -34,16 +35,20 @@
 	});
 </script>
 
-<p>Drag your preferred options to the top.</p>
+<P>Drag your preferred options to the top.</P>
 
 <section
+	class="min-h-md"
 	use:dndzone={{ items, flipDurationMs, dropTargetStyle: { outline: 'none' } }}
 	onconsider={handleSort}
 	onfinalize={handleFinalize}
 >
 	{#each items as item, index (item.id)}
-		<div class="choice-card" animate:flip={{ duration: flipDurationMs }}>
-			<div class="rank-number">
+		<div
+			class="my-4 flex min-w-48 rounded-lg bg-gray-200 px-4 py-3.5"
+			animate:flip={{ duration: flipDurationMs }}
+		>
+			<div class="pr-2 font-bold text-gray-500">
 				{index + 1}.
 			</div>
 			<div>
@@ -52,24 +57,3 @@
 		</div>
 	{/each}
 </section>
-
-<style>
-	.choice-card {
-		display: flex;
-		min-width: 15em;
-		background-color: #e4e4e4;
-		border-radius: 8px;
-		margin: 15px;
-		padding: 15px 20px;
-	}
-
-	.rank-number {
-		padding-right: 10px;
-		font-weight: bold;
-		color: #909090;
-	}
-
-	section {
-		min-height: 12em;
-	}
-</style>

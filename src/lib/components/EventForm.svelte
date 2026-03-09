@@ -45,7 +45,7 @@
 
 		storage.saveEvent(response.id, response.name, response.host_token);
 
-		await goto(resolve(`/event/${response.id}/host/invitation/`));
+		await goto(resolve(`/event/${response.id}`));
 	};
 </script>
 
