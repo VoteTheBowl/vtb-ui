@@ -202,19 +202,19 @@
 </script>
 
 {#each totalRatings.sort(sortRatings) as vote (vote.choice)}
-	<div class="flex flex-wrap items-center justify-center gap-2">
+	<div class="flex flex-wrap items-center gap-2">
 		<P class="my-2">
 			{vote.choice} - {vote.total}
 		</P>
 		<Star fillPercent={100} size={20} ariaLabel="Star icon" />
 		{#if firstPlace && vote.choice === firstPlace.winner}
-			<P size="sm" class="font-bold text-green-600">(Winner) {firstPlace.reasoning}</P>
+			<P size="sm" class="font-bold text-green-600">(Winner)</P>
 		{/if}
 		{#if secondPlace && vote.choice === secondPlace.winner}
-			<P size="sm" class="font-bold text-blue-600">(Second Place) {secondPlace.reasoning}</P>
+			<P size="sm" class="font-bold text-blue-600">(Second Place)</P>
 		{/if}
 		{#if thirdPlace && vote.choice === thirdPlace.winner}
-			<P size="sm" class="font-bold text-yellow-600">(Third Place) {thirdPlace.reasoning}</P>
+			<P size="sm" class="font-bold text-yellow-600">(Third Place)</P>
 		{/if}
 	</div>
 {/each}
