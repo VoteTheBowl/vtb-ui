@@ -2,7 +2,6 @@
 	import { EventsAPI, type BallotResponseData, type EventResponseData } from '$lib/api/events';
 	import { getStorageContext } from '$lib/storage/storage';
 	import { Button, Heading, P } from 'flowbite-svelte';
-	import { ArrowRightOutline, ArrowLeftOutline } from 'flowbite-svelte-icons';
 
 	const {
 		event = $bindable(),
@@ -13,11 +12,11 @@
 	const submittedBallots = $derived(ballots?.filter((ballot) => ballot.submitted));
 	const unsubmittedBallots = $derived(ballots?.filter((ballot) => !ballot.submitted));
 
-	const openRegistration = async () => {
+	/* 	const openRegistration = async () => {
 		const api = new EventsAPI();
 		await api.updateStatus(event.id, storage.getEvent(event.id).token, 'RE');
 		event.status = 'RE';
-	};
+	}; */
 	const closeVoting = async () => {
 		const api = new EventsAPI();
 		await api.updateStatus(event.id, storage.getEvent(event.id).token, 'CL');
@@ -49,8 +48,8 @@
 {/if}
 
 <div class="flex min-h-full flex-wrap items-stretch gap-2">
-	<Button size="sm" outline color="red" class="grow" onclick={openRegistration}>
+	<!-- <Button size="sm" outline color="red" class="grow" onclick={openRegistration}>
 		Temporarily Open Registration
-	</Button>
+	</Button> -->
 	<Button size="xl" color="blue" class="grow" onclick={closeVoting}>Close Voting</Button>
 </div>

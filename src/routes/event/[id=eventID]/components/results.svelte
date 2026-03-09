@@ -2,7 +2,7 @@
 	import { EventsAPI, type BallotResponseData, type EventResponseData } from '$lib/api/events';
 	import { getStorageContext } from '$lib/storage/storage';
 	import votingSystems from '$lib/voting-system/config';
-	import { Checkbox, Heading, Label, P } from 'flowbite-svelte';
+	import { Checkbox, Heading, Label } from 'flowbite-svelte';
 
 	const {
 		event = $bindable(),

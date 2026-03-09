@@ -9,7 +9,6 @@
 	import { RESULTS_REFRESH_DELAY } from '$lib/const';
 
 	let eventID = $derived(Number(page.params.id));
-	let loading = $state(true);
 	let event: EventResponseData | null = $state(null);
 	let ballots: BallotResponseData[] | null = $state(null);
 	const storage = getStorageContext();

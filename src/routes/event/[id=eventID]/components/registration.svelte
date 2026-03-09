@@ -16,6 +16,7 @@
 
 	const storage = getStorageContext();
 
+	let ballotCount = $derived(ballots?.length || 0);
 	let copied = $state(false);
 	let shareURL: string = $derived(
 		page.url.protocol +
@@ -58,7 +59,7 @@
 		</div>
 	</Button>
 
-	<Heading tag="h3" class="mb-2">Registered Voters</Heading>
+	<Heading tag="h3" class="mb-2">Registered Voters ({ballotCount})</Heading>
 	{#if ballots == null}
 		<p>Loading...</p>
 	{:else if ballots.length == 0}
@@ -72,4 +73,6 @@
 	{/if}
 </div>
 
-<Button size="xl" color="blue" class="w-full" onclick={startVoting}>Begin Voting</Button>
+<Button size="xl" color="blue" class="w-full" disabled={ballotCount < 2} onclick={startVoting}>
+	Begin Voting
+</Button>
