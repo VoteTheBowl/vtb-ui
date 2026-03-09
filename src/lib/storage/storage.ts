@@ -1,5 +1,4 @@
-import type { CurrentStorageSchema, StorageData, StorageSchemaV1 } from './types';
-import { BallotAPI, EventsAPI } from '$lib/api/events';
+import type { CurrentStorageSchema, StorageData } from './types';
 import { createContext } from 'svelte';
 
 export class ErrorBallotNotFound extends Error {
@@ -21,76 +20,6 @@ export class ErrorBallotWithEventIDNotFound extends Error {
 		super(`Ballot with Event ID ${eventID} not found in storage.`);
 		this.name = 'ErrorBallotWithEventIDNotFound';
 	}
-}
-
-async function convertNoSchemaToVersionV1(): Promise<StorageData<StorageSchemaV1>> {
-	const hostTokensString = localStorage.getItem('host-tokens');
-	const voterTokensString = localStorage.getItem('voter-tokens');
-
-	const data: StorageSchemaV1 = { events: null, ballots: null };
-
-	const promises = [];
-
-	if (hostTokensString) {
-		const tokens = JSON.parse(hostTokensString) as Record<number, string>;
-
-		data.events = {};
-
-		const api = new EventsAPI();
-
-		for (const id in tokens) {
-			promises.push(
-				(async () => {
-					const eventID = Number(id);
-
-					const event = await api.getEvent(eventID, tokens[id]);
-
-					if (data.events) {
-						data.events[eventID] = {
-							name: event.name,
-							token: tokens[id]
-						};
-					}
-				})()
-			);
-		}
-	}
-
-	if (voterTokensString) {
-		const tokens = JSON.parse(voterTokensString) as Record<number, string>;
-
-		data.ballots = {};
-
-		const api = new BallotAPI();
-
-		for (const id in tokens) {
-			promises.push(
-				(async () => {
-					const eventID = Number(id);
-
-					const ballot = await api.getBallotFromToken(tokens[id]);
-
-					if (data.ballots) {
-						data.ballots[ballot.id] = {
-							eventID,
-							token: tokens[id]
-						};
-					}
-				})()
-			);
-		}
-	}
-
-	try {
-		await Promise.all(promises);
-	} catch (e) {
-		console.error('Error migrating storage from no schema to version 1:', e);
-	}
-
-	localStorage.removeItem('host-tokens');
-	localStorage.removeItem('voter-tokens');
-
-	return { version: 1, ...data };
 }
 
 export class StorageManager {
@@ -152,7 +81,7 @@ export class StorageManager {
 			default:
 				throw new Error(`Unsupported storage version: ${data.version}`);
 			case 0:
-				migratedData = await convertNoSchemaToVersionV1();
+				migratedData = { ...migratedData }; // Placeholder for future migrations
 		}
 
 		return migratedData as StorageData<CurrentStorageSchema>;
