@@ -66,11 +66,21 @@ export class StorageManager {
 		this.saveStorage(this.data);
 	}
 
+	deleteBallot(ballotID: number) {
+		if (this.data.ballots) delete this.data.ballots[ballotID];
+		this.saveStorage(this.data);
+	}
+
 	saveEvent(eventID: number, name: string, token: string) {
 		if (!this.data.events) {
 			this.data.events = {};
 		}
 		this.data.events[eventID] = { name, token };
+		this.saveStorage(this.data);
+	}
+
+	deleteEvent(eventID: number) {
+		if (this.data.events) delete this.data.events[eventID];
 		this.saveStorage(this.data);
 	}
 
