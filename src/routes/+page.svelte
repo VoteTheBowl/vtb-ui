@@ -1,5 +1,7 @@
 <script lang="ts">
 	import EventForm from '$lib/components/EventForm.svelte';
+	import SavedBallotList from '$lib/components/SavedBallotList.svelte';
+	import SavedEventList from '$lib/components/SavedEventList.svelte';
 	import { Heading, P, Hr } from 'flowbite-svelte';
 </script>
 
@@ -13,6 +15,9 @@
 	</P>
 
 	<Hr />
+
+	<SavedEventList />
+	<SavedBallotList />
 
 	<EventForm />
 </div>
