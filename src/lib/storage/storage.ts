@@ -35,6 +35,14 @@ export class StorageManager {
 		this.data = await this.loadStorage();
 	};
 
+	hasBallots() {
+		return !!this.data.ballots;
+	}
+
+	hasEvents() {
+		return !!this.data.events;
+	}
+
 	getBallot(ballotID: number) {
 		if (!this.data.ballots) throw new ErrorBallotNotFound(ballotID);
 		if (ballotID in this.data.ballots) return this.data.ballots[ballotID];
