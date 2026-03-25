@@ -2,7 +2,7 @@
 	import type { APIError } from '$lib/api/base';
 	import { EventsAPI } from '$lib/api/events';
 	import { getStorageContext } from '$lib/storage/storage';
-	import { Card, Heading, P } from 'flowbite-svelte';
+	import { Heading, Listgroup, ListgroupItem, P } from 'flowbite-svelte';
 	import { onMount } from 'svelte';
 
 	type EventItem = {
@@ -49,30 +49,31 @@
 </script>
 
 {#snippet eventItem(event: EventItem)}
-	<li class="p-0.5">
-		<Card class="flex flex-row items-center justify-between px-4 py-3" href={`/event/${event.id}`}>
-			{event.name}
-		</Card>
-	</li>
+	<ListgroupItem
+		class="flex flex-row items-center justify-between px-4 py-3"
+		href={`/event/${event.id}`}
+	>
+		{event.name}
+	</ListgroupItem>
 {/snippet}
 
 {#if events.length === 0}
-	<P>No past events found.</P>
+	<P class="mb-4">No past events found.</P>
 {:else}
 	{#if openEvents.length}
-		<Heading tag="h4" class="text-lg">Open</Heading>
-		<ul class="mb-4">
+		<Listgroup active class="mb-4 ">
+			<Heading tag="h4" class="p-4 text-lg">Open</Heading>
 			{#each openEvents as event (event.id)}
 				{@render eventItem(event)}
 			{/each}
-		</ul>
+		</Listgroup>
 	{/if}
 	{#if closedEvents.length}
-		<Heading tag="h4" class="text-lg">Closed</Heading>
-		<ul class="mb-4">
+		<Listgroup active class="mb-4">
+			<Heading tag="h4" class="p-4 text-lg">Closed</Heading>
 			{#each closedEvents.slice(0, 5) as event (event.id)}
 				{@render eventItem(event)}
 			{/each}
-		</ul>
+		</Listgroup>
 	{/if}
 {/if}

@@ -2,7 +2,7 @@
 	import type { APIError } from '$lib/api/base';
 	import { EventsAPI } from '$lib/api/events';
 	import { getStorageContext } from '$lib/storage/storage';
-	import { Card, Heading, P } from 'flowbite-svelte';
+	import { Heading, Listgroup, ListgroupItem, P } from 'flowbite-svelte';
 	import { onMount } from 'svelte';
 
 	type BallotItem = {
@@ -44,33 +44,31 @@
 </script>
 
 {#snippet ballotItem(ballot: BallotItem)}
-	<li class="p-0.5">
-		<Card
-			class="flex flex-row items-center justify-between px-4 py-3"
-			href={`/event/${ballot.eventID}/ballot/${ballot.id}`}
-		>
-			{ballot.eventName}
-		</Card>
-	</li>
+	<ListgroupItem
+		class="flex flex-row items-center justify-between px-4 py-3"
+		href={`/event/${ballot.eventID}/ballot/${ballot.id}`}
+	>
+		{ballot.eventName}
+	</ListgroupItem>
 {/snippet}
 
 {#if ballots.length === 0}
-	<P>No past ballots found.</P>
+	<P class="mb-4">No past ballots found.</P>
 {:else}
 	{#if openBallots.length}
-		<Heading tag="h4" class="text-lg">Open</Heading>
-		<ul class="mb-4">
+		<Listgroup active class="mb-4 ">
+			<Heading tag="h4" class="p-4 text-lg">Open</Heading>
 			{#each openBallots as ballot (ballot.id)}
 				{@render ballotItem(ballot)}
 			{/each}
-		</ul>
+		</Listgroup>
 	{/if}
 	{#if closedBallots.length}
-		<Heading tag="h4" class="text-lg">Closed</Heading>
-		<ul class="mb-4">
+		<Listgroup active class="mb-4">
+			<Heading tag="h4" class="p-4 text-lg">Closed</Heading>
 			{#each closedBallots.slice(0, 5) as ballot (ballot.id)}
 				{@render ballotItem(ballot)}
 			{/each}
-		</ul>
+		</Listgroup>
 	{/if}
 {/if}
