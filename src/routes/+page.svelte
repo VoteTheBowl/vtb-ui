@@ -1,8 +1,6 @@
 <script lang="ts">
 	import EventForm from '$lib/components/EventForm.svelte';
-	import SavedBallotList from '$lib/components/SavedBallotList.svelte';
-	import SavedEventList from '$lib/components/SavedEventList.svelte';
-	import { Heading, P, Hr } from 'flowbite-svelte';
+	import { Heading, P, Hr, Button } from 'flowbite-svelte';
 </script>
 
 <div class="p-4">
@@ -16,8 +14,9 @@
 
 	<Hr />
 
-	<SavedEventList />
-	<SavedBallotList />
+	<Button href="/user/dashboard" class="w-full">See past events</Button>
+
+	<Hr>or</Hr>
 
 	<EventForm />
 </div>

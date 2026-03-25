@@ -2,17 +2,19 @@
 	import type { APIError } from '$lib/api/base';
 	import { EventsAPI } from '$lib/api/events';
 	import { getStorageContext } from '$lib/storage/storage';
-	import { Alert, Button } from 'flowbite-svelte';
+	import { Card, Heading, P } from 'flowbite-svelte';
 	import { onMount } from 'svelte';
 
 	type BallotItem = {
 		eventName: string;
 		eventID: number;
-		state: 'expired' | 'valid' | 'missing';
+		state: 'closed' | 'open';
 		id: number;
 	};
 
 	let ballots: BallotItem[] = $state([]);
+	let closedBallots: BallotItem[] = $derived(ballots.filter((ballot) => ballot.state === 'closed'));
+	let openBallots: BallotItem[] = $derived(ballots.filter((ballot) => ballot.state === 'open'));
 
 	const storage = getStorageContext();
 
@@ -31,24 +33,44 @@
 					eventName: response.name,
 					eventID: localBallots[keyAsNumber].eventID,
 					id: keyAsNumber,
-					state: response.status == 'CL' ? 'expired' : 'valid'
+					state: response.status == 'CL' ? 'closed' : 'open'
 				});
 			} catch (e) {
-				if ((e as APIError).status == 404) storage.deleteBallot(keyAsNumber);
+				const status = (e as APIError).status;
+				if (status == 404 || status == 403) storage.deleteBallot(keyAsNumber);
 			}
 		}
 	});
 </script>
 
 {#snippet ballotItem(ballot: BallotItem)}
-	<Alert color="green">
-		Ballot - {ballot.eventName}
-		<Button href={`/event/${ballot.eventID}/ballot/${ballot.id}`} size="xs" class="py-1">
-			Open
-		</Button>
-	</Alert>
+	<li class="p-0.5">
+		<Card
+			class="flex flex-row items-center justify-between px-4 py-3"
+			href={`/event/${ballot.eventID}/ballot/${ballot.id}`}
+		>
+			{ballot.eventName}
+		</Card>
+	</li>
 {/snippet}
 
-{#each ballots as ballot (ballot.id)}
-	{@render ballotItem(ballot)}
-{/each}
+{#if ballots.length === 0}
+	<P>No past ballots found.</P>
+{:else}
+	{#if openBallots.length}
+		<Heading tag="h4" class="text-lg">Open</Heading>
+		<ul class="mb-4">
+			{#each openBallots as ballot (ballot.id)}
+				{@render ballotItem(ballot)}
+			{/each}
+		</ul>
+	{/if}
+	{#if closedBallots.length}
+		<Heading tag="h4" class="text-lg">Closed</Heading>
+		<ul class="mb-4">
+			{#each closedBallots.slice(0, 5) as ballot (ballot.id)}
+				{@render ballotItem(ballot)}
+			{/each}
+		</ul>
+	{/if}
+{/if}
