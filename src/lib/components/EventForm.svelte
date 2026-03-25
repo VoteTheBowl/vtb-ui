@@ -13,7 +13,7 @@
 	let newDish = $state('');
 	let votingSystem: string = $state(votingSystems[0].id);
 
-	const isFormValid = $derived(eventName.trim() !== '' && dishes.length > 0);
+	const isFormValid = $derived(eventName.trim() !== '' && dishes.length > 1);
 
 	const addDish = () => {
 		if (newDish.trim()) {
