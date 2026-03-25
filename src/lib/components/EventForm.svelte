@@ -49,7 +49,7 @@
 	};
 </script>
 
-<Heading tag="h2" class="mb-4">Create an Event</Heading>
+<Heading tag="h2" class="mb-4">Host an Event</Heading>
 
 <form class="space-y-6" onsubmit={handleSubmit}>
 	<div>
@@ -67,7 +67,7 @@
 					onkeydown={handleKeyPressOnDishInput}
 				/>
 				<div>
-					<Button color="blue" onclick={addDish}>Add</Button>
+					<Button color="secondary" onclick={addDish}>Add</Button>
 				</div>
 			</div>
 			{#if dishes.length > 0}
@@ -93,5 +93,5 @@
 			{/each}
 		</Select>
 	</div>
-	<Button type="submit" class="flex-1" color="blue" disabled={!isFormValid}>Create Event</Button>
+	<Button type="submit" class="flex-1" disabled={!isFormValid}>Create Event</Button>
 </form>
