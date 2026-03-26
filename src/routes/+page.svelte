@@ -1,6 +1,9 @@
 <script lang="ts">
 	import EventForm from '$lib/components/EventForm.svelte';
-	import { Heading, P, Hr } from 'flowbite-svelte';
+	import { getStorageContext } from '$lib/storage/storage';
+	import { Heading, P, Hr, Button } from 'flowbite-svelte';
+
+	const storage = getStorageContext();
 </script>
 
 <div class="p-4">
@@ -13,6 +16,12 @@
 	</P>
 
 	<Hr />
+
+	{#if storage.hasEvents() || storage.hasEvents()}
+		<Button href="/user/dashboard" class="w-full">See past events</Button>
+
+		<Hr>or</Hr>
+	{/if}
 
 	<EventForm />
 </div>

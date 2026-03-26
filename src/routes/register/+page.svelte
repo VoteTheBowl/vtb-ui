@@ -82,7 +82,7 @@
 			</div>
 
 			<div class="flex gap-4">
-				<Button type="submit" class="flex-1 cursor-pointer" color="blue" disabled={!isFormValid}>
+				<Button type="submit" class="flex-1 cursor-pointer" disabled={!isFormValid}>
 					Start Voting!
 				</Button>
 			</div>

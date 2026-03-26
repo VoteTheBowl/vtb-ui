@@ -79,6 +79,6 @@
 	{/if}
 </div>
 
-<Button size="xl" color="blue" class="w-full" disabled={ballotCount < 2} onclick={startVoting}>
+<Button size="xl" class="w-full" disabled={ballotCount < 2} onclick={startVoting}>
 	Begin Voting
 </Button>

@@ -56,5 +56,5 @@
 	<!-- <Button size="sm" outline color="red" class="grow" onclick={openRegistration}>
 		Temporarily Open Registration
 	</Button> -->
-	<Button size="xl" color="blue" class="grow" onclick={closeVoting}>Close Voting</Button>
+	<Button size="xl" class="grow" onclick={closeVoting}>Close Voting</Button>
 </div>

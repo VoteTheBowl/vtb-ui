@@ -35,6 +35,14 @@ export class StorageManager {
 		this.data = await this.loadStorage();
 	};
 
+	hasBallots() {
+		return !!this.data.ballots;
+	}
+
+	hasEvents() {
+		return !!this.data.events;
+	}
+
 	getBallot(ballotID: number) {
 		if (!this.data.ballots) throw new ErrorBallotNotFound(ballotID);
 		if (ballotID in this.data.ballots) return this.data.ballots[ballotID];
@@ -66,11 +74,21 @@ export class StorageManager {
 		this.saveStorage(this.data);
 	}
 
+	deleteBallot(ballotID: number) {
+		if (this.data.ballots) delete this.data.ballots[ballotID];
+		this.saveStorage(this.data);
+	}
+
 	saveEvent(eventID: number, name: string, token: string) {
 		if (!this.data.events) {
 			this.data.events = {};
 		}
 		this.data.events[eventID] = { name, token };
+		this.saveStorage(this.data);
+	}
+
+	deleteEvent(eventID: number) {
+		if (this.data.events) delete this.data.events[eventID];
 		this.saveStorage(this.data);
 	}
 
