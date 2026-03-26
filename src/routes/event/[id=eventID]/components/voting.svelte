@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { EventsAPI, type BallotResponseData, type EventResponseData } from '$lib/api/events';
+	import ConfirmationModal from '$lib/components/ConfirmationModal.svelte';
 	import { getStorageContext } from '$lib/storage/storage';
 	import { Button, Heading, P } from 'flowbite-svelte';
 
@@ -17,6 +18,9 @@
 		await api.updateStatus(event.id, storage.getEvent(event.id).token, 'RE');
 		event.status = 'RE';
 	}; */
+
+	let openConfirmClose = $state(false);
+
 	const closeVoting = async () => {
 		const api = new EventsAPI();
 		await api.updateStatus(event.id, storage.getEvent(event.id).token, 'CL');
@@ -56,5 +60,9 @@
 	<!-- <Button size="sm" outline color="red" class="grow" onclick={openRegistration}>
 		Temporarily Open Registration
 	</Button> -->
-	<Button size="xl" class="grow" onclick={closeVoting}>Close Voting</Button>
+	<Button size="xl" class="grow" onclick={() => (openConfirmClose = true)}>Close Voting</Button>
 </div>
+
+<ConfirmationModal bind:open={openConfirmClose} heading="Close Vote?" onconfirm={closeVoting}>
+	Are you sure you want to close the voting?
+</ConfirmationModal>

@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { Button, Modal } from 'flowbite-svelte';
+	import { Button } from 'flowbite-svelte';
 	import { setContext } from 'svelte';
 	import votingSystems from '$lib/voting-system/config';
 	import type { SubmissionContext } from '$lib/types';
 	import { BallotAPI, type BallotResponseData, type EventResponseData } from '$lib/api/events';
-	import { ExclamationCircleOutline } from 'flowbite-svelte-icons';
+	import ConfirmationModal from './ConfirmationModal.svelte';
 
 	const {
 		ballotID,
@@ -46,15 +46,6 @@
 	Submit Vote
 </Button>
 
-<Modal bind:open={openConfirmationModal} size="xs" form permanent>
-	<div class="text-center">
-		<ExclamationCircleOutline class="mx-auto mb-4 h-12 w-12" />
-		<h3 class="mb-5 text-lg font-normal">
-			Are you sure you want to submit your vote? You cannot change it after submitting.
-		</h3>
-		<div class="space-x-2">
-			<Button type="submit" value="yes" color="red" onclick={submitVote}>Yes, I'm sure</Button>
-			<Button type="submit" value="no" color="alternative">Not yet</Button>
-		</div>
-	</div>
-</Modal>
+<ConfirmationModal bind:open={openConfirmationModal} heading="Submit Ballot" onconfirm={submitVote}>
+	Are you sure you want to submit yor ballot?
+</ConfirmationModal>

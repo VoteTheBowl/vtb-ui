@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import { EventsAPI, type BallotResponseData, type EventResponseData } from '$lib/api/events';
+	import ConfirmationModal from '$lib/components/ConfirmationModal.svelte';
 	import { getStorageContext } from '$lib/storage/storage';
 	import QRCode from '@castlenine/svelte-qrcode';
 	import { Button, Heading, P } from 'flowbite-svelte';
@@ -34,7 +35,9 @@
 		copied = true;
 	};
 
-	const startVoting = async () => {
+	let openConfirmStart = $state(false);
+
+	const beginVote = async () => {
 		const api = new EventsAPI();
 		await api.updateStatus(event.id, storage.getEvent(event.id).token, 'VO');
 		event.status = 'VO';
@@ -79,6 +82,20 @@
 	{/if}
 </div>
 
-<Button size="xl" class="w-full" disabled={ballotCount < 2} onclick={startVoting}>
-	Begin Voting
+<Button
+	size="xl"
+	class="w-full"
+	disabled={ballotCount < 2}
+	onclick={() => (openConfirmStart = true)}
+>
+	Begin Vote
 </Button>
+
+<ConfirmationModal
+	bind:open={openConfirmStart}
+	cancelButtonLabel="Not Sure"
+	heading="Begin Vote?"
+	onconfirm={beginVote}
+>
+	Are you sure all participant's have registered?
+</ConfirmationModal>
