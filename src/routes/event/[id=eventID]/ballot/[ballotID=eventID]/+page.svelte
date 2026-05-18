@@ -43,14 +43,14 @@
 </script>
 
 <div class="min-h-dvh p-4">
-	{#if ballot && event?.status == 'RE'}
+	{#if ballot && event?.allow_registration == true && event?.allow_voting == false}
 		<Heading tag="h1" class="mb-8">{event.name}</Heading>
 		<P>
 			Thanks for registering for <b>{event.name}</b>. Sit tight and wait for the event to start.
 		</P>
-	{:else if ballot && event?.status == 'VO'}
+	{:else if ballot && event?.allow_registration == false && event?.allow_voting == true}
 		<Voting {event} bind:ballot />
-	{:else if ballot && event?.status == 'CL'}
+	{:else if ballot && event?.closed}
 		<Results {event} {ballot} />
 	{:else}
 		Loading...

@@ -4,6 +4,8 @@ export type EventCreateRequestData = {
 	name: string;
 	choices: string[];
 	electoral_system: string;
+	allow_registration?: boolean;
+	allow_voting?: boolean;
 };
 
 export type EventStatus = 'RE' | 'VO' | 'CL';
@@ -12,14 +14,21 @@ export type EventResponseData = {
 	id: number;
 	name: string;
 	choices: string[];
-	status: EventStatus;
+	allow_registration: boolean;
+	allow_voting: boolean;
 	electoral_system: string;
 	share_token: string;
 	show_results: boolean;
+	closed: null | string;
 };
 
 export type EventCreateResponseData = EventResponseData & {
 	host_token: string;
+};
+
+export type EventUpdateBody = {
+	allow_registration?: boolean;
+	allow_voting?: boolean;
 };
 
 export type BallotResponseData = {
@@ -47,7 +56,9 @@ export class EventsAPI extends BaseAPI {
 	};
 
 	closeEvent = async (eventID: number, host_token: string) => {
-		return this.post(`/${eventID}/close`, null, { 'X-API-Key': host_token });
+		return this.post(`/${eventID}/close`, null, { 'X-API-Key': host_token }) as Promise<{
+			closed: string;
+		}>;
 	};
 
 	openEvent = async (eventID: number, host_token: string) => {
@@ -72,14 +83,10 @@ export class EventsAPI extends BaseAPI {
 		}) as Promise<BallotCreateResponseData>;
 	};
 
-	updateStatus = async (eventID: number, token: string, status: EventStatus) => {
-		return this.patch(
-			`/${eventID}/update-status`,
-			{ status },
-			{
-				'X-API-Key': token
-			}
-		);
+	update = async (eventID: number, token: string, body: EventUpdateBody) => {
+		return this.patch(`/${eventID}/update`, body, {
+			'X-API-Key': token
+		}) as Promise<EventResponseData>;
 	};
 }
 

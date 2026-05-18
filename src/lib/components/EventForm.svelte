@@ -40,7 +40,8 @@
 		const response = await api.createEvent({
 			name: eventName,
 			choices: dishes,
-			electoral_system: votingSystem
+			electoral_system: votingSystem,
+			allow_registration: true
 		});
 
 		storage.saveEvent(response.id, response.name, response.host_token);

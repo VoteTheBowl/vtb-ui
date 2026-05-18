@@ -31,7 +31,7 @@
 				events.push({
 					name: localEvents[keyAsNumber].name,
 					id: keyAsNumber,
-					state: event.status === 'CL' ? 'closed' : 'open'
+					state: event.closed ? 'closed' : 'open'
 				});
 			} catch (e) {
 				const status = (e as APIError).status;

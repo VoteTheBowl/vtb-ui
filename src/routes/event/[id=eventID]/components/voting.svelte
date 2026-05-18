@@ -4,7 +4,7 @@
 	import { getStorageContext } from '$lib/storage/storage';
 	import { Button, Heading, P } from 'flowbite-svelte';
 
-	const {
+	let {
 		event = $bindable(),
 		ballots
 	}: { event: EventResponseData; ballots: BallotResponseData[] | null } = $props();
@@ -23,8 +23,8 @@
 
 	const closeVoting = async () => {
 		const api = new EventsAPI();
-		await api.updateStatus(event.id, storage.getEvent(event.id).token, 'CL');
-		event.status = 'CL';
+		const response = await api.closeEvent(event.id, storage.getEvent(event.id).token);
+		event.closed = response.closed;
 	};
 </script>
 
