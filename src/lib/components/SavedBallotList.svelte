@@ -33,7 +33,7 @@
 					eventName: response.name,
 					eventID: localBallots[keyAsNumber].eventID,
 					id: keyAsNumber,
-					state: response.status == 'CL' ? 'closed' : 'open'
+					state: response.closed ? 'closed' : 'open'
 				});
 			} catch (e) {
 				const status = (e as APIError).status;

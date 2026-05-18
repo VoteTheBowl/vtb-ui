@@ -38,12 +38,12 @@
 </script>
 
 <div class="flex min-h-dvh flex-col justify-between gap-8 p-4">
-	{#if event?.status == 'RE'}
-		<Registration bind:event {ballots} />
-	{:else if event?.status == 'VO'}
-		<Voting bind:event {ballots} />
-	{:else if event?.status == 'CL'}
+	{#if event?.closed}
 		<Results bind:event {ballots} />
+	{:else if event?.allow_registration == true && event?.allow_voting == false}
+		<Registration bind:event {ballots} />
+	{:else if event?.allow_voting == true}
+		<Voting bind:event {ballots} />
 	{:else}
 		Loading...
 	{/if}

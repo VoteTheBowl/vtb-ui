@@ -7,7 +7,7 @@
 	import { Button, Heading, P } from 'flowbite-svelte';
 	import { ClipboardCheckOutline, ClipboardCleanOutline } from 'flowbite-svelte-icons';
 
-	const {
+	let {
 		event = $bindable(),
 		ballots
 	}: {
@@ -39,8 +39,10 @@
 
 	const beginVote = async () => {
 		const api = new EventsAPI();
-		await api.updateStatus(event.id, storage.getEvent(event.id).token, 'VO');
-		event.status = 'VO';
+		event = await api.update(event.id, storage.getEvent(event.id).token, {
+			allow_registration: false,
+			allow_voting: true
+		});
 	};
 </script>
 
