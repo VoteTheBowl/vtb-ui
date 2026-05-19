@@ -29,6 +29,7 @@ export type EventCreateResponseData = EventResponseData & {
 export type EventUpdateBody = {
 	allow_registration?: boolean;
 	allow_voting?: boolean;
+	show_results?: boolean;
 };
 
 export type BallotResponseData = {
@@ -61,18 +62,6 @@ export class EventsAPI extends BaseAPI {
 		}>;
 	};
 
-	openEvent = async (eventID: number, host_token: string) => {
-		return this.post(`/${eventID}/open`, null, { 'X-API-Key': host_token });
-	};
-
-	showResults = async (eventID: number, host_token: string) => {
-		return this.post(`/${eventID}/show-results`, null, { 'X-API-Key': host_token });
-	};
-
-	hideResults = async (eventID: number, host_token: string) => {
-		return this.post(`/${eventID}/hide-results`, null, { 'X-API-Key': host_token });
-	};
-
 	listBallots = async (eventID: number, token: string) => {
 		return this.get(`/${eventID}/ballots`, { 'X-API-Key': token }) as Promise<BallotResponseData[]>;
 	};
@@ -83,8 +72,8 @@ export class EventsAPI extends BaseAPI {
 		}) as Promise<BallotCreateResponseData>;
 	};
 
-	update = async (eventID: number, token: string, body: EventUpdateBody) => {
-		return this.patch(`/${eventID}/update`, body, {
+	updateEvent = async (eventID: number, token: string, body: EventUpdateBody) => {
+		return this.patch(`/${eventID}`, body, {
 			'X-API-Key': token
 		}) as Promise<EventResponseData>;
 	};

@@ -39,7 +39,7 @@
 
 	const beginVote = async () => {
 		const api = new EventsAPI();
-		event = await api.update(event.id, storage.getEvent(event.id).token, {
+		event = await api.updateEvent(event.id, storage.getEvent(event.id).token, {
 			allow_registration: false,
 			allow_voting: true
 		});

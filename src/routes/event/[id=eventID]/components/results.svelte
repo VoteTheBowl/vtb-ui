@@ -16,10 +16,10 @@
 		const api = new EventsAPI();
 		const token = storage.getEvent(event.id).token;
 		if (event.show_results) {
-			await api.hideResults(event.id, token);
+			await api.updateEvent(event.id, token, { show_results: false });
 			event.show_results = false;
 		} else {
-			await api.showResults(event.id, token);
+			await api.updateEvent(event.id, token, { show_results: true });
 			event.show_results = true;
 		}
 	};
