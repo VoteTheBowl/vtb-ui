@@ -54,7 +54,7 @@
 							class="flex cursor-pointer items-center justify-center p-2 pt-1.5 pb-0.5"
 							onclick={() => onRatingClick(choice, 0)}
 						>
-							<RefreshOutline class="h-5 w-5 shrink-0" />
+							<RefreshOutline class="h-5 w-5 shrink-0 dark:text-white " />
 						</button>
 					{/if}
 				</div>
