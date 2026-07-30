@@ -60,7 +60,7 @@
 
 	<div>
 		<Label class="mb-2">Dishes</Label>
-		<div class="space-y-2">
+		<div>
 			<div class="flex gap-2">
 				<Input
 					placeholder="Add a dish"
@@ -72,12 +72,16 @@
 				</div>
 			</div>
 			{#if dishes.length > 0}
-				<ul class="space-y-2">
+				<ul class="space-y-2 py-4">
 					{#each dishes as dish, i (dish + i)}
-						<li class="flex items-center justify-between rounded bg-gray-50 p-2">
+						<li
+							class="flex items-center justify-between rounded bg-gray-50 p-2 dark:bg-gray-700 dark:text-white"
+						>
 							<span>{dish}</span>
 							<div>
-								<Button color="red" size="xs" onclick={() => removeDish(i)}>Remove</Button>
+								<Button color="red" size="xs" class="p-2" onclick={() => removeDish(i)}>
+									Remove
+								</Button>
 							</div>
 						</li>
 					{/each}

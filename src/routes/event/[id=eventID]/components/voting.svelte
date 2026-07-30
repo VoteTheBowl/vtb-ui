@@ -37,21 +37,17 @@
 
 {#if unsubmittedBallots !== undefined && submittedBallots !== undefined}
 	<Heading tag="h3" class="my-2 text-center">Active Ballots ({unsubmittedBallots.length})</Heading>
-	<ul class="text-center">
+	<ul class="text-center dark:text-white">
 		{#each unsubmittedBallots as ballot (ballot.id)}
 			<li>{ballot.voter_name}</li>
 		{/each}
 	</ul>
 	<Heading tag="h3" class="my-2 text-center">Submitted Ballots ({submittedBallots.length})</Heading>
-	<ul class="text-center">
+	<ul class="text-center dark:text-white">
 		{#each submittedBallots as ballot (ballot.id)}
 			<li>{ballot.voter_name}</li>
 		{/each}
 	</ul>
-
-	{#if submittedBallots.length === 0 && unsubmittedBallots.length === 0}
-		<P class="text-center">No ballots available.</P>
-	{/if}
 {:else}
 	<P class="text-center">Loading ballots...</P>
 {/if}

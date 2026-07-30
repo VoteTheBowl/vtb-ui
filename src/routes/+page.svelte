@@ -1,14 +1,12 @@
 <script lang="ts">
 	import EventForm from '$lib/components/EventForm.svelte';
 	import { getStorageContext } from '$lib/storage/storage';
-	import { Heading, P, Hr, Button } from 'flowbite-svelte';
+	import { P, Hr, Button } from 'flowbite-svelte';
 
 	const storage = getStorageContext();
 </script>
 
-<div class="p-4">
-	<Heading tag="h1" class="mb-6">Vote The Bowl</Heading>
-
+<main class="p-4">
 	<P>
 		Make your cook off voting easy! Create an event and invite others to vote. You don't need an
 		account just start by creating an event below and sharing the registration link or QR-code. You
@@ -17,11 +15,11 @@
 
 	<Hr />
 
-	{#if storage.hasEvents() || storage.hasEvents()}
+	{#if storage.hasBallots() || storage.hasEvents()}
 		<Button href="/user/dashboard" class="w-full">See past events</Button>
 
-		<Hr>or</Hr>
+		<Hr innerDivClass="dark:bg-gray-800 dark:text-white">or</Hr>
 	{/if}
 
 	<EventForm />
-</div>
+</main>

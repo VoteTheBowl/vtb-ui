@@ -71,17 +71,19 @@
 	</Button>
 
 	<Heading tag="h3" class="mb-2">Registered Voters ({ballotCount})</Heading>
-	{#if ballots == null}
-		<p>Loading...</p>
-	{:else if ballots.length == 0}
-		<p>No voters have registered yet.</p>
-	{:else}
-		<ul>
-			{#each ballots as ballot (ballot.id)}
-				<li>{ballot.voter_name}</li>
-			{/each}
-		</ul>
-	{/if}
+	<div class="dark:text-white">
+		{#if ballots == null}
+			<p>Loading...</p>
+		{:else if ballots.length == 0}
+			<p>No voters have registered yet.</p>
+		{:else}
+			<ul>
+				{#each ballots as ballot (ballot.id)}
+					<li>{ballot.voter_name}</li>
+				{/each}
+			</ul>
+		{/if}
+	</div>
 </div>
 
 <Button
