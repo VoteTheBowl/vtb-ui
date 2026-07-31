@@ -30,7 +30,10 @@
 		<header class="relative bg-primary-600 text-white dark:bg-primary-900 dark:text-gray-200">
 			<div class="m-auto mx-auto p-4 sm:max-w-lg">
 				<h1 class="text-2xl font-bold">
-					<a href={resolve('/')}>Vote The Bowl</a>
+					<a href={resolve('/')} class="flex items-center gap-4">
+						<img src={favicon} alt="" aria-hidden="true" class="h-8 w-8 rounded-full" />
+						Vote The Bowl
+					</a>
 				</h1>
 				<DarkMode
 					size="sm"
