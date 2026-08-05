@@ -36,11 +36,11 @@ export class StorageManager {
 	};
 
 	hasBallots() {
-		return !!this.data.ballots;
+		return this.data.ballots === null || Object.keys(this.data.ballots).length > 0;
 	}
 
 	hasEvents() {
-		return !!this.data.events;
+		return this.data.events === null || Object.keys(this.data.events).length > 0;
 	}
 
 	getBallot(ballotID: number) {
