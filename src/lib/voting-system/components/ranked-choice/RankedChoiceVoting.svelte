@@ -45,10 +45,10 @@
 >
 	{#each items as item, index (item.id)}
 		<div
-			class="my-4 flex min-w-48 rounded-lg bg-gray-200 px-4 py-3.5"
+			class="my-4 flex min-w-48 rounded-lg bg-gray-200 px-4 py-3.5 text-gray-500 dark:bg-gray-700 dark:text-gray-300"
 			animate:flip={{ duration: flipDurationMs }}
 		>
-			<div class="pr-2 font-bold text-gray-500">
+			<div class="pr-2 font-bold">
 				{index + 1}.
 			</div>
 			<div>

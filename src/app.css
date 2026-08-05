@@ -38,6 +38,10 @@
 	}
 
 	h1 {
-		font-size: var(--text-3xl);
+		font-size: theme(--text-3xl);
+	}
+
+	.dark p {
+		color: theme(--color-white);
 	}
 }
