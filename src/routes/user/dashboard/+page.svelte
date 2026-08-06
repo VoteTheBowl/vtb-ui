@@ -1,18 +1,18 @@
 <script lang="ts">
 	import SavedBallotList from '$lib/components/SavedBallotList.svelte';
 	import SavedEventList from '$lib/components/SavedEventList.svelte';
-	import { Button, Heading } from 'flowbite-svelte';
+	import { Button } from 'flowbite-svelte';
 </script>
 
 <div class="p-4">
-	<Heading tag="h2" class="mb-6">Your Dashboard</Heading>
+	<h2 class="page-title mb-8">Your Dashboard</h2>
 
 	<div class="mb-8">
-		<Heading tag="h3" class="mb-4">Events</Heading>
+		<h3 class="subheading mb-4">Events</h3>
 		<SavedEventList />
 	</div>
 	<div>
-		<Heading tag="h3" class="mb-4">Ballots</Heading>
+		<h3 class="subheading mb-4">Ballots</h3>
 		<SavedBallotList />
 	</div>
 

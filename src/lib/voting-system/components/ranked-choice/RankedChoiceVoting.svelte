@@ -5,7 +5,6 @@
 	import type { SubmissionContext } from '$lib/types';
 	import type { VotingComponentProps } from '$lib/voting-system/types';
 	import type { RankedSubmission } from './types';
-	import { P } from 'flowbite-svelte';
 
 	let { event }: VotingComponentProps = $props();
 
@@ -35,7 +34,7 @@
 	});
 </script>
 
-<P>Drag your preferred options to the top.</P>
+<p>Drag your preferred options to the top.</p>
 
 <section
 	class="min-h-md"
