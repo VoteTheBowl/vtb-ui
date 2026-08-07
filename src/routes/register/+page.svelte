@@ -2,7 +2,7 @@
 	import type { PageProps } from './$types';
 	import { goto } from '$app/navigation';
 	import { EventsAPI } from '$lib/api/events';
-	import { Heading, Input, Label, Button, Spinner, Alert } from 'flowbite-svelte';
+	import { Input, Label, Button, Spinner, Alert } from 'flowbite-svelte';
 	import { resolve } from '$app/paths';
 	import { onMount } from 'svelte';
 	import { APIError } from '$lib/api/base';
@@ -60,8 +60,9 @@
 
 <div class="p-4">
 	{#if loading === false}
-		<Heading tag="h1">{data.name}</Heading>
-		<Heading tag="h2" class="mb-8">Register</Heading>
+		<h2 class="mb-8">{data.name}</h2>
+		<h3 class="mb-2">Register</h3>
+
 		<form class="space-y-6" onsubmit={handleSubmit}>
 			{#if error}
 				<Alert color="red">

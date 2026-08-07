@@ -2,7 +2,7 @@
 	import { EventsAPI, type BallotResponseData, type EventResponseData } from '$lib/api/events';
 	import { getStorageContext } from '$lib/storage/storage';
 	import votingSystems from '$lib/voting-system/config';
-	import { Checkbox, Heading, Label } from 'flowbite-svelte';
+	import { Toggle } from 'flowbite-svelte';
 
 	const {
 		event = $bindable(),
@@ -26,17 +26,21 @@
 </script>
 
 <div>
-	<Heading tag="h2" class="mb-4">Results ({event.name})</Heading>
-	<Label class="mb-6 cursor-pointer">
-		<Checkbox class="ml-2" checked={event.show_results} onchange={toggleShowResults} />
-		Visible to participants
-	</Label>
+	<h2 class="mb-8">{event.name}</h2>
+	<h3 class="mb-2">Results</h3>
 
-	{#if config}
-		{#if ballots}
-			<config.results {event} {ballots} />
+	<div class="mb-4">
+		{#if config}
+			{#if ballots}
+				<config.results {event} {ballots} />
+			{/if}
+		{:else}
+			Config Error!
 		{/if}
-	{:else}
-		Config Error!
-	{/if}
+	</div>
+
+	<h3 class="mb-2">Settings</h3>
+	<Toggle class="ml-2" checked={event.show_results} onchange={toggleShowResults}>
+		Results {event.show_results ? 'Visible' : 'Hidden'}
+	</Toggle>
 </div>
