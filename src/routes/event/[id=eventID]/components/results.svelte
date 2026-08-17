@@ -40,7 +40,7 @@
 	</div>
 
 	<h3 class="mb-2">Settings</h3>
-	<Toggle class="ml-2" checked={event.show_results} onchange={toggleShowResults}>
+	<Toggle class="ml-2 cursor-pointer" checked={event.show_results} onchange={toggleShowResults}>
 		Results {event.show_results ? 'Visible' : 'Hidden'}
 	</Toggle>
 </div>
