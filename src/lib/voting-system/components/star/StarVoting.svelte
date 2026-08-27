@@ -1,14 +1,14 @@
 <script lang="ts">
-	import type { SubmissionContext } from '$lib/types';
-	import { Star } from 'flowbite-svelte';
 	import { RefreshOutline } from 'flowbite-svelte-icons';
 	import type { StarSubmission } from './types';
 	import type { VotingComponentProps } from '$lib/voting-system/types';
-	import { getContext, onMount } from 'svelte';
+	import { onMount } from 'svelte';
+	import Star from './Star.svelte';
+	import { getSubmissionContext } from '$lib/voting-system/context';
 
 	let { event }: VotingComponentProps = $props();
 
-	let submissionContext: SubmissionContext = getContext('ballot-data');
+	let submissionContext = getSubmissionContext();
 	let ratings: StarSubmission = $state([]);
 
 	function onRatingClick(choice: string, rating: number) {
@@ -40,13 +40,7 @@
 							class="flex cursor-pointer items-center justify-center"
 							onclick={() => onRatingClick(choice, index + 1)}
 						>
-							<Star
-								iconIndex={index}
-								groupId={choice.trim().toLowerCase().replace(/\s+/g, '-')}
-								fillPercent={ratingObj.rating > index ? 100 : 0}
-								size={50}
-								ariaLabel={`Rate ${index + 1} star${index == 0 ? '' : 's'}`}
-							/>
+							<Star {index} {choice} rating={ratingObj.rating} />
 						</button>
 					{/each}
 					{#if ratingObj.rating > 0}

@@ -1,16 +1,16 @@
 <script lang="ts">
-	import type { SubmissionContext } from '$lib/types';
+	import { setSubmissionContext, type SubmissionContext } from '$lib/voting-system/context';
 	import { Accordion, AccordionItem } from 'flowbite-svelte';
 	import { CheckCircleSolid, CloseCircleSolid } from 'flowbite-svelte-icons';
-	import { setContext, type Snippet } from 'svelte';
+	import type { Snippet } from 'svelte';
 
 	const { children }: { children: Snippet } = $props();
 
 	const submissionContext: SubmissionContext = $state({
-		submission: {},
+		submission: undefined,
 		submissionIsValid: false
 	});
-	setContext('ballot-data', submissionContext);
+	setSubmissionContext(submissionContext);
 </script>
 
 <div class="p-4">

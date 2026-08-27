@@ -1,13 +1,12 @@
 <script lang="ts">
-	import type { EventResponseData } from '$lib/api/events';
-	import type { SubmissionContext } from '$lib/types';
+	import { getSubmissionContext } from '$lib/voting-system/context';
+	import type { VotingComponentProps } from '$lib/voting-system/types';
 	import { Radio } from 'flowbite-svelte';
-	import { getContext } from 'svelte';
 
-	let { event }: { event: EventResponseData } = $props();
+	let { event }: VotingComponentProps = $props();
 
 	let selectedChoice: string = $state('');
-	let submissionContext: SubmissionContext = getContext('ballot-data');
+	let submissionContext = getSubmissionContext();
 
 	$effect(() => {
 		submissionContext.submission = { choice: selectedChoice };

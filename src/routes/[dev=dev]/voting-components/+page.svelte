@@ -19,6 +19,11 @@
 {#each votingConfig as config (config.id)}
 	<TestVotingWrapper>
 		<h2 class="mb-2 text-2xl font-bold dark:text-white">{config.label}</h2>
-		<config.voting event={testEvent} />
+		<div class="relative">
+			<config.voting event={testEvent} />
+			<div class="absolute bottom-0 left-full">
+				<config.displayOnlyVote event={testEvent} />
+			</div>
+		</div>
 	</TestVotingWrapper>
 {/each}
