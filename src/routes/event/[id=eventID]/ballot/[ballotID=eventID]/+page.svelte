@@ -8,7 +8,6 @@
 	} from '$lib/api/events';
 	import { getStorageContext } from '$lib/storage/storage';
 	import { onMount } from 'svelte';
-	import { Heading, P } from 'flowbite-svelte';
 	import Voting from './components/voting.svelte';
 	import { VOTER_REFRESH_DELAY } from '$lib/const';
 	import Results from './components/results.svelte';
@@ -42,12 +41,12 @@
 	});
 </script>
 
-<div class="min-h-dvh p-4">
+<div class="p-4">
 	{#if ballot && event?.allow_registration == true && event?.allow_voting == false}
-		<Heading tag="h1" class="mb-8">{event.name}</Heading>
-		<P>
+		<h2 class="mb-4">{event.name}</h2>
+		<p>
 			Thanks for registering for <b>{event.name}</b>. Sit tight and wait for the event to start.
-		</P>
+		</p>
 	{:else if ballot && event?.allow_registration == false && event?.allow_voting == true}
 		<Voting {event} bind:ballot />
 	{:else if ballot && event?.closed}

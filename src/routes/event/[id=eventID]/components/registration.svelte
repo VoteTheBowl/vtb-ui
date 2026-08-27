@@ -4,7 +4,7 @@
 	import ConfirmationModal from '$lib/components/ConfirmationModal.svelte';
 	import { getStorageContext } from '$lib/storage/storage';
 	import QRCode from '@castlenine/svelte-qrcode';
-	import { Button, Heading, P } from 'flowbite-svelte';
+	import { Button } from 'flowbite-svelte';
 	import { ClipboardCheckOutline, ClipboardCleanOutline } from 'flowbite-svelte-icons';
 
 	let {
@@ -47,18 +47,19 @@
 </script>
 
 <div>
-	<Heading tag="h2" class="mb-8">Registration ({event.name})</Heading>
+	<h2 class="mb-4">Registration</h2>
 
-	<P class="mb-4">
+	<p class="mb-4">
 		Share the QR-code with voters to allow them to register. Atleast 2 voters have to be registered
 		to <i>begin voting</i>.
 		<b>If you <i>begin voting</i>, users will no longer be able to register.</b>
-	</P>
+	</p>
 
 	<Button
 		onclick={onCopyClick}
 		class="mb-6 flex w-full max-w-md cursor-pointer flex-col items-center gap-4 p-4"
 	>
+		<h3>{event.name}</h3>
 		<QRCode data={shareURL} isResponsive />
 		<div class="flex">
 			{#if copied}
@@ -70,7 +71,7 @@
 		</div>
 	</Button>
 
-	<Heading tag="h3" class="mb-2">Registered Voters ({ballotCount})</Heading>
+	<h3 class="mb-2">Registered Voters ({ballotCount})</h3>
 	<div class="dark:text-white">
 		{#if ballots == null}
 			<p>Loading...</p>

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { EventsAPI } from '$lib/api/events';
-	import { Input, Label, Button, Select, Heading } from 'flowbite-svelte';
+	import { Input, Label, Button, Select } from 'flowbite-svelte';
 	import { resolve } from '$app/paths';
 	import votingSystems from '$lib/voting-system/config';
 	import { getStorageContext } from '$lib/storage/storage';
@@ -50,7 +50,7 @@
 	};
 </script>
 
-<Heading tag="h2" class="mb-4">Host an Event</Heading>
+<h2 class="subheading mb-4">Create an event</h2>
 
 <form class="space-y-6" onsubmit={handleSubmit}>
 	<div>

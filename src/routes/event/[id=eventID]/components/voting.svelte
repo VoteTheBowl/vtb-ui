@@ -2,7 +2,7 @@
 	import { EventsAPI, type BallotResponseData, type EventResponseData } from '$lib/api/events';
 	import ConfirmationModal from '$lib/components/ConfirmationModal.svelte';
 	import { getStorageContext } from '$lib/storage/storage';
-	import { Button, Heading, P } from 'flowbite-svelte';
+	import { Button } from 'flowbite-svelte';
 
 	let {
 		event = $bindable(),
@@ -28,29 +28,31 @@
 	};
 </script>
 
-<Heading tag="h2">Voting ({event.name})</Heading>
+<div>
+	<h2>Voting</h2>
 
-<P>
-	Once all voters have submitted their ballots you can close the voting. This will calculate the
-	results and prevent voters from submitting any more votes.
-</P>
+	<p class="mb-4">
+		Once all voters have submitted their ballots you can close the voting. This will calculate the
+		results and prevent voters from submitting any more votes.
+	</p>
 
-{#if unsubmittedBallots !== undefined && submittedBallots !== undefined}
-	<Heading tag="h3" class="my-2 text-center">Active Ballots ({unsubmittedBallots.length})</Heading>
-	<ul class="text-center dark:text-white">
-		{#each unsubmittedBallots as ballot (ballot.id)}
-			<li>{ballot.voter_name}</li>
-		{/each}
-	</ul>
-	<Heading tag="h3" class="my-2 text-center">Submitted Ballots ({submittedBallots.length})</Heading>
-	<ul class="text-center dark:text-white">
-		{#each submittedBallots as ballot (ballot.id)}
-			<li>{ballot.voter_name}</li>
-		{/each}
-	</ul>
-{:else}
-	<P class="text-center">Loading ballots...</P>
-{/if}
+	{#if unsubmittedBallots !== undefined && submittedBallots !== undefined}
+		<h3 class="mb-2">Active Ballots ({unsubmittedBallots.length})</h3>
+		<ul class="mb-4">
+			{#each unsubmittedBallots as ballot (ballot.id)}
+				<li>{ballot.voter_name}</li>
+			{/each}
+		</ul>
+		<h3 class="mb-2">Submitted Ballots ({submittedBallots.length})</h3>
+		<ul class="mb-4">
+			{#each submittedBallots as ballot (ballot.id)}
+				<li>{ballot.voter_name}</li>
+			{/each}
+		</ul>
+	{:else}
+		<p>Loading ballots...</p>
+	{/if}
+</div>
 
 <div class="flex min-h-full flex-wrap items-stretch gap-2">
 	<!-- <Button size="sm" outline color="red" class="grow" onclick={openRegistration}>

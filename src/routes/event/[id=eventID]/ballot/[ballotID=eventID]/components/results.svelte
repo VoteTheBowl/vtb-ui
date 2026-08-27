@@ -2,7 +2,6 @@
 	import type { BallotResponseData, EventResponseData } from '$lib/api/events';
 	import ResultWrapper from '$lib/components/ResultWrapper.svelte';
 	import { getStorageContext } from '$lib/storage/storage';
-	import { Heading, P } from 'flowbite-svelte';
 
 	let {
 		event,
@@ -15,11 +14,11 @@
 	const storage = getStorageContext();
 </script>
 
-<Heading tag="h1">{event.name}</Heading>
-<Heading tag="h2" class="mb-8">Results</Heading>
-<P class="mb-8">
+<h2 class="mb-4">{event.name}</h2>
+<h3 class="mb-8">Results</h3>
+<p class="mb-2">
 	This event has concluded. Thank you for participating <i>{ballot.voter_name}</i>!
-</P>
+</p>
 {#if event.show_results}
 	<ResultWrapper {event} token={storage.getBallot(ballot.id).token} />
 {/if}

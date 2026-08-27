@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { P, Star } from 'flowbite-svelte';
+	import { Star } from 'flowbite-svelte';
 	import type { StarSubmission } from './types';
 	import seedrandom from 'seedrandom';
 	import type { ResultComponentProps } from '$lib/voting-system/types';
@@ -203,18 +203,18 @@
 
 {#each totalRatings.sort(sortRatings) as vote (vote.choice)}
 	<div class="flex flex-wrap items-center gap-2">
-		<P class="my-2">
+		<p>
 			{vote.choice} - {vote.total}
-		</P>
+		</p>
 		<Star fillPercent={100} size={20} ariaLabel="Star icon" />
 		{#if firstPlace && vote.choice === firstPlace.winner}
-			<P size="sm" class="font-bold text-green-600">(Winner)</P>
+			<p class="font-bold text-green-600">(Winner)</p>
 		{/if}
 		{#if secondPlace && vote.choice === secondPlace.winner}
-			<P size="sm" class="font-bold text-blue-600">(Second Place)</P>
+			<p class="font-bold text-blue-600 dark:text-blue-400">(Second Place)</p>
 		{/if}
 		{#if thirdPlace && vote.choice === thirdPlace.winner}
-			<P size="sm" class="font-bold text-yellow-600">(Third Place)</P>
+			<p class="font-bold text-yellow-600">(Third Place)</p>
 		{/if}
 	</div>
 {/each}

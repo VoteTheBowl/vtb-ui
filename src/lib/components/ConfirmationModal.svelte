@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button, Modal, P } from 'flowbite-svelte';
+	import { Button, Modal } from 'flowbite-svelte';
 	import type { Snippet } from 'svelte';
 
 	let {
@@ -30,9 +30,9 @@
 	class="justify-between md:max-w-md"
 >
 	{#snippet header()}
-		{heading}
+		<h2>{heading}</h2>
 	{/snippet}
-	<P>{@render children()}</P>
+	<p>{@render children()}</p>
 	{#snippet footer()}
 		<Button
 			class="grow"

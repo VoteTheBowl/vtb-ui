@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { EventResponseData } from '$lib/api/events';
 	import type { SubmissionContext } from '$lib/types';
-	import { P, Radio } from 'flowbite-svelte';
+	import { Radio } from 'flowbite-svelte';
 	import { getContext } from 'svelte';
 
 	let { event }: { event: EventResponseData } = $props();
@@ -15,7 +15,7 @@
 	});
 </script>
 
-<P>Select your top pick.</P>
+<p>Select your top pick.</p>
 
 {#each event.choices as choice (choice)}
 	<Radio name="candidates" id={choice} value={choice} bind:group={selectedChoice} class="my-2">

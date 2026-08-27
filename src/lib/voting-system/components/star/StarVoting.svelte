@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { SubmissionContext } from '$lib/types';
-	import { P, Star } from 'flowbite-svelte';
+	import { Star } from 'flowbite-svelte';
 	import { RefreshOutline } from 'flowbite-svelte-icons';
 	import type { StarSubmission } from './types';
 	import type { VotingComponentProps } from '$lib/voting-system/types';
@@ -26,14 +26,14 @@
 	});
 </script>
 
-<P>Rate each item from 0-5 stars. You may rate multiple items with the same number of stars.</P>
+<p>Rate each item from 0-5 stars. You may rate multiple items with the same number of stars.</p>
 
 <div class="items-between flex-col">
 	{#each event.choices as choice (choice)}
 		{@const ratingObj = ratings.find((r) => r.choice === choice)}
 		{#if ratingObj}
 			<div class="my-2 w-full flex-col items-center justify-between gap-4">
-				<P size="lg" class="font-bold">{choice}</P>
+				<p>{choice}</p>
 				<div class="relative flex items-center">
 					{#each Array(5), index (index)}
 						<button
