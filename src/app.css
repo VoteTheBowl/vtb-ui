@@ -32,37 +32,36 @@
 @source '../node_modules/flowbite-svelte-icons/dist';
 
 @layer base {
+	@font-face {
+		font-family: 'unkempt';
+		src: url('/fonts/Unkempt-Bold.ttf') format('truetype');
+		font-weight: 700;
+		font-style: bold;
+		font-display: swap;
+	}
 
 	@font-face {
-        font-family: 'unkempt';
-        src: url('/fonts/Unkempt-Bold.ttf') format('truetype');
-        font-weight: 700;
-        font-style: bold;
-        font-display: swap;
-    }
-
-    @font-face {
-        font-family: 'shortstack';
-        src: url('/fonts/ShortStack-Regular.ttf') format('truetype');
-        font-weight: 400;
-        font-style: normal;
-        font-display: swap;
-    }
+		font-family: 'shortstack';
+		src: url('/fonts/ShortStack-Regular.ttf') format('truetype');
+		font-weight: 400;
+		font-style: normal;
+		font-display: swap;
+	}
 
 	@font-face {
 		font-family: 'averia';
 		src: url(/fonts/AveriaSansLibre-Regular.ttf) format('truetype');
 		font-weight: 400;
-        font-style: normal;
-        font-display: swap;
+		font-style: normal;
+		font-display: swap;
 	}
 
 	@font-face {
 		font-family: 'averia';
 		src: url(/fonts/AveriaSansLibre-Bold.ttf) format('truetype');
 		font-weight: 700;
-        font-style: bold;
-        font-display: swap;
+		font-style: bold;
+		font-display: swap;
 	}
 
 	/* disable chrome cancel button */
@@ -70,12 +69,21 @@
 		display: none;
 	}
 
-	p, label, span, button, a, li {
-		@apply text-lg font-[averia] dark:text-white;
+	p,
+	label,
+	span,
+	button,
+	a,
+	li {
+		@apply font-[averia] text-lg dark:text-white;
 	}
 
-	h2, h3, h4, h5, h6 {
-		@apply font-bold font-[unkempt] dark:text-white;
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		@apply font-[unkempt] font-bold dark:text-white;
 	}
 
 	h2 {
