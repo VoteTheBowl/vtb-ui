@@ -13,8 +13,15 @@
 	);
 </script>
 
-{#each votes.sort((a, b) => b.count - a.count) as vote (vote.choice)}
-	<P class="my-2">
-		{vote.choice}: {vote.count}
+{#each votes.sort((a, b) => b.count - a.count) as vote, index (vote.choice)}
+	{#if index === 0}
+		<p class="mb-4">
+			The winner is <span class="text-xl font-bold italic">{vote.choice}</span> with ({vote.count})
+			votes.
+		</p>
+		<h4 class="border-b-2">Totals</h4>
+	{/if}
+	<P class="my-2 text-xl">
+		<span class="text-xl font-bold">{vote.choice}</span>: {vote.count}
 	</P>
 {/each}

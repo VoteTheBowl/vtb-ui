@@ -35,7 +35,7 @@ export type EventUpdateBody = {
 export type BallotResponseData = {
 	id: number;
 	voter_name: string;
-	vote: Record<string, unknown> | unknown[];
+	vote: Record<string, unknown> | unknown[] | null;
 	created: string;
 	submitted: null | string;
 };

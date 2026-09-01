@@ -1,6 +1,9 @@
 <script lang="ts">
 	import type { EventResponseData } from '$lib/api/events';
+	import Section from '$lib/components/Section.svelte';
 	import votingConfig from '$lib/voting-system/config';
+	import { LockOutline } from 'flowbite-svelte-icons';
+	import TestDisplayVoteWrapper from './TestDisplayVoteWrapper.svelte';
 	import TestVotingWrapper from './TestVotingWrapper.svelte';
 
 	const testEvent: EventResponseData = {
@@ -20,10 +23,15 @@
 	<TestVotingWrapper>
 		<h2 class="mb-2 text-2xl font-bold dark:text-white">{config.label}</h2>
 		<div class="relative">
-			<config.voting event={testEvent} />
-			<div class="absolute bottom-0 left-full">
-				<config.displayOnlyVote event={testEvent} />
-			</div>
+			<Section title="Ballot">
+				<config.voting event={testEvent} />
+			</Section>
+			<Section title="Submitted Ballot" class="absolute bottom-0 left-full">
+				{#snippet icon()}
+					<LockOutline size="xl" />
+				{/snippet}
+				<TestDisplayVoteWrapper event={testEvent} {config} />
+			</Section>
 		</div>
 	</TestVotingWrapper>
 {/each}

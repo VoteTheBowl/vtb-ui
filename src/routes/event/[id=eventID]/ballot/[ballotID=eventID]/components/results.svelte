@@ -1,7 +1,9 @@
 <script lang="ts">
-	import type { BallotResponseData, EventResponseData } from '$lib/api/events';
-	import ResultWrapper from '$lib/components/ResultWrapper.svelte';
+	import { type BallotResponseData, type EventResponseData } from '$lib/api/events';
 	import { getStorageContext } from '$lib/storage/storage';
+	import DisplayVoteWrapper from '$lib/components/DisplayVoteWrapper.svelte';
+	import ResultWrapper from '$lib/components/ResultWrapper.svelte';
+	import Section from '$lib/components/Section.svelte';
 
 	let {
 		event,
@@ -15,10 +17,19 @@
 </script>
 
 <h2 class="mb-4">{event.name}</h2>
-<h3 class="mb-8">Results</h3>
-<p class="mb-2">
+
+<p class="mb-12">
 	This event has concluded. Thank you for participating <i>{ballot.voter_name}</i>!
+	{#if !event.show_results}
+		<br />
+		<br />
+		Your host has chosen to hide the final results, please talk to the host to find out the winner!
+	{/if}
 </p>
 {#if event.show_results}
-	<ResultWrapper {event} token={storage.getBallot(ballot.id).token} />
+	<Section title="Results" class="mb-16">
+		<ResultWrapper {event} token={storage.getBallot(ballot.id).token} />
+	</Section>
 {/if}
+
+<DisplayVoteWrapper {event} {ballot} />

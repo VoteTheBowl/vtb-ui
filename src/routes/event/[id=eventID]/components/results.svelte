@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { EventsAPI, type BallotResponseData, type EventResponseData } from '$lib/api/events';
+	import DisplayVoteWrapper from '$lib/components/DisplayVoteWrapper.svelte';
+	import Section from '$lib/components/Section.svelte';
 	import { getStorageContext } from '$lib/storage/storage';
 	import votingSystems from '$lib/voting-system/config';
 	import { Toggle } from 'flowbite-svelte';
@@ -11,6 +13,9 @@
 
 	const storage = getStorageContext();
 	const config = $derived(votingSystems.find((value) => value.id === event.electoral_system));
+	const myBallot = $derived(
+		ballots?.find((b) => b.id === Number(storage.getBallotIDFromEventID(event.id)))
+	);
 
 	const toggleShowResults = async () => {
 		const api = new EventsAPI();
@@ -27,20 +32,23 @@
 
 <div>
 	<h2 class="mb-8">{event.name}</h2>
-	<h3 class="mb-2">Results</h3>
-
-	<div class="mb-4">
-		{#if config}
-			{#if ballots}
-				<config.results {event} {ballots} />
+	<Section title="Results">
+		<div class="mb-4">
+			{#if config}
+				{#if ballots}
+					<config.results {event} {ballots} />
+				{/if}
+			{:else}
+				Config Error!
 			{/if}
-		{:else}
-			Config Error!
-		{/if}
-	</div>
-
-	<h3 class="mb-2">Settings</h3>
-	<Toggle class="ml-2 cursor-pointer" checked={event.show_results} onchange={toggleShowResults}>
-		Results {event.show_results ? 'Visible' : 'Hidden'}
-	</Toggle>
+		</div>
+	</Section>
+	<Section title="Settings">
+		<Toggle class="ml-2 cursor-pointer" checked={event.show_results} onchange={toggleShowResults}>
+			Results {event.show_results ? 'Visible' : 'Hidden'}
+		</Toggle>
+	</Section>
+	{#if myBallot}
+		<DisplayVoteWrapper {event} ballot={myBallot} />
+	{/if}
 </div>

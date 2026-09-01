@@ -14,10 +14,10 @@
 	});
 </script>
 
-<p>Select your top pick.</p>
+<p class="mb-2">Select your top pick.</p>
 
 {#each event.choices as choice (choice)}
-	<Radio name="candidates" id={choice} value={choice} bind:group={selectedChoice} class="my-2">
-		{choice}
+	<Radio name="candidates" id={choice} value={choice} bind:group={selectedChoice} class="my-3">
+		<span class="text-2xl">{choice}</span>
 	</Radio>
 {/each}

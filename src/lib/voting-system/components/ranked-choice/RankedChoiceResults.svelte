@@ -10,7 +10,10 @@
 		choiceData: EventResponseData['choices'],
 		ballotData: BallotResponseData[]
 	) => {
-		let ballots = ballotData.map((b) => (Array.isArray(b.vote) ? [...b.vote] : []));
+		let ballots = ballotData.map((b) => {
+			const v = b.vote as RankedSubmission;
+			return v ? [...v] : [];
+		});
 		let choices = [...choiceData];
 
 		const rounds: Record<string, number>[] = [];
@@ -25,7 +28,7 @@
 
 			ballots.forEach((b) => {
 				if (b.length > 0) {
-					tallies[(b as RankedSubmission)[0]]++;
+					tallies[b[0]]++;
 				} else {
 					tallies['Exhausted']++;
 				}
@@ -53,7 +56,7 @@
 			// Purge roundLosers from the ballots (and the choice list)
 
 			ballots.forEach((b, i) => {
-				ballots[i] = (b as RankedSubmission).filter((i) => !roundLosers.includes(i));
+				ballots[i] = b.filter((i) => !roundLosers.includes(i));
 			});
 			choices = choices.filter((c) => !roundLosers.includes(c));
 

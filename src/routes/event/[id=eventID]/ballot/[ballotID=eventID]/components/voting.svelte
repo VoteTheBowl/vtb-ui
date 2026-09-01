@@ -3,6 +3,8 @@
 	import VotingWrapper from '$lib/components/VotingWrapper.svelte';
 	import { getStorageContext } from '$lib/storage/storage';
 	import type { BallotResponseData, EventResponseData } from '$lib/api/events';
+	import DisplayVoteWrapper from '$lib/components/DisplayVoteWrapper.svelte';
+	import Section from '$lib/components/Section.svelte';
 
 	const ballotID = $derived(Number(page.params.ballotID));
 
@@ -21,10 +23,13 @@
 	}
 </script>
 
-<h2 class="mb-4">{event.name}</h2>
-<h3 class="mb-8">{ballot.voter_name}'s Ballot</h3>
+<h2 class="mb-16">{event.name} - Voting</h2>
 {#if ballot.submitted !== null}
-	<p>Thank you for submitting your vote!</p>
+	<p class="mb-8">Thank you for submitting your vote!</p>
+
+	<DisplayVoteWrapper title="Submitted Vote" {event} {ballot} />
 {:else}
-	<VotingWrapper {ballotID} {event} token={storage.getBallot(ballotID).token} {onSubmitVote} />
+	<Section title="Your Ballot">
+		<VotingWrapper {ballotID} {event} token={storage.getBallot(ballotID).token} {onSubmitVote} />
+	</Section>
 {/if}
