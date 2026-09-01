@@ -1,16 +1,20 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { page } from '$app/state';
+
+	import { VOTER_REFRESH_DELAY } from '$lib/const';
+
 	import {
 		BallotAPI,
 		EventsAPI,
 		type BallotResponseData,
 		type EventResponseData
 	} from '$lib/api/events';
-	import { getStorageContext } from '$lib/storage/storage';
-	import { onMount } from 'svelte';
-	import Voting from './components/voting.svelte';
-	import { VOTER_REFRESH_DELAY } from '$lib/const';
-	import Results from './components/results.svelte';
+	import { getStorageContext } from '$lib/storage/storage.svelte';
+
+	import BasicPageLayout from '$lib/components/layouts/BasicPageLayout.svelte';
+	import ParticipantVotingPage from './components/ParticipantVotingPage.svelte';
+	import ParticipantResultsPage from './components/ParticipantResultsPage.svelte';
 
 	let eventID = $derived(Number(page.params.id));
 	let ballotID = $derived(Number(page.params.ballotID));
@@ -41,17 +45,14 @@
 	});
 </script>
 
-<div class="p-4">
-	{#if ballot && event?.allow_registration == true && event?.allow_voting == false}
-		<h2 class="mb-4">{event.name}</h2>
+{#if ballot && event?.allow_registration == true && event?.allow_voting == false}
+	<BasicPageLayout title="{event.name} - Voting">
 		<p>
 			Thanks for registering for <b>{event.name}</b>. Sit tight and wait for the event to start.
 		</p>
-	{:else if ballot && event?.allow_registration == false && event?.allow_voting == true}
-		<Voting {event} bind:ballot />
-	{:else if ballot && event?.closed}
-		<Results {event} {ballot} />
-	{:else}
-		Loading...
-	{/if}
-</div>
+	</BasicPageLayout>
+{:else if ballot && event?.allow_registration == false && event?.allow_voting == true}
+	<ParticipantVotingPage {event} bind:ballot />
+{:else if ballot && event?.closed}
+	<ParticipantResultsPage {event} {ballot} />
+{/if}

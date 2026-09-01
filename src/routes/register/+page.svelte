@@ -6,7 +6,8 @@
 	import { resolve } from '$app/paths';
 	import { onMount } from 'svelte';
 	import { APIError } from '$lib/api/base';
-	import { ErrorBallotWithEventIDNotFound, getStorageContext } from '$lib/storage/storage';
+	import { ErrorBallotWithEventIDNotFound, getStorageContext } from '$lib/storage/storage.svelte';
+	import BasicPageLayout from '$lib/components/layouts/BasicPageLayout.svelte';
 
 	const { data }: PageProps = $props();
 
@@ -58,10 +59,11 @@
 	});
 </script>
 
-<div class="p-4">
+<BasicPageLayout title="Registration">
 	{#if loading === false}
-		<h2 class="mb-8">{data.name}</h2>
-		<h3 class="mb-2">Register</h3>
+		<p class="mb-8">
+			Register for the <i><b>{data.name}!</b></i> Provide a unique name below and start voting!
+		</p>
 
 		<form class="space-y-6" onsubmit={handleSubmit}>
 			{#if error}
@@ -91,4 +93,4 @@
 	{:else if loading === true}
 		<span><Spinner /> Loading...</span>
 	{/if}
-</div>
+</BasicPageLayout>

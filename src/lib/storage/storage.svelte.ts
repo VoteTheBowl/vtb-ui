@@ -25,6 +25,7 @@ export class ErrorBallotWithEventIDNotFound extends Error {
 export class StorageManager {
 	version = 1; //Current version
 	localStorageKey: string;
+	loaded = $state(false);
 	data: StorageData<CurrentStorageSchema> = { version: 0, events: null, ballots: null };
 
 	constructor(localStorageKey: string) {
@@ -33,6 +34,7 @@ export class StorageManager {
 
 	init = async () => {
 		this.data = await this.loadStorage();
+		this.loaded = true;
 	};
 
 	hasBallots() {

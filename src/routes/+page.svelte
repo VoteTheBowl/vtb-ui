@@ -1,12 +1,13 @@
 <script lang="ts">
+	import BasicPageLayout from '$lib/components/layouts/BasicPageLayout.svelte';
 	import EventForm from '$lib/components/EventForm.svelte';
-	import { getStorageContext } from '$lib/storage/storage';
+	import { getStorageContext } from '$lib/storage/storage.svelte';
 	import { Hr, Button } from 'flowbite-svelte';
 
 	const storage = getStorageContext();
 </script>
 
-<main class="p-4">
+<BasicPageLayout>
 	<p>
 		Make your cook off voting easy! Create an event and invite others to vote. You don't need an
 		account just start by creating an event below and sharing the registration link or QR-code. You
@@ -22,4 +23,4 @@
 	{/if}
 
 	<EventForm />
-</main>
+</BasicPageLayout>

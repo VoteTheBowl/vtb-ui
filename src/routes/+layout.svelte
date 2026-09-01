@@ -1,16 +1,12 @@
 <script lang="ts">
 	import '../app.css';
-	import logo from '$lib/assets/logo.png';
 	import { defaultTheme } from '$lib/themes';
 	import { InfoAPI } from '$lib/api/info';
 	import { onMount } from 'svelte';
 	import StorageProvider from '$lib/storage/StorageProvider.svelte';
-	import { DarkMode, ThemeProvider, Tooltip } from 'flowbite-svelte';
-	import { resolve } from '$app/paths';
+	import { ThemeProvider } from 'flowbite-svelte';
 
 	let { children } = $props();
-
-	let loaded = $state(false);
 
 	onMount(async () => {
 		console.log(
@@ -20,38 +16,8 @@
 	});
 </script>
 
-<svelte:head>
-	<title>Vote The Bowl - Cook Off Voting Made Easy</title>
-</svelte:head>
-
 <ThemeProvider theme={defaultTheme}>
-	<StorageProvider onLoad={() => (loaded = true)}>
-		<header class="relative bg-primary-600 text-white dark:bg-primary-900 dark:text-gray-200">
-			<div class="m-auto mx-auto p-4 sm:max-w-lg">
-				<h1>
-					<a
-						href={resolve('/')}
-						class="flex items-center gap-4 font-[unkempt] text-4xl leading-none font-bold"
-					>
-						<img src={logo} alt="" aria-hidden="true" class="h-8 w-8 rounded-full" />
-						Vote The Bowl
-					</a>
-				</h1>
-				<DarkMode
-					size="sm"
-					class="absolute top-1/2 right-4 -translate-y-1/2 cursor-pointer text-primary-300 hover:bg-primary-700 dark:text-primary-400 hover:dark:bg-primary-800"
-				/>
-				<Tooltip>Dark mode toggle</Tooltip>
-			</div>
-		</header>
-		{#if !loaded}
-			<div class="m-auto min-h-screen w-screen">
-				<p class="text-center">Loading...</p>
-			</div>
-		{:else}
-			<div class="m-auto sm:max-w-lg">
-				{@render children?.()}
-			</div>
-		{/if}
+	<StorageProvider>
+		{@render children()}
 	</StorageProvider>
 </ThemeProvider>

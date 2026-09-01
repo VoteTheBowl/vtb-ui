@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { EventsAPI, type BallotResponseData, type EventResponseData } from '$lib/api/events';
 	import DisplayVoteWrapper from '$lib/components/DisplayVoteWrapper.svelte';
+	import BasicPageLayout from '$lib/components/layouts/BasicPageLayout.svelte';
 	import Section from '$lib/components/Section.svelte';
-	import { getStorageContext } from '$lib/storage/storage';
+	import { getStorageContext } from '$lib/storage/storage.svelte';
 	import votingSystems from '$lib/voting-system/config';
 	import { Toggle } from 'flowbite-svelte';
 
@@ -30,8 +31,7 @@
 	};
 </script>
 
-<div>
-	<h2 class="mb-8">{event.name}</h2>
+<BasicPageLayout class="flex min-h-dvh flex-col gap-8" title="{event.name} - Results">
 	<Section title="Results">
 		<div class="mb-4">
 			{#if config}
@@ -51,4 +51,4 @@
 	{#if myBallot}
 		<DisplayVoteWrapper {event} ballot={myBallot} />
 	{/if}
-</div>
+</BasicPageLayout>

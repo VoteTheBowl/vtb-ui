@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { onMount, type Snippet } from 'svelte';
-	import { setStorageContext, StorageManager } from './storage';
+	import { setStorageContext, StorageManager } from './storage.svelte';
 
-	let { children, onLoad }: { children: Snippet; onLoad?: () => void } = $props();
+	let { children }: { children: Snippet } = $props();
 
 	const storage = new StorageManager('storage');
 	setStorageContext(storage);
@@ -12,9 +12,7 @@
 	};
 
 	onMount(() => {
-		storage.init().then(() => {
-			onLoad?.();
-		});
+		storage.init();
 	});
 </script>
 

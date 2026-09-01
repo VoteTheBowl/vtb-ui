@@ -4,7 +4,7 @@
 	import { Input, Label, Button, Select } from 'flowbite-svelte';
 	import { resolve } from '$app/paths';
 	import votingSystems from '$lib/voting-system/config';
-	import { getStorageContext } from '$lib/storage/storage';
+	import { getStorageContext } from '$lib/storage/storage.svelte';
 
 	const storage = getStorageContext();
 

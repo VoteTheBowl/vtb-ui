@@ -11,7 +11,7 @@
 	}: { title: string; children: Snippet; icon?: Snippet; class?: ClassValue } = $props();
 </script>
 
-<div class="mb-8 min-w-80 pt-4.5 pr-4.5 {className}" in:fade>
+<div class="min-w-80 pt-4.5 pr-4.5 {className}" in:fade>
 	<div class="relative rounded-2xl border-3 border-black p-4 dark:border-white">
 		<h3 class="absolute bottom-full translate-y-1/3 bg-white px-2 dark:bg-gray-800">{title}</h3>
 

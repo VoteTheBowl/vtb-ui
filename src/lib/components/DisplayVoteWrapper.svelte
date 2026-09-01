@@ -7,7 +7,7 @@
 	let {
 		event,
 		ballot = $bindable(),
-		title = 'Your Vote'
+		title = 'Your Submitted Ballot'
 	}: {
 		event: EventResponseData;
 		ballot: BallotResponseData;
