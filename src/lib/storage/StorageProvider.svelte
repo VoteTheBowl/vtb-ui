@@ -7,11 +7,17 @@
 	const storage = new StorageManager('storage');
 	setStorageContext(storage);
 
+	const refreshStorage = () => {
+		storage.init();
+	};
+
 	onMount(() => {
 		storage.init().then(() => {
 			onLoad?.();
 		});
 	});
 </script>
+
+<svelte:window onstorage={refreshStorage} />
 
 {@render children?.()}
