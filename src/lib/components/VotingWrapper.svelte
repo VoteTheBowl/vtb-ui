@@ -32,17 +32,19 @@
 	};
 </script>
 
-{#if config}
-	<config.voting {event} />
-{:else}
-	Config Error!
-{/if}
+<div class="mb-8">
+	{#if config}
+		<config.voting {event} />
+	{:else}
+		Config Error!
+	{/if}
+</div>
 
 <Button
 	disabled={!submissionContext.submissionIsValid}
 	onclick={() => (openConfirmationModal = true)}
 >
-	Submit Vote
+	Submit Ballot
 </Button>
 
 <ConfirmationModal bind:open={openConfirmationModal} heading="Submit Ballot" onconfirm={submitVote}>
