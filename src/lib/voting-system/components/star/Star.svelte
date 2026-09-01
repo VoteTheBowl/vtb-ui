@@ -5,6 +5,7 @@
 </script>
 
 <Star
+	svgClass="*:!stroke-amber-400"
 	iconIndex={index}
 	groupId={choice.trim().toLowerCase().replace(/\s+/g, '-')}
 	fillPercent={rating > index ? 100 : 0}
