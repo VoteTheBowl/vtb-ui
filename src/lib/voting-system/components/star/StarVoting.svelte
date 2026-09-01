@@ -9,7 +9,7 @@
 	let { event }: VotingComponentProps = $props();
 
 	let submissionContext = getSubmissionContext();
-	let ratings: StarSubmission = $state([]);
+	let ratings: NonNullable<StarSubmission> = $state([]);
 
 	function onRatingClick(choice: string, rating: number) {
 		const selectedChoice = ratings.find((r) => r.choice === choice);

@@ -1,5 +1,9 @@
 import type { Component } from 'svelte';
-import type { ResultComponentProps, VotingComponentProps } from './types';
+import type {
+	DisplayOnlyVotingComponentProps,
+	ResultComponentProps,
+	VotingComponentProps
+} from './types';
 
 //Ranked Choice
 import RankedChoiceVoting from './components/ranked-choice/RankedChoiceVoting.svelte';
@@ -16,13 +20,15 @@ import StarVoting from './components/star/StarVoting.svelte';
 import StarResults from './components/star/StarResults.svelte';
 import StarDisplayVote from './components/star/StarDisplayVote.svelte';
 
-const config: {
+export type VotingConfigItem = {
 	id: string;
 	label: string;
 	voting: Component<VotingComponentProps>;
-	displayOnlyVote: Component<VotingComponentProps>;
+	displayOnlyVote: Component<DisplayOnlyVotingComponentProps>;
 	results: Component<ResultComponentProps>;
-}[] = [
+};
+
+const config: VotingConfigItem[] = [
 	{
 		id: 'RC',
 		label: 'Ranked Choice',

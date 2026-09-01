@@ -7,7 +7,7 @@
 	const { children }: { children: Snippet } = $props();
 
 	const submissionContext: SubmissionContext = $state({
-		submission: undefined,
+		submission: null,
 		submissionIsValid: false
 	});
 	setSubmissionContext(submissionContext);

@@ -1,1 +1,1 @@
-export type StarSubmission = { choice: string; rating: number }[];
+export type StarSubmission = { choice: string; rating: number }[] | null;
