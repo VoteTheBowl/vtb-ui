@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { onMount, type Snippet } from 'svelte';
+	import { onMount } from 'svelte';
 	import { setStorageContext, StorageManager } from './storage.svelte';
 
-	let { children }: { children: Snippet } = $props();
+	let { children } = $props();
 
 	const storage = new StorageManager('storage');
 	setStorageContext(storage);
@@ -18,4 +18,6 @@
 
 <svelte:window onstorage={refreshStorage} />
 
-{@render children?.()}
+{#if storage.loaded}
+	{@render children()}
+{/if}

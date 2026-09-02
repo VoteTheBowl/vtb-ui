@@ -19,7 +19,7 @@
 	{#if storage.hasBallots() || storage.hasEvents()}
 		<Button href="/user/dashboard" class="w-full">See past events</Button>
 
-		<Hr innerDivClass="dark:bg-gray-800 dark:text-white">or</Hr>
+		<Hr innerDivClass="dark:bg-gray-800 dark:text-white transition-colors duration-150">or</Hr>
 	{/if}
 
 	<EventForm />

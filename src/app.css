@@ -74,7 +74,7 @@
 	button,
 	a,
 	li {
-		@apply font-[averia] text-lg dark:text-white;
+		@apply font-[averia] text-lg transition-colors duration-150 dark:text-white;
 	}
 
 	h1,
@@ -83,7 +83,7 @@
 	h4,
 	h5,
 	h6 {
-		@apply font-[unkempt] font-bold dark:text-white;
+		@apply font-[unkempt] font-bold transition-colors duration-150 dark:text-white;
 	}
 
 	h1 {
