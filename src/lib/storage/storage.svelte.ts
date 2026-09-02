@@ -21,7 +21,6 @@ export class ErrorBallotWithEventIDNotFound extends Error {
 		this.name = 'ErrorBallotWithEventIDNotFound';
 	}
 }
-
 export class StorageManager {
 	version = 1; //Current version
 	localStorageKey: string;
