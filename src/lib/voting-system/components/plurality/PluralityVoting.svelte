@@ -1,13 +1,12 @@
 <script lang="ts">
-	import type { EventResponseData } from '$lib/api/events';
-	import type { SubmissionContext } from '$lib/types';
+	import { getSubmissionContext } from '$lib/voting-system/context';
+	import type { VotingComponentProps } from '$lib/voting-system/types';
 	import { Radio } from 'flowbite-svelte';
-	import { getContext } from 'svelte';
 
-	let { event }: { event: EventResponseData } = $props();
+	let { event }: VotingComponentProps = $props();
 
 	let selectedChoice: string = $state('');
-	let submissionContext: SubmissionContext = getContext('ballot-data');
+	let submissionContext = getSubmissionContext();
 
 	$effect(() => {
 		submissionContext.submission = { choice: selectedChoice };
@@ -15,10 +14,10 @@
 	});
 </script>
 
-<p>Select your top pick.</p>
+<p class="mb-2">Select your top pick.</p>
 
 {#each event.choices as choice (choice)}
-	<Radio name="candidates" id={choice} value={choice} bind:group={selectedChoice} class="my-2">
-		{choice}
+	<Radio name="candidates" id={choice} value={choice} bind:group={selectedChoice} class="my-3">
+		<span class="text-2xl">{choice}</span>
 	</Radio>
 {/each}

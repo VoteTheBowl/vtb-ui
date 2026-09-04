@@ -1,12 +1,15 @@
 <script lang="ts">
-	import { page } from '$app/state';
-	import { EventsAPI, type BallotResponseData, type EventResponseData } from '$lib/api/events';
-	import { getStorageContext } from '$lib/storage/storage';
 	import { onMount } from 'svelte';
-	import Registration from './components/registration.svelte';
-	import Voting from './components/voting.svelte';
-	import Results from './components/results.svelte';
+	import { page } from '$app/state';
+
 	import { RESULTS_REFRESH_DELAY } from '$lib/const';
+	import { getStorageContext } from '$lib/storage/storage.svelte';
+
+	import { EventsAPI, type BallotResponseData, type EventResponseData } from '$lib/api/events';
+
+	import HostRegistrationPage from './components/HostRegistrationPage.svelte';
+	import HostVotingPage from './components/HostVotingPage.svelte';
+	import HostResultsPage from './components/HostResultsPage.svelte';
 
 	let eventID = $derived(Number(page.params.id));
 	let event: EventResponseData | null = $state(null);
@@ -35,16 +38,14 @@
 			clearInterval(intervalID);
 		};
 	});
+
+	//TODO: Convert all host dashboard pages to actual pages. Same for Participant pages
 </script>
 
-<div class="flex min-h-dvh flex-col justify-between gap-8 p-4">
-	{#if event?.closed}
-		<Results bind:event {ballots} />
-	{:else if event?.allow_registration == true && event?.allow_voting == false}
-		<Registration bind:event {ballots} />
-	{:else if event?.allow_voting == true}
-		<Voting bind:event {ballots} />
-	{:else}
-		Loading...
-	{/if}
-</div>
+{#if event?.closed}
+	<HostResultsPage bind:event {ballots} />
+{:else if event?.allow_registration == true && event?.allow_voting == false}
+	<HostRegistrationPage bind:event {ballots} />
+{:else if event?.allow_voting == true}
+	<HostVotingPage bind:event {ballots} />
+{/if}

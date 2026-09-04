@@ -1,20 +1,19 @@
 <script lang="ts">
+	import BasicPageLayout from '$lib/components/layouts/BasicPageLayout.svelte';
 	import SavedBallotList from '$lib/components/SavedBallotList.svelte';
 	import SavedEventList from '$lib/components/SavedEventList.svelte';
 	import { Button } from 'flowbite-svelte';
 </script>
 
-<div class="p-4">
-	<h2 class="page-title mb-8">Your Dashboard</h2>
-
+<BasicPageLayout title="Dashboard">
 	<div class="mb-8">
-		<h3 class="subheading mb-4">Events</h3>
+		<h2 class="subheading mb-4">Events</h2>
 		<SavedEventList />
 	</div>
 	<div>
-		<h3 class="subheading mb-4">Ballots</h3>
+		<h2 class="subheading mb-4">Ballots</h2>
 		<SavedBallotList />
 	</div>
 
 	<Button href="/" class="w-full">Back to Home</Button>
-</div>
+</BasicPageLayout>

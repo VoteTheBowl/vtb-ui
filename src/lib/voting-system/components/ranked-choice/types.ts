@@ -1,1 +1,1 @@
-export type RankedSubmission = string[];
+export type RankedSubmission = string[] | null;

@@ -1,10 +1,9 @@
 <script lang="ts">
 	import { Button } from 'flowbite-svelte';
-	import { setContext } from 'svelte';
 	import votingSystems from '$lib/voting-system/config';
-	import type { SubmissionContext } from '$lib/types';
 	import { BallotAPI, type BallotResponseData, type EventResponseData } from '$lib/api/events';
 	import ConfirmationModal from './ConfirmationModal.svelte';
+	import { setSubmissionContext, type SubmissionContext } from '$lib/voting-system/context';
 
 	const {
 		ballotID,
@@ -24,7 +23,7 @@
 	});
 	let openConfirmationModal = $state(false);
 
-	setContext('ballot-data', submissionContext);
+	setSubmissionContext(submissionContext);
 
 	const submitVote = async () => {
 		const ballotAPI = new BallotAPI();
@@ -33,17 +32,19 @@
 	};
 </script>
 
-{#if config}
-	<config.voting {event} />
-{:else}
-	Config Error!
-{/if}
+<div class="mb-8">
+	{#if config}
+		<config.voting {event} />
+	{:else}
+		Config Error!
+	{/if}
+</div>
 
 <Button
 	disabled={!submissionContext.submissionIsValid}
 	onclick={() => (openConfirmationModal = true)}
 >
-	Submit Vote
+	Submit Ballot
 </Button>
 
 <ConfirmationModal bind:open={openConfirmationModal} heading="Submit Ballot" onconfirm={submitVote}>

@@ -8,3 +8,8 @@ export type ResultComponentProps = {
 	event: EventResponseData;
 	ballots: BallotResponseData[];
 };
+
+export type DisplayOnlyVotingComponentProps = {
+	event: EventResponseData;
+	ballot: BallotResponseData;
+};

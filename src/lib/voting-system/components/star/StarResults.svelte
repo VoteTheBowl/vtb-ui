@@ -14,12 +14,14 @@
 		let total = 0;
 		let totalFiveStars = 0;
 		for (const submission of submissions) {
-			const ratingObj = submission.find((s) => s.choice === choice);
-			if (ratingObj && ratingObj.rating > 0) {
-				total += ratingObj.rating;
-			}
-			if (ratingObj && ratingObj.rating === 5) {
-				totalFiveStars += 1;
+			if (submission) {
+				const ratingObj = submission.find((s) => s.choice === choice);
+				if (ratingObj && ratingObj.rating > 0) {
+					total += ratingObj.rating;
+				}
+				if (ratingObj && ratingObj.rating === 5) {
+					totalFiveStars += 1;
+				}
 			}
 		}
 		return { total, totalFiveStars };
@@ -89,16 +91,17 @@
 
 			for (const ballot of ballots) {
 				const vote = ballot.vote as StarSubmission;
+				if (vote !== null) {
+					const candidate1Rating =
+						vote.find((vt) => vt.choice === finalResults[0].choice)?.rating ?? 0;
+					const candidate2Rating =
+						vote.find((vt) => vt.choice === finalResults[1].choice)?.rating ?? 0;
 
-				const candidate1Rating =
-					vote.find((vt) => vt.choice === finalResults[0].choice)?.rating ?? 0;
-				const candidate2Rating =
-					vote.find((vt) => vt.choice === finalResults[1].choice)?.rating ?? 0;
-
-				if (candidate1Rating > candidate2Rating) {
-					candidate1Total += 1;
-				} else if (candidate2Rating > candidate1Rating) {
-					candidate2Total += 1;
+					if (candidate1Rating > candidate2Rating) {
+						candidate1Total += 1;
+					} else if (candidate2Rating > candidate1Rating) {
+						candidate2Total += 1;
+					}
 				}
 			}
 
@@ -202,8 +205,14 @@
 </script>
 
 {#each totalRatings.sort(sortRatings) as vote (vote.choice)}
+	{#if firstPlace && vote.choice === firstPlace.winner}
+		<p class="mb-4">
+			<span class="text-xl font-bold italic">{vote.choice}</span> won with
+			<span>({vote.total} Total Stars)</span>
+		</p>
+	{/if}
 	<div class="flex flex-wrap items-center gap-2">
-		<p>
+		<p class="text-xl">
 			{vote.choice} - {vote.total}
 		</p>
 		<Star fillPercent={100} size={20} ariaLabel="Star icon" />

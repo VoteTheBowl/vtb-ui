@@ -1,7 +1,8 @@
 <script lang="ts">
+	import { page } from '$app/state';
 	import type { APIError } from '$lib/api/base';
 	import { EventsAPI } from '$lib/api/events';
-	import { getStorageContext } from '$lib/storage/storage';
+	import { getStorageContext } from '$lib/storage/storage.svelte';
 	import { Heading, Listgroup, ListgroupItem, P } from 'flowbite-svelte';
 	import { onMount } from 'svelte';
 
@@ -51,7 +52,7 @@
 {#snippet eventItem(event: EventItem)}
 	<ListgroupItem
 		class="flex flex-row items-center justify-between px-4 py-3"
-		href={`/event/${event.id}`}
+		href={`/event/${event.id}?ref-name=Dashboard&ref=${page.url.pathname}`}
 	>
 		{event.name}
 	</ListgroupItem>

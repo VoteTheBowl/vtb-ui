@@ -1,16 +1,16 @@
 <script lang="ts">
 	import { dndzone, type DndEvent, type Item } from 'svelte-dnd-action';
 	import { flip } from 'svelte/animate';
-	import { getContext, onMount } from 'svelte';
-	import type { SubmissionContext } from '$lib/types';
+	import { onMount } from 'svelte';
 	import type { VotingComponentProps } from '$lib/voting-system/types';
 	import type { RankedSubmission } from './types';
+	import { getSubmissionContext } from '$lib/voting-system/context';
 
 	let { event }: VotingComponentProps = $props();
 
 	const flipDurationMs = 200;
 
-	let submissionContext: SubmissionContext = getContext('ballot-data');
+	let submissionContext = getSubmissionContext();
 
 	let items: Item[] = $state([]);
 
