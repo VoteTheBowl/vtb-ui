@@ -32,7 +32,7 @@
 			<a href={resolve('/')}>
 				<img src={logo} alt="" aria-hidden="true" class="h-8 w-8 rounded-full" />
 			</a>
-			<span out:fade={{ duration: 50 }} in:fade>
+			<span>
 				{title}
 			</span>
 		</h1>
