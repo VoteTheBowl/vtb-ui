@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { page } from '$app/state';
 	import type { APIError } from '$lib/api/base';
 	import { EventsAPI } from '$lib/api/events';
 	import { getStorageContext } from '$lib/storage/storage.svelte';
@@ -52,7 +51,7 @@
 {#snippet eventItem(event: EventItem)}
 	<ListgroupItem
 		class="flex flex-row items-center justify-between px-4 py-3"
-		href={`/event/${event.id}?ref-name=Dashboard&ref=${page.url.pathname}`}
+		href={`/host/?e=${event.id}`}
 	>
 		{event.name}
 	</ListgroupItem>

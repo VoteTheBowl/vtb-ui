@@ -46,7 +46,7 @@
 
 		storage.saveEvent(response.id, response.name, response.host_token);
 
-		await goto(resolve(`/event/${response.id}`));
+		await goto(resolve(`/host/registration?e=${response.id}`));
 	};
 </script>
 
