@@ -1,24 +1,21 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
-	import { EventsAPI, type BallotResponseData, type EventResponseData } from '$lib/api/events';
+	import { EventsAPI } from '$lib/api/events';
 	import ConfirmationModal from '$lib/components/ConfirmationModal.svelte';
 	import BasicPageLayout from '$lib/components/layouts/BasicPageLayout.svelte';
+	import { getBallotsContext, getEventContext } from '$lib/context';
 	import { getStorageContext } from '$lib/storage/storage.svelte';
 	import QRCode from '@castlenine/svelte-qrcode';
 	import { Button } from 'flowbite-svelte';
 	import { ClipboardCheckOutline, ClipboardCleanOutline } from 'flowbite-svelte-icons';
 
-	let {
-		event = $bindable(),
-		ballots
-	}: {
-		event: EventResponseData;
-		ballots: BallotResponseData[] | null;
-	} = $props();
-
+	const eventContext = getEventContext();
+	const ballotsContext = getBallotsContext();
 	const storage = getStorageContext();
 
-	let ballotCount = $derived(ballots?.length || 0);
+	let ballotCount = $derived(ballotsContext.ballots?.length || 0);
 	let copied = $state(false);
 	let shareURL: string = $derived(
 		page.url.protocol +
@@ -26,9 +23,9 @@
 			page.url.host +
 			'/register' +
 			'?e=' +
-			page.params.id +
+			eventContext.event?.id +
 			'&s=' +
-			event.share_token
+			eventContext.event?.share_token
 	);
 
 	const onCopyClick = () => {
@@ -39,17 +36,25 @@
 	let openConfirmStart = $state(false);
 
 	const beginVote = async () => {
+		if (!eventContext.event) return;
+
 		const api = new EventsAPI();
-		event = await api.updateEvent(event.id, storage.getEvent(event.id).token, {
-			allow_registration: false,
-			allow_voting: true
-		});
+		eventContext.event = await api.updateEvent(
+			eventContext.event.id,
+			storage.getEvent(eventContext.event.id).token,
+			{
+				allow_registration: false,
+				allow_voting: true
+			}
+		);
+		goto(resolve(`/host/voting?e=${eventContext.event.id}`), { replaceState: true });
 	};
 </script>
 
 <BasicPageLayout
 	class="flex min-h-dvh flex-col justify-between gap-8"
-	title="{event.name} - Registration"
+	title="Registration"
+	eventName={eventContext.event?.name}
 >
 	<div>
 		<p class="mb-4">
@@ -62,7 +67,6 @@
 			onclick={onCopyClick}
 			class="mb-2 flex w-full max-w-md cursor-pointer flex-col items-center gap-4 p-4"
 		>
-			<h3>{event.name}</h3>
 			<QRCode data={shareURL} isResponsive />
 			<div class="flex">
 				{#if copied}
@@ -80,13 +84,13 @@
 
 		<h3 class="mb-2">Registered Voters ({ballotCount})</h3>
 		<div class="dark:text-white">
-			{#if ballots == null}
+			{#if ballotsContext.ballots == null}
 				<p>Loading...</p>
-			{:else if ballots.length == 0}
+			{:else if ballotsContext.ballots.length == 0}
 				<p>No voters have registered yet.</p>
 			{:else}
 				<ul>
-					{#each ballots as ballot (ballot.id)}
+					{#each ballotsContext.ballots as ballot (ballot.id)}
 						<li>{ballot.voter_name}</li>
 					{/each}
 				</ul>

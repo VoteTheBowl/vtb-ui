@@ -11,10 +11,12 @@
 	let {
 		children,
 		title = 'Vote The Bowl',
+		eventName = '',
 		class: className = ''
 	}: {
 		children: Snippet;
 		title?: string;
+		eventName?: string;
 		class?: ClassValue;
 	} = $props();
 
@@ -34,6 +36,7 @@
 			</a>
 			<span>
 				{title}
+				{eventName}
 			</span>
 		</h1>
 		<DarkMode

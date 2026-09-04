@@ -1,19 +1,21 @@
 <script lang="ts">
-	import { EventsAPI, type BallotResponseData, type EventResponseData } from '$lib/api/events';
+	import { goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
+	import { EventsAPI } from '$lib/api/events';
 	import ConfirmationModal from '$lib/components/ConfirmationModal.svelte';
 	import BasicPageLayout from '$lib/components/layouts/BasicPageLayout.svelte';
 	import Section from '$lib/components/Section.svelte';
+	import { getBallotsContext, getEventContext } from '$lib/context';
 	import { getStorageContext } from '$lib/storage/storage.svelte';
 	import { Button } from 'flowbite-svelte';
 
-	let {
-		event = $bindable(),
-		ballots
-	}: { event: EventResponseData; ballots: BallotResponseData[] | null } = $props();
-
+	const eventContext = getEventContext();
+	const ballotsContext = getBallotsContext();
 	const storage = getStorageContext();
-	const submittedBallots = $derived(ballots?.filter((ballot) => ballot.submitted));
-	const unsubmittedBallots = $derived(ballots?.filter((ballot) => !ballot.submitted));
+	const submittedBallots = $derived(ballotsContext.ballots?.filter((ballot) => ballot.submitted));
+	const unsubmittedBallots = $derived(
+		ballotsContext.ballots?.filter((ballot) => !ballot.submitted)
+	);
 
 	/* 	const openRegistration = async () => {
 		const api = new EventsAPI();
@@ -24,13 +26,24 @@
 	let openConfirmClose = $state(false);
 
 	const closeVoting = async () => {
+		if (!eventContext.event) return;
+
 		const api = new EventsAPI();
-		const response = await api.closeEvent(event.id, storage.getEvent(event.id).token);
-		event.closed = response.closed;
+		const response = await api.closeEvent(
+			eventContext.event.id,
+			storage.getEvent(eventContext.event.id).token
+		);
+		eventContext.event.closed = response.closed;
+
+		goto(resolve(`/host/results?e=${eventContext.event.id}`), { replaceState: true });
 	};
 </script>
 
-<BasicPageLayout class="flex min-h-dvh flex-col gap-8" title="{event.name} - Voting">
+<BasicPageLayout
+	class="flex min-h-dvh flex-col gap-8"
+	title="Voting"
+	eventName={eventContext.event?.name}
+>
 	<div>
 		<p class="mb-4">
 			Once all voters have submitted their ballots you can close the voting. This will calculate the
