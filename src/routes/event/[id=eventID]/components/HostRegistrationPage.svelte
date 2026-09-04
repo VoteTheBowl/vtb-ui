@@ -60,7 +60,7 @@
 
 		<Button
 			onclick={onCopyClick}
-			class="mb-6 flex w-full max-w-md cursor-pointer flex-col items-center gap-4 p-4"
+			class="mb-2 flex w-full max-w-md cursor-pointer flex-col items-center gap-4 p-4"
 		>
 			<h3>{event.name}</h3>
 			<QRCode data={shareURL} isResponsive />
@@ -73,6 +73,10 @@
 				{copied ? 'Invitation copied to clipboard' : 'Copy invitation to clipboard'}
 			</div>
 		</Button>
+
+		<p class="mb-6 max-w-md rounded-lg bg-primary-700 p-4 text-white dark:bg-primary-600">
+			{shareURL}
+		</p>
 
 		<h3 class="mb-2">Registered Voters ({ballotCount})</h3>
 		<div class="dark:text-white">
