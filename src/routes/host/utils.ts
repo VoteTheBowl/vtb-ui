@@ -33,9 +33,10 @@ export async function getEventFromParamOrReroute(
 }
 
 export async function checkEventStageAndReroute(event: EventResponseData | null) {
-	if (event?.closed) await goto(resolve(`/host/results?e=${event.id}`), { replaceState: true });
+	if (event?.closed)
+		await goto(resolve(`/host/event/results?e=${event.id}`), { replaceState: true });
 	else if (event?.allow_registration == true && event?.allow_voting == false)
-		await goto(resolve(`/host/registration?e=${event.id}`), { replaceState: true });
+		await goto(resolve(`/host/event/registration?e=${event.id}`), { replaceState: true });
 	else if (event?.allow_voting == true)
-		await goto(resolve(`/host/voting?e=${event.id}`), { replaceState: true });
+		await goto(resolve(`/host/event/voting?e=${event.id}`), { replaceState: true });
 }

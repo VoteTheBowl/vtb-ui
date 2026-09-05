@@ -40,7 +40,8 @@
 <BasicPageLayout
 	class="flex min-h-dvh flex-col gap-8"
 	title="Results"
-	eventName={eventContext.event?.name}
+	subtitle={eventContext.event?.name}
+	subtitleURL="/host/event/?e={eventContext.event?.id}"
 >
 	{#if eventContext.event && ballotsContext.ballots}
 		{@const event = eventContext.event}

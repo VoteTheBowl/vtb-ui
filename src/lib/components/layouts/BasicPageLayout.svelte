@@ -11,12 +11,14 @@
 	let {
 		children,
 		title = 'Vote The Bowl',
-		eventName = '',
+		subtitle = '',
+		subtitleURL = '',
 		class: className = ''
 	}: {
 		children: Snippet;
 		title?: string;
-		eventName?: string;
+		subtitle?: string;
+		subtitleURL?: string;
 		class?: ClassValue;
 	} = $props();
 
@@ -28,22 +30,32 @@
 	<title>{title} | Vote The Bowl</title>
 </svelte:head>
 
-<header class=" bg-primary-900 text-white dark:text-gray-200">
-	<div class="relative m-auto mx-auto p-4 sm:max-w-lg">
-		<h1 class="flex items-center gap-4 leading-none">
-			<a href={resolve('/')}>
-				<img src={logo} alt="" aria-hidden="true" class="h-8 w-8 rounded-full" />
-			</a>
-			<span>
+<header>
+	<div class="bg-primary-900 text-white dark:text-gray-200">
+		<div class="relative m-auto mx-auto p-4 sm:max-w-lg">
+			<h1 class="flex min-h-9 items-center gap-4 leading-none">
+				<a href={resolve('/')}>
+					<img src={logo} alt="" aria-hidden="true" class="h-8 w-8 rounded-full" />
+				</a>
 				{title}
-				{eventName}
-			</span>
-		</h1>
-		<DarkMode
-			size="sm"
-			class="absolute top-1/2 right-4 -translate-y-1/2 cursor-pointer rounded-md bg-primary-900 p-2 text-gray-200 hover:bg-primary-700 dark:text-gray-200 dark:hover:bg-primary-700"
-		/>
+				<span class="sr-only"> - {subtitle}</span>
+			</h1>
+			<DarkMode
+				size="sm"
+				class="absolute top-1/2 right-4 -translate-y-1/2 cursor-pointer rounded-md bg-primary-900 p-2 text-gray-200 hover:bg-primary-700 dark:text-gray-200 dark:hover:bg-primary-700"
+			/>
+		</div>
 	</div>
+	{#if subtitle}
+		<div class="m-auto mx-auto px-4 sm:max-w-lg">
+			<div class="rounded-b-2xl bg-secondary-900 px-2">
+				<!-- eslint-disable-next-line svelte/no-navigation-without-resolve-->
+				<a class="h3" href={subtitleURL}>
+					{subtitle}
+				</a>
+			</div>
+		</div>
+	{/if}
 	{#if ref}
 		<nav class=" bg-primary-600 text-white">
 			<div class="m-auto mx-auto p-1 px-4 sm:max-w-lg">

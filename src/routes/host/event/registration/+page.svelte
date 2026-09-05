@@ -47,14 +47,15 @@
 				allow_voting: true
 			}
 		);
-		goto(resolve(`/host/voting?e=${eventContext.event.id}`), { replaceState: true });
+		goto(resolve(`/host/event/voting?e=${eventContext.event.id}`), { replaceState: true });
 	};
 </script>
 
 <BasicPageLayout
 	class="flex min-h-dvh flex-col justify-between gap-8"
 	title="Registration"
-	eventName={eventContext.event?.name}
+	subtitle={eventContext.event?.name}
+	subtitleURL="/host/event/?e={eventContext.event?.id}"
 >
 	<div>
 		<p class="mb-4">

@@ -51,7 +51,7 @@
 {#snippet eventItem(event: EventItem)}
 	<ListgroupItem
 		class="flex flex-row items-center justify-between px-4 py-3"
-		href={`/host/?e=${event.id}`}
+		href={`/host/event/?e=${event.id}`}
 	>
 		{event.name}
 	</ListgroupItem>

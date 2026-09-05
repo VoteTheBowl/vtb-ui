@@ -78,24 +78,30 @@
 	}
 
 	h1,
+	.h1,
 	h2,
+	.h2,
 	h3,
+	.h3,
 	h4,
-	h5,
-	h6 {
+	.h4 {
 		@apply font-[unkempt] font-bold transition-colors duration-150 dark:text-white;
 	}
 
-	h1 {
+	h1,
+	.h1 {
 		@apply text-4xl;
 	}
-	h2 {
+	h2,
+	.h2 {
 		@apply text-3xl;
 	}
-	h3 {
+	h3,
+	.h3 {
 		@apply text-2xl;
 	}
-	h4 {
+	h4,
+	.h4 {
 		@apply text-xl;
 	}
 }

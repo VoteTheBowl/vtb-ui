@@ -35,14 +35,15 @@
 		);
 		eventContext.event.closed = response.closed;
 
-		goto(resolve(`/host/results?e=${eventContext.event.id}`), { replaceState: true });
+		goto(resolve(`/host/event/results?e=${eventContext.event.id}`), { replaceState: true });
 	};
 </script>
 
 <BasicPageLayout
 	class="flex min-h-dvh flex-col gap-8"
 	title="Voting"
-	eventName={eventContext.event?.name}
+	subtitle={eventContext.event?.name}
+	subtitleURL="/host/event/?e={eventContext.event?.id}"
 >
 	<div>
 		<p class="mb-4">
