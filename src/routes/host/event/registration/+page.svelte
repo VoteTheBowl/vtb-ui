@@ -21,7 +21,7 @@
 		page.url.protocol +
 			'//' +
 			page.url.host +
-			'/register' +
+			'/ballot' +
 			'?e=' +
 			eventContext.event?.id +
 			'&s=' +

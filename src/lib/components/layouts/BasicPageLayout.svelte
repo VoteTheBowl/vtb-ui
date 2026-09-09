@@ -49,10 +49,14 @@
 	{#if subtitle}
 		<div class="m-auto mx-auto px-4 sm:max-w-lg">
 			<div class="rounded-b-2xl bg-secondary-900 px-2">
-				<!-- eslint-disable-next-line svelte/no-navigation-without-resolve-->
-				<a class="h3" href={subtitleURL}>
-					{subtitle}
-				</a>
+				{#if subtitleURL}
+					<!-- eslint-disable-next-line svelte/no-navigation-without-resolve-->
+					<a class="h3" href={subtitleURL}>
+						{subtitle}
+					</a>
+				{:else}
+					<span class="h3">{subtitle}</span>
+				{/if}
 			</div>
 		</div>
 	{/if}

@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { page } from '$app/state';
 	import type { APIError } from '$lib/api/base';
 	import { EventsAPI } from '$lib/api/events';
 	import { getStorageContext } from '$lib/storage/storage.svelte';
@@ -47,7 +46,7 @@
 {#snippet ballotItem(ballot: BallotItem)}
 	<ListgroupItem
 		class="flex flex-row items-center justify-between px-4 py-3"
-		href={`/event/${ballot.eventID}/ballot/${ballot.id}?ref-name=Dashboard&ref=${page.url.pathname}`}
+		href={`/ballot/${ballot.state === 'closed' ? 'results' : 'voting'}?b=${ballot.id}`}
 	>
 		{ballot.eventName}
 	</ListgroupItem>

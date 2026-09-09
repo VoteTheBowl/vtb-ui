@@ -40,9 +40,8 @@ export type BallotResponseData = {
 	submitted: null | string;
 };
 
-export type BallotCreateResponseData = {
-	ballot_id: number;
-	ballot_token: string;
+export type BallotCreateResponseData = BallotResponseData & {
+	token: string;
 };
 
 export class EventsAPI extends BaseAPI {
