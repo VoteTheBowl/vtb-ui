@@ -6,6 +6,7 @@
 	import BasicPageLayout from '$lib/components/layouts/BasicPageLayout.svelte';
 	import { getBallotContext, getEventContext } from '$lib/context';
 	import { page } from '$app/state';
+	import UpdateContext from '../UpdateContext.svelte';
 
 	const ballotID = $derived(Number(page.url.searchParams.get('b')));
 
@@ -14,6 +15,8 @@
 
 	const storage = getStorageContext();
 </script>
+
+<UpdateContext />
 
 <BasicPageLayout title="Results" subtitle={eventContext.event?.name}>
 	{#if eventContext.event && ballotContext.ballot}

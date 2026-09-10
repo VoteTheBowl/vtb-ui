@@ -9,6 +9,7 @@
 	import { resolve } from '$app/paths';
 	import { goto } from '$app/navigation';
 	import { Button } from 'flowbite-svelte';
+	import UpdateContext from '../UpdateContext.svelte';
 
 	const ballotID = $derived(Number(page.url.searchParams.get('b')));
 
@@ -21,6 +22,8 @@
 		goto(resolve(`/ballot/results?b=${ballotID}`));
 	}
 </script>
+
+<UpdateContext />
 
 <BasicPageLayout title="Voting" subtitle={eventContext.event?.name}>
 	{#if eventContext.event && ballotContext.ballot}

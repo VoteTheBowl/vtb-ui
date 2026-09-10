@@ -48,14 +48,14 @@
 	</div>
 	{#if subtitle}
 		<div class="m-auto mx-auto px-4 sm:max-w-lg">
-			<div class="rounded-b-2xl bg-secondary-900 px-2">
+			<div class="rounded-b-2xl bg-secondary-900 px-4 py-1">
 				{#if subtitleURL}
 					<!-- eslint-disable-next-line svelte/no-navigation-without-resolve-->
-					<a class="h3" href={subtitleURL}>
+					<a class="h3 text-white" href={subtitleURL}>
 						{subtitle}
 					</a>
 				{:else}
-					<span class="h3">{subtitle}</span>
+					<span class="h3 text-white">{subtitle}</span>
 				{/if}
 			</div>
 		</div>
