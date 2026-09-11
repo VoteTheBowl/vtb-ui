@@ -44,6 +44,7 @@
 	},
 	"dependencies": {
 		"@sentry/sveltekit": "^10.73.0",
+		"dayjs": "^1.11.23",
 		"seedrandom": "^3.0.5"
 	},
 	"devEngines": {

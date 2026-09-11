@@ -37,11 +37,11 @@ export class StorageManager {
 	};
 
 	hasBallots() {
-		return this.data.ballots === null || Object.keys(this.data.ballots).length > 0;
+		return !(this.data.ballots === null) && Object.keys(this.data.ballots).length > 0;
 	}
 
 	hasEvents() {
-		return this.data.events === null || Object.keys(this.data.events).length > 0;
+		return !(this.data.events === null) && Object.keys(this.data.events).length > 0;
 	}
 
 	getBallot(ballotID: number) {
@@ -55,7 +55,7 @@ export class StorageManager {
 		for (const ballotID in this.data.ballots) {
 			const ballot = this.data.ballots[ballotID];
 			if (ballot.eventID === eventID) {
-				return ballotID;
+				return Number(ballotID);
 			}
 		}
 		throw new ErrorBallotWithEventIDNotFound(eventID);

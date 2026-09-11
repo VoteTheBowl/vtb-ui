@@ -17,7 +17,14 @@
 	<Hr />
 
 	{#if storage.hasBallots() || storage.hasEvents()}
-		<Button href="/user/dashboard" class="w-full">See past events</Button>
+		<div class="flex flex-row gap-4">
+			{#if storage.hasBallots()}
+				<Button href="/ballots" class="w-full">My Ballots</Button>
+			{/if}
+			{#if storage.hasEvents()}
+				<Button href="/host" class="w-full">Saved Events</Button>
+			{/if}
+		</div>
 
 		<Hr innerDivClass="dark:bg-gray-800 dark:text-white transition-colors duration-150">or</Hr>
 	{/if}
