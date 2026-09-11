@@ -16,9 +16,16 @@
 	);
 	const myBallot = $derived(
 		ballotsContext.ballots?.find((b) => {
-			return (
-				eventContext.event && b.id === Number(storage.getBallotIDFromEventID(eventContext.event.id))
-			);
+			if (eventContext.event) {
+				let storedBallotID = undefined;
+				try {
+					storedBallotID = Number(storage.getBallotIDFromEventID(eventContext.event.id));
+				} catch {
+					//Do nothing
+				}
+
+				return b.id === storedBallotID;
+			}
 		})
 	);
 
