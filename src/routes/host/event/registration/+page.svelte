@@ -55,7 +55,6 @@
 	class="flex min-h-dvh flex-col justify-between gap-8"
 	title="Registration"
 	subtitle={eventContext.event?.name}
-	subtitleURL="/host/event/?e={eventContext.event?.id}"
 >
 	<div>
 		<p class="mb-4">

@@ -1,22 +1,25 @@
 <script lang="ts">
 	import type { APIError } from '$lib/api/base';
-	import { EventsAPI } from '$lib/api/events';
+	import { EventsAPI, type EventResponseData } from '$lib/api/events';
 	import { getStorageContext } from '$lib/storage/storage.svelte';
-	import { Heading, Listgroup, ListgroupItem, P } from 'flowbite-svelte';
+	import { getEventStage, getEventURL } from '$lib/util';
+	import dayjs from 'dayjs';
 	import { onMount } from 'svelte';
+	import Section from './Section.svelte';
+	import { resolve } from '$app/paths';
 
-	type EventItem = {
-		name: string;
-		state: 'closed' | 'open' | 'missing';
-		id: number;
-	};
-
-	let events: EventItem[] = $state([]);
-
-	let closedEvents: EventItem[] = $derived(events.filter((event) => event.state === 'closed'));
-	let openEvents: EventItem[] = $derived(events.filter((event) => event.state === 'open'));
+	let events: EventResponseData[] = $state([]);
 
 	const storage = getStorageContext();
+
+	function sortEvents(a: EventResponseData, b: EventResponseData) {
+		const aWeight = a.closed ? dayjs(a.closed).unix() : 0;
+		const bWeight = b.closed ? dayjs(b.closed).unix() : 0;
+
+		if (bWeight == 0) return 1;
+
+		return bWeight - aWeight;
+	}
 
 	onMount(async () => {
 		const eventApi = new EventsAPI();
@@ -28,19 +31,10 @@
 
 			try {
 				const event = await eventApi.getEvent(keyAsNumber, localEvents[keyAsNumber].token);
-				events.push({
-					name: localEvents[keyAsNumber].name,
-					id: keyAsNumber,
-					state: event.closed ? 'closed' : 'open'
-				});
+				events.push(event);
 			} catch (e) {
 				const status = (e as APIError).status;
 				if (status == 404 || status == 403) {
-					events.push({
-						name: localEvents[keyAsNumber].name,
-						id: keyAsNumber,
-						state: 'missing'
-					});
 					storage.deleteEvent(keyAsNumber);
 				}
 			}
@@ -48,32 +42,28 @@
 	});
 </script>
 
-{#snippet eventItem(event: EventItem)}
-	<ListgroupItem
-		class="flex flex-row items-center justify-between px-4 py-3"
-		href={`/host/event/?e=${event.id}`}
-	>
-		{event.name}
-	</ListgroupItem>
-{/snippet}
-
-{#if events.length === 0}
-	<P class="mb-4">No past events found.</P>
-{:else}
-	{#if openEvents.length}
-		<Listgroup active class="mb-4 ">
-			<Heading tag="h4" class="p-4 text-lg">Open</Heading>
-			{#each openEvents as event (event.id)}
-				{@render eventItem(event)}
+<Section title="Events">
+	{#if events.length === 0}
+		<p>No past events found.</p>
+	{:else if events.length}
+		<ul>
+			{#each events.toSorted(sortEvents) as event (event.id)}
+				{@const eventStage = getEventStage(event)}
+				<li>
+					<a
+						href={resolve(getEventURL(event))}
+						class="relative flex flex-row items-center justify-between border-b-2 border-b-transparent
+						pt-3 pb-2 transition-colors duration-300 hover:border-b-black dark:hover:border-b-white"
+					>
+						<span>{event.name}</span>
+						<span>
+							{eventStage}{eventStage === 'Closed'
+								? ` - ${dayjs(event.closed).format('MMM D, YYYY')}`
+								: ''}
+						</span>
+					</a>
+				</li>
 			{/each}
-		</Listgroup>
+		</ul>
 	{/if}
-	{#if closedEvents.length}
-		<Listgroup active class="mb-4">
-			<Heading tag="h4" class="p-4 text-lg">Closed</Heading>
-			{#each closedEvents.slice(0, 5) as event (event.id)}
-				{@render eventItem(event)}
-			{/each}
-		</Listgroup>
-	{/if}
-{/if}
+</Section>

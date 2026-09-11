@@ -43,7 +43,6 @@
 	class="flex min-h-dvh flex-col gap-8"
 	title="Voting"
 	subtitle={eventContext.event?.name}
-	subtitleURL="/host/event/?e={eventContext.event?.id}"
 >
 	<div>
 		<p class="mb-4">

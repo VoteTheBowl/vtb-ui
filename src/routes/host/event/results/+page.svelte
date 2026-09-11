@@ -41,7 +41,6 @@
 	class="flex min-h-dvh flex-col gap-8"
 	title="Results"
 	subtitle={eventContext.event?.name}
-	subtitleURL="/host/event/?e={eventContext.event?.id}"
 >
 	{#if eventContext.event && ballotsContext.ballots}
 		{@const event = eventContext.event}

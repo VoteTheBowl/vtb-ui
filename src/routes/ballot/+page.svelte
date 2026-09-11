@@ -7,7 +7,7 @@
 	import { getStorageContext } from '$lib/storage/storage.svelte';
 	import BasicPageLayout from '$lib/components/layouts/BasicPageLayout.svelte';
 	import { page } from '$app/state';
-	import { getEventStage } from '$lib/util';
+	import { getBallotURL } from '$lib/util';
 	import { getBallotContext, getEventContext } from '$lib/context';
 
 	let eventID = Number(page.url.searchParams.get('e'));
@@ -17,7 +17,7 @@
 	const eventContext = getEventContext();
 	const ballotContext = getBallotContext();
 
-	let ballotID: string | undefined = $derived(getBallotID(eventID));
+	let ballotID: number | undefined = $derived(getBallotID(eventID));
 
 	function getBallotID(eID: number) {
 		try {
@@ -84,13 +84,7 @@
 			{:else if ballotID}
 				<p>You have already registed for the {e.name}.</p>
 
-				<Button
-					href={getEventStage(e) === 'closed'
-						? `/ballot/results?b=${ballotID}`
-						: `/ballot/voting?b=${ballotID}`}
-				>
-					Go to ballot
-				</Button>
+				<Button href={getBallotURL(e, ballotID)}>Go to ballot</Button>
 			{:else if e.closed}
 				<p>This event has concluded.</p>
 				<Button href="/">Go to homepage</Button>
