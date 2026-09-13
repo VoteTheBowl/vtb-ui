@@ -8,7 +8,8 @@ export default defineConfig({
 	plugins: [
 		sentrySvelteKit({
 			org: 'jesudas-joseph',
-			project: 'vote-the-bowl-ui'
+			project: 'vote-the-bowl-ui',
+			telemetry: false
 		}),
 		tailwindcss(),
 		sveltekit()

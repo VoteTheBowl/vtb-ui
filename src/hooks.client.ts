@@ -1,6 +1,8 @@
 import { dev } from '$app/env';
+import { env } from '$env/dynamic/public';
 import { handleErrorWithSentry } from '@sentry/sveltekit';
 import * as Sentry from '@sentry/sveltekit';
+import type { HandleFetch } from '@sveltejs/kit';
 
 if (!dev) {
 	Sentry.init({
@@ -14,6 +16,13 @@ if (!dev) {
 		}
 	});
 }
+
+export const handleFetch: HandleFetch = async ({ event, request, fetch }) => {
+	if (event.url.pathname.startsWith('/api') && env.PUBLIC_API_URL) {
+		request = new Request(`${env.PUBLIC_API_URL}${event.url.pathname}`, request);
+	}
+	return await fetch(request);
+};
 
 // If you have a custom error handler, pass it to `handleErrorWithSentry`
 export const handleError = handleErrorWithSentry();

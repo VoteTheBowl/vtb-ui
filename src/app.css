@@ -77,6 +77,10 @@
 		@apply font-[averia] text-lg transition-colors duration-150 dark:text-white;
 	}
 
+	a {
+		@apply underline;
+	}
+
 	h1,
 	.h1,
 	h2,
