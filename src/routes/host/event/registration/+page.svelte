@@ -3,13 +3,15 @@
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
 	import { EventsAPI } from '$lib/api/events';
+	import Button from '$lib/components/Button.svelte';
 	import ConfirmationModal from '$lib/components/ConfirmationModal.svelte';
 	import BasicPageLayout from '$lib/components/layouts/BasicPageLayout.svelte';
+	import Section from '$lib/components/Section.svelte';
 	import { getBallotsContext, getEventContext } from '$lib/context';
 	import { getStorageContext } from '$lib/storage/storage.svelte';
 	import QRCode from '@castlenine/svelte-qrcode';
-	import { Button } from 'flowbite-svelte';
 	import { ClipboardCheckOutline, ClipboardCleanOutline } from 'flowbite-svelte-icons';
+	import { fade } from 'svelte/transition';
 
 	const eventContext = getEventContext();
 	const ballotsContext = getBallotsContext();
@@ -63,47 +65,48 @@
 			<b>If you <i>begin voting</i>, users will no longer be able to register.</b>
 		</p>
 
-		<Button
-			onclick={onCopyClick}
-			class="mb-2 flex w-full max-w-md cursor-pointer flex-col items-center gap-4 p-4"
-		>
-			<QRCode data={shareURL} isResponsive />
-			<div class="flex">
-				{#if copied}
-					<ClipboardCheckOutline class="h-6 w-6 shrink-0" />
-				{:else}
-					<ClipboardCleanOutline class="h-6 w-6 shrink-0" />
-				{/if}
-				{copied ? 'Invitation copied to clipboard' : 'Copy invitation to clipboard'}
-			</div>
-		</Button>
-
-		<p class="mb-6 max-w-md rounded-lg bg-primary-700 p-4 text-white dark:bg-primary-600">
-			{shareURL}
-		</p>
-
-		<h3 class="mb-2">Registered Voters ({ballotCount})</h3>
-		<div class="dark:text-white">
-			{#if ballotsContext.ballots == null}
-				<p>Loading...</p>
-			{:else if ballotsContext.ballots.length == 0}
-				<p>No voters have registered yet.</p>
-			{:else}
-				<ul>
-					{#each ballotsContext.ballots as ballot (ballot.id)}
-						<li>{ballot.voter_name}</li>
-					{/each}
-				</ul>
+		<Section title="Registration QR-Code" class="mb-8 text-black transition-colors dark:text-white">
+			{#if eventContext.event}
+				<div class="mb-2" in:fade>
+					<QRCode data={shareURL} isResponsive backgroundColor="none" color="currentColor" isJoin />
+				</div>
 			{/if}
-		</div>
+			<Button
+				onclick={onCopyClick}
+				class="mb-4 flex w-full cursor-pointer flex-col items-center gap-4 p-4"
+			>
+				<div class="flex">
+					{#if copied}
+						<ClipboardCheckOutline class="h-6 w-6 shrink-0" />
+					{:else}
+						<ClipboardCleanOutline class="h-6 w-6 shrink-0" />
+					{/if}
+					{copied ? 'Invitation copied to clipboard' : 'Copy invitation to clipboard'}
+				</div>
+			</Button>
+			<div class="rounded-lg border p-2 text-center break-all">
+				{shareURL}
+			</div>
+		</Section>
+
+		<Section title="Registered Voters ({ballotCount})">
+			<div class="dark:text-white">
+				{#if ballotsContext.ballots == null}
+					<p>Loading...</p>
+				{:else if ballotsContext.ballots.length == 0}
+					<p>No voters have registered yet.</p>
+				{:else}
+					<ul>
+						{#each ballotsContext.ballots as ballot (ballot.id)}
+							<li>{ballot.voter_name}</li>
+						{/each}
+					</ul>
+				{/if}
+			</div>
+		</Section>
 	</div>
 
-	<Button
-		size="xl"
-		class="w-full"
-		disabled={ballotCount < 2}
-		onclick={() => (openConfirmStart = true)}
-	>
+	<Button class="w-full" disabled={ballotCount < 2} onclick={() => (openConfirmStart = true)}>
 		Begin Vote
 	</Button>
 

@@ -2,12 +2,12 @@
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import { EventsAPI } from '$lib/api/events';
+	import Button from '$lib/components/Button.svelte';
 	import ConfirmationModal from '$lib/components/ConfirmationModal.svelte';
 	import BasicPageLayout from '$lib/components/layouts/BasicPageLayout.svelte';
 	import Section from '$lib/components/Section.svelte';
 	import { getBallotsContext, getEventContext } from '$lib/context';
 	import { getStorageContext } from '$lib/storage/storage.svelte';
-	import { Button } from 'flowbite-svelte';
 
 	const eventContext = getEventContext();
 	const ballotsContext = getBallotsContext();
@@ -51,7 +51,7 @@
 		</p>
 
 		{#if unsubmittedBallots !== undefined && submittedBallots !== undefined}
-			<Section title="Active Ballots ({unsubmittedBallots.length})">
+			<Section title="Active Ballots ({unsubmittedBallots.length})" class="mb-8">
 				<ul>
 					{#each unsubmittedBallots as ballot (ballot.id)}
 						<li>{ballot.voter_name}</li>
@@ -74,7 +74,7 @@
 		<!-- <Button size="sm" outline color="red" class="grow" onclick={openRegistration}>
 		Temporarily Open Registration
 	</Button> -->
-		<Button size="xl" class="grow" onclick={() => (openConfirmClose = true)}>Close Voting</Button>
+		<Button class="grow" onclick={() => (openConfirmClose = true)}>Close Voting</Button>
 	</div>
 
 	<ConfirmationModal bind:open={openConfirmClose} heading="Close Vote?" onconfirm={closeVoting}>

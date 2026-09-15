@@ -1,10 +1,12 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { EventsAPI } from '$lib/api/events';
-	import { Input, Label, Button, Select } from 'flowbite-svelte';
+	import { Input, Label, Select } from 'flowbite-svelte';
 	import { resolve } from '$app/paths';
 	import votingSystems from '$lib/voting-system/config';
 	import { getStorageContext } from '$lib/storage/storage.svelte';
+	import Button from './Button.svelte';
+	import { CloseOutline } from 'flowbite-svelte-icons';
 
 	const storage = getStorageContext();
 
@@ -68,7 +70,7 @@
 					onkeydown={handleKeyPressOnDishInput}
 				/>
 				<div>
-					<Button color="secondary" onclick={addDish}>Add</Button>
+					<Button secondary onclick={addDish}>Add</Button>
 				</div>
 			</div>
 			{#if dishes.length > 0}
@@ -79,8 +81,8 @@
 						>
 							<span>{dish}</span>
 							<div>
-								<Button color="red" size="xs" class="p-2" onclick={() => removeDish(i)}>
-									Remove
+								<Button class="bg-red-800 p-2! hover:bg-red-600" onclick={() => removeDish(i)}>
+									<CloseOutline />
 								</Button>
 							</div>
 						</li>

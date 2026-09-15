@@ -4,7 +4,7 @@
 	import { getStorageContext } from '$lib/storage/storage.svelte';
 	import { getBallotURL, getEventStage } from '$lib/util';
 	import { onMount } from 'svelte';
-	import Section from './Section.svelte';
+	import Section from '../../lib/components/Section.svelte';
 	import dayjs from 'dayjs';
 	import { resolve } from '$app/paths';
 
@@ -51,7 +51,7 @@
 					<a
 						href={resolve(getBallotURL(ballot.event, ballot.id))}
 						class="relative flex flex-row items-center justify-between border-b-2 border-b-transparent
-						pt-3 pb-2 transition-colors duration-300 hover:border-b-black dark:hover:border-b-white"
+						pt-3 pb-2 no-underline transition-colors duration-300 hover:border-b-black dark:hover:border-b-white"
 					>
 						<span>{ballot.event.name}</span>
 						<span>

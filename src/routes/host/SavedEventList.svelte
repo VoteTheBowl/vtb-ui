@@ -5,8 +5,9 @@
 	import { getEventStage, getEventURL } from '$lib/util';
 	import dayjs from 'dayjs';
 	import { onMount } from 'svelte';
-	import Section from './Section.svelte';
+	import Section from '../../lib/components/Section.svelte';
 	import { resolve } from '$app/paths';
+	import { fade } from 'svelte/transition';
 
 	let events: EventResponseData[] = $state([]);
 
@@ -49,11 +50,11 @@
 		<ul>
 			{#each events.toSorted(sortEvents) as event (event.id)}
 				{@const eventStage = getEventStage(event)}
-				<li>
+				<li in:fade>
 					<a
 						href={resolve(getEventURL(event))}
 						class="relative flex flex-row items-center justify-between border-b-2 border-b-transparent
-						pt-3 pb-2 transition-colors duration-300 hover:border-b-black dark:hover:border-b-white"
+						pt-3 pb-2 no-underline transition-colors duration-300 hover:border-b-black dark:hover:border-b-white"
 					>
 						<span>{event.name}</span>
 						<span>

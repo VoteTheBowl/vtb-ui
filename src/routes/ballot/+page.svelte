@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { EventsAPI, type EventResponseData } from '$lib/api/events';
-	import { Input, Label, Button, Alert } from 'flowbite-svelte';
+	import { Input, Label, Alert } from 'flowbite-svelte';
 	import { resolve } from '$app/paths';
 	import { APIError } from '$lib/api/base';
 	import { getStorageContext } from '$lib/storage/storage.svelte';
@@ -9,6 +9,7 @@
 	import { page } from '$app/state';
 	import { getBallotURL } from '$lib/util';
 	import { getBallotContext, getEventContext } from '$lib/context';
+	import Button from '$lib/components/Button.svelte';
 
 	let eventID = Number(page.url.searchParams.get('e'));
 	let shareToken = page.url.searchParams.get('s');
