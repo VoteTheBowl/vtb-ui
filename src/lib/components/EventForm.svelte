@@ -70,7 +70,7 @@
 					onkeydown={handleKeyPressOnDishInput}
 				/>
 				<div>
-					<Button secondary onclick={addDish}>Add</Button>
+					<Button variant="secondary" onclick={addDish}>Add</Button>
 				</div>
 			</div>
 			{#if dishes.length > 0}
@@ -81,7 +81,7 @@
 						>
 							<span>{dish}</span>
 							<div>
-								<Button class="bg-red-800 p-2! hover:bg-red-600" onclick={() => removeDish(i)}>
+								<Button variant="danger" class="p-2!" onclick={() => removeDish(i)}>
 									<CloseOutline />
 								</Button>
 							</div>

@@ -1,6 +1,7 @@
 <script lang="ts">
-	import { Button, Modal } from 'flowbite-svelte';
+	import { Modal } from 'flowbite-svelte';
 	import type { Snippet } from 'svelte';
+	import Button from './Button.svelte';
 
 	let {
 		open = $bindable(),
@@ -47,7 +48,7 @@
 		</Button>
 		<Button
 			class="grow"
-			color="red"
+			variant="danger"
 			onclick={() => {
 				open = false;
 				if (oncancel) {
