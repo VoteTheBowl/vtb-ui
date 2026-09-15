@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { EventsAPI, type EventResponseData } from '$lib/api/events';
-	import { Input, Label, Alert } from 'flowbite-svelte';
+	import { Alert } from 'flowbite-svelte';
 	import { resolve } from '$app/paths';
 	import { APIError } from '$lib/api/base';
 	import { getStorageContext } from '$lib/storage/storage.svelte';
@@ -106,8 +106,8 @@
 						</Alert>
 					{/if}
 					<div>
-						<Label for="name" class="mb-2">Name</Label>
-						<Input
+						<label for="name" class="mb-2">Name</label>
+						<input
 							id="name"
 							placeholder="Enter your name"
 							bind:value={voterName}

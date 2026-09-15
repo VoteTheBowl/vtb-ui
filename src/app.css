@@ -71,7 +71,9 @@
 
 	p,
 	label,
+	select,
 	button,
+	option,
 	a,
 	li {
 		@apply font-[averia] text-lg transition-colors duration-150 dark:text-white;
@@ -79,6 +81,18 @@
 
 	a {
 		@apply underline;
+	}
+
+	label {
+		@apply block w-full text-xl;
+	}
+
+	input {
+		@apply block w-full rounded-lg border border-gray-500 p-2 text-xl dark:border-gray-300 dark:text-white;
+	}
+
+	option {
+		@apply rounded-lg border border-gray-500 p-2 text-xl dark:border-gray-300 dark:text-white;
 	}
 
 	h1,

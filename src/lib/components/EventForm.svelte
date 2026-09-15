@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { EventsAPI } from '$lib/api/events';
-	import { Input, Label, Select } from 'flowbite-svelte';
 	import { resolve } from '$app/paths';
 	import votingSystems from '$lib/voting-system/config';
 	import { getStorageContext } from '$lib/storage/storage.svelte';
@@ -56,15 +55,16 @@
 
 <form class="space-y-6" onsubmit={handleSubmit}>
 	<div>
-		<Label for="event-name" class="mb-2">Event Name</Label>
-		<Input id="event-name" placeholder="Enter event name" bind:value={eventName} required />
+		<label for="event-name" class="mb-2">Event Name</label>
+		<input id="event-name" placeholder="Enter event name" bind:value={eventName} required />
 	</div>
 
 	<div>
-		<Label class="mb-2">Dishes</Label>
+		<label class="mb-2" for="dish">Dishes</label>
 		<div>
 			<div class="flex gap-2">
-				<Input
+				<input
+					id="dish"
 					placeholder="Add a dish"
 					bind:value={newDish}
 					onkeydown={handleKeyPressOnDishInput}
@@ -93,12 +93,12 @@
 	</div>
 
 	<div>
-		<Label for="voting-system" class="mb-2">Voting System</Label>
-		<Select id="voting-system" bind:value={votingSystem}>
+		<label for="voting-system" class="mb-2">Voting System</label>
+		<select id="voting-system" bind:value={votingSystem}>
 			{#each votingSystems as config (config.id)}
 				<option value={config.id}>{config.label}</option>
 			{/each}
-		</Select>
+		</select>
 	</div>
 	<Button type="submit" class="flex-1" disabled={!isFormValid}>Create Event</Button>
 </form>
