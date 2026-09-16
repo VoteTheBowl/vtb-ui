@@ -2,7 +2,6 @@
 	import BasicPageLayout from '$lib/components/layouts/BasicPageLayout.svelte';
 	import EventForm from '$lib/components/EventForm.svelte';
 	import { getStorageContext } from '$lib/storage/storage.svelte';
-	import { Hr } from 'flowbite-svelte';
 	import Button from '$lib/components/Button.svelte';
 
 	const storage = getStorageContext();
@@ -15,7 +14,7 @@
 		can choose the voting system that best suits your needs (more on the way).
 	</p>
 
-	<Hr />
+	<div class="mb-6 w-full border-b border-gray-500 pt-6 dark:border-gray-600"></div>
 
 	{#if storage.hasBallots() || storage.hasEvents()}
 		<div class="flex flex-row gap-4">
@@ -27,7 +26,7 @@
 			{/if}
 		</div>
 
-		<Hr innerDivClass="dark:bg-gray-800 dark:text-white transition-colors duration-150">or</Hr>
+		<div class="mb-6 w-full border-b border-gray-500 pt-6 dark:border-gray-600"></div>
 	{/if}
 
 	<EventForm />

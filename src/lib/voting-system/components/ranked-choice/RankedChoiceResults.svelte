@@ -2,7 +2,6 @@
 	import type { ResultComponentProps } from '$lib/voting-system/types';
 	import type { BallotResponseData, EventResponseData } from '$lib/api/events';
 	import type { RankedSubmission } from './types';
-	import { P } from 'flowbite-svelte';
 
 	let { event, ballots }: ResultComponentProps = $props();
 
@@ -84,13 +83,13 @@
 	});
 </script>
 
-<P class="mb-4 font-bold">
+<p class="mb-4 font-bold">
 	{#if overallWinner === '__TIE_FLAG__'}
 		It's a tie!
 	{:else}
 		{overallWinner} wins!
 	{/if}
-</P>
+</p>
 
 <div class="flex flex-col-reverse">
 	{#each roundData as voteCount, i (i)}

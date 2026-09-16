@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { getSubmissionContext } from '$lib/voting-system/context';
 	import type { VotingComponentProps } from '$lib/voting-system/types';
-	import { Radio } from 'flowbite-svelte';
 
 	let { event }: VotingComponentProps = $props();
 
@@ -17,7 +16,15 @@
 <p class="mb-2">Select your top pick.</p>
 
 {#each event.choices as choice (choice)}
-	<Radio name="candidates" id={choice} value={choice} bind:group={selectedChoice} class="my-3">
-		<span class="text-2xl">{choice}</span>
-	</Radio>
+	<div class="flex flex-row items-center">
+		<input
+			class="shrink-10 cursor-pointer"
+			type="radio"
+			name="items"
+			id={choice}
+			value={choice}
+			bind:group={selectedChoice}
+		/>
+		<label class="cursor-pointer" for={choice}>{choice}</label>
+	</div>
 {/each}

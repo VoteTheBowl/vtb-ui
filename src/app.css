@@ -1,7 +1,5 @@
 @import 'tailwindcss';
 
-@plugin 'flowbite/plugin';
-
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
@@ -28,7 +26,6 @@
 	--color-secondary-900: #a5371b;
 }
 
-@source '../node_modules/flowbite-svelte/dist';
 @source '../node_modules/flowbite-svelte-icons/dist';
 
 @layer base {
@@ -91,8 +88,9 @@
 		@apply block w-full rounded-lg border border-gray-500 p-2 text-xl dark:border-gray-300 dark:text-white;
 	}
 
-	option {
-		@apply rounded-lg border border-gray-500 p-2 text-xl dark:border-gray-300 dark:text-white;
+	option,
+	select {
+		@apply cursor-pointer rounded-lg border border-gray-500 p-2 text-xl dark:border-gray-300 dark:text-white;
 	}
 
 	h1,
