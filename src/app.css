@@ -26,8 +26,6 @@
 	--color-secondary-900: #a5371b;
 }
 
-@source '../node_modules/flowbite-svelte-icons/dist';
-
 @layer base {
 	@font-face {
 		font-family: 'unkempt';

@@ -2,8 +2,6 @@
 	import logo from '$lib/assets/logo.png';
 	import { DarkMode } from 'flowbite-svelte';
 	import { resolve } from '$app/paths';
-	import { page } from '$app/state';
-	import { ArrowLeftOutline } from 'flowbite-svelte-icons';
 	import { fade } from 'svelte/transition';
 	import type { Snippet } from 'svelte';
 	import type { ClassValue } from 'svelte/elements';
@@ -19,9 +17,6 @@
 		subtitle?: string;
 		class?: ClassValue;
 	} = $props();
-
-	let ref = $derived(page.url.searchParams.get('ref'));
-	let refName = $derived(page.url.searchParams.get('ref-name'));
 </script>
 
 <svelte:head>
@@ -50,16 +45,6 @@
 				<span class="h3 text-white">{subtitle}</span>
 			</div>
 		</div>
-	{/if}
-	{#if ref}
-		<nav class=" bg-primary-600 text-white">
-			<div class="m-auto mx-auto p-1 px-4 sm:max-w-lg">
-				<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
-				<a href={ref}>
-					<ArrowLeftOutline class="inline" /> Back{refName ? ` to ${refName}` : ''}
-				</a>
-			</div>
-		</nav>
 	{/if}
 </header>
 <main class="m-auto p-4 sm:max-w-lg {className}" in:fade>

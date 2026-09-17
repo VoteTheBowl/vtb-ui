@@ -5,12 +5,12 @@
 	import { EventsAPI } from '$lib/api/events';
 	import Button from '$lib/components/Button.svelte';
 	import ConfirmationModal from '$lib/components/ConfirmationModal.svelte';
+	import Icon from '$lib/components/Icon.svelte';
 	import BasicPageLayout from '$lib/components/layouts/BasicPageLayout.svelte';
 	import Section from '$lib/components/Section.svelte';
 	import { getBallotsContext, getEventContext } from '$lib/context';
 	import { getStorageContext } from '$lib/storage/storage.svelte';
 	import QRCode from '@castlenine/svelte-qrcode';
-	import { ClipboardCheckOutline, ClipboardCleanOutline } from 'flowbite-svelte-icons';
 	import { fade } from 'svelte/transition';
 
 	const eventContext = getEventContext();
@@ -75,11 +75,11 @@
 				onclick={onCopyClick}
 				class="mb-4 flex w-full cursor-pointer flex-col items-center gap-4 p-4"
 			>
-				<div class="flex">
+				<div class="flex items-center gap-2">
 					{#if copied}
-						<ClipboardCheckOutline class="h-6 w-6 shrink-0" />
+						<Icon icon="check-circle" class="stroke-green-400" />
 					{:else}
-						<ClipboardCleanOutline class="h-6 w-6 shrink-0" />
+						<Icon icon="clipboard" />
 					{/if}
 					{copied ? 'Invitation copied to clipboard' : 'Copy invitation to clipboard'}
 				</div>

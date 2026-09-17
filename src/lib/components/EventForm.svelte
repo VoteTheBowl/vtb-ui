@@ -5,7 +5,7 @@
 	import votingSystems from '$lib/voting-system/config';
 	import { getStorageContext } from '$lib/storage/storage.svelte';
 	import Button from './Button.svelte';
-	import { CloseOutline } from 'flowbite-svelte-icons';
+	import Icon from './Icon.svelte';
 
 	const storage = getStorageContext();
 
@@ -82,7 +82,7 @@
 							<span>{dish}</span>
 							<div>
 								<Button variant="danger" class="p-2!" onclick={() => removeDish(i)}>
-									<CloseOutline />
+									<Icon icon="x-circle" />
 								</Button>
 							</div>
 						</li>

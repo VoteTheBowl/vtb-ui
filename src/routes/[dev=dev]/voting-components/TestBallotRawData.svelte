@@ -1,15 +1,15 @@
 <script lang="ts">
+	import Icon from '$lib/components/Icon.svelte';
 	import { getSubmissionContext } from '$lib/voting-system/context';
-	import { CheckCircleSolid, CloseCircleSolid } from 'flowbite-svelte-icons';
 
 	let submissionContext = getSubmissionContext();
 </script>
 
 <div class="mb-4 flex-row items-center gap-2 not-visited:flex dark:text-white">
 	{#if submissionContext.submissionIsValid}
-		<CheckCircleSolid class="h-8 w-8 text-green-500" /> Valid
+		<Icon icon="check-circle" class="stroke-green-500" /> Valid
 	{:else}
-		<CloseCircleSolid class="h-8 w-8 text-red-500" /> Invalid
+		<Icon icon="x-circle" class="stroke-red-500" /> Invalid
 	{/if}
 </div>
 <pre
