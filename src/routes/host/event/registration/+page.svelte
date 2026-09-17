@@ -4,9 +4,9 @@
 	import { page } from '$app/state';
 	import { EventsAPI } from '$lib/api/events';
 	import Button from '$lib/components/Button.svelte';
-	import ConfirmationModal from '$lib/components/ConfirmationModal.svelte';
 	import Icon from '$lib/components/Icon.svelte';
 	import BasicPageLayout from '$lib/components/layouts/BasicPageLayout.svelte';
+	import Modal from '$lib/components/Modal.svelte';
 	import Section from '$lib/components/Section.svelte';
 	import { getBallotsContext, getEventContext } from '$lib/context';
 	import { getStorageContext } from '$lib/storage/storage.svelte';
@@ -35,7 +35,9 @@
 		copied = true;
 	};
 
-	let openConfirmStart = $state(false);
+	// This does not need to be reactive.
+	// svelte-ignore non_reactive_update
+	let confirmationDialog: HTMLDialogElement;
 
 	const beginVote = async () => {
 		if (!eventContext.event) return;
@@ -106,16 +108,31 @@
 		</Section>
 	</div>
 
-	<Button class="w-full" disabled={ballotCount < 2} onclick={() => (openConfirmStart = true)}>
+	<Button class="w-full" disabled={ballotCount < 2} onclick={() => confirmationDialog.showModal()}>
 		Begin Vote
 	</Button>
 
-	<ConfirmationModal
-		bind:open={openConfirmStart}
-		cancelButtonLabel="Not Sure"
-		heading="Begin Vote?"
-		onconfirm={beginVote}
-	>
-		Are you sure all participant's have registered?
-	</ConfirmationModal>
+	<Modal bind:dialog={confirmationDialog}>
+		<p>Are you sure all participant's have registered?</p>
+		<div class="flex flex-row gap-2">
+			<Button
+				class="grow"
+				variant="danger"
+				onclick={() => {
+					confirmationDialog.close();
+				}}
+			>
+				No
+			</Button>
+			<Button
+				class="grow"
+				onclick={() => {
+					confirmationDialog.close();
+					beginVote();
+				}}
+			>
+				Yes
+			</Button>
+		</div>
+	</Modal>
 </BasicPageLayout>

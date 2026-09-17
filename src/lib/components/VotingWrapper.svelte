@@ -1,9 +1,9 @@
 <script lang="ts">
 	import votingSystems from '$lib/voting-system/config';
 	import { BallotAPI, type BallotResponseData, type EventResponseData } from '$lib/api/events';
-	import ConfirmationModal from './ConfirmationModal.svelte';
 	import { setSubmissionContext, type SubmissionContext } from '$lib/voting-system/context';
 	import Button from './Button.svelte';
+	import Modal from './Modal.svelte';
 
 	const {
 		ballotID,
@@ -21,7 +21,9 @@
 		submission: {},
 		submissionIsValid: false
 	});
-	let openConfirmationModal = $state(false);
+
+	// svelte-ignore non_reactive_update
+	let confirmationDialog: HTMLDialogElement;
 
 	setSubmissionContext(submissionContext);
 
@@ -42,11 +44,31 @@
 
 <Button
 	disabled={!submissionContext.submissionIsValid}
-	onclick={() => (openConfirmationModal = true)}
+	onclick={() => confirmationDialog.showModal()}
 >
 	Submit Ballot
 </Button>
 
-<ConfirmationModal bind:open={openConfirmationModal} heading="Submit Ballot" onconfirm={submitVote}>
-	Are you sure you want to submit yor ballot?
-</ConfirmationModal>
+<Modal bind:dialog={confirmationDialog}>
+	<p>Are you sure you want to submit yor ballot?</p>
+	<div class="flex flex-row gap-2">
+		<Button
+			class="grow"
+			variant="danger"
+			onclick={() => {
+				confirmationDialog.close();
+			}}
+		>
+			No
+		</Button>
+		<Button
+			class="grow"
+			onclick={() => {
+				confirmationDialog.close();
+				submitVote();
+			}}
+		>
+			Yes
+		</Button>
+	</div>
+</Modal>
