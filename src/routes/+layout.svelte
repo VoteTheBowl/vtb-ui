@@ -3,7 +3,6 @@
 	import { InfoAPI } from '$lib/api/info';
 	import { onMount } from 'svelte';
 	import StorageProvider from '$lib/storage/StorageProvider.svelte';
-	import { DarkMode } from 'flowbite-svelte';
 
 	let { children } = $props();
 
@@ -18,5 +17,3 @@
 <StorageProvider>
 	{@render children()}
 </StorageProvider>
-
-<DarkMode class="invisible" aria-hidden />

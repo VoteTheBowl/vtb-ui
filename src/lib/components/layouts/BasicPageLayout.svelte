@@ -1,6 +1,5 @@
 <script lang="ts">
 	import logo from '$lib/assets/logo.png';
-	import { DarkMode } from 'flowbite-svelte';
 	import { resolve } from '$app/paths';
 	import { fade } from 'svelte/transition';
 	import type { Snippet } from 'svelte';
@@ -28,15 +27,12 @@
 		<div class="relative m-auto mx-auto p-4 sm:max-w-lg">
 			<h1 class="flex min-h-9 items-center gap-4 leading-none">
 				<a href={resolve('/')}>
+					<span class="sr-only">Vote The Bowl</span>
 					<img src={logo} alt="" aria-hidden="true" class="h-8 w-8 rounded-full" />
 				</a>
 				{title}
 				<span class="sr-only"> - {subtitle}</span>
 			</h1>
-			<DarkMode
-				size="sm"
-				class="absolute top-1/2 right-4 -translate-y-1/2 cursor-pointer rounded-md bg-primary-900 p-2 text-gray-200 hover:bg-primary-700 dark:text-gray-200 dark:hover:bg-primary-700"
-			/>
 		</div>
 	</div>
 	{#if subtitle}
