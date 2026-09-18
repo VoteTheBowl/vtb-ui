@@ -1,8 +1,8 @@
 <script lang="ts">
 	import type { EventResponseData, BallotResponseData } from '$lib/api/events';
 	import votingSystems from '$lib/voting-system/config';
-	import { LockOutline } from 'flowbite-svelte-icons';
 	import Section from './Section.svelte';
+	import Icon from './Icon.svelte';
 
 	let {
 		event,
@@ -19,7 +19,7 @@
 
 <Section {title}>
 	{#snippet icon()}
-		<LockOutline size="xl" />
+		<Icon icon="lock" />
 	{/snippet}
 	{#if config}
 		<config.displayOnlyVote {event} {ballot} />

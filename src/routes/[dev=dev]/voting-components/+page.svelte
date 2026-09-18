@@ -2,11 +2,10 @@
 	import type { EventResponseData } from '$lib/api/events';
 	import Section from '$lib/components/Section.svelte';
 	import votingConfig from '$lib/voting-system/config';
-	import { LockOutline } from 'flowbite-svelte-icons';
 	import TestDisplayVoteWrapper from './TestDisplayVoteWrapper.svelte';
 	import TestBallotContextProvider from './TestBallotContextProvider.svelte';
 	import TestBallotRawData from './TestBallotRawData.svelte';
-	import { DarkMode } from 'flowbite-svelte';
+	import Icon from '$lib/components/Icon.svelte';
 
 	const testEvent: EventResponseData = {
 		id: 1,
@@ -22,7 +21,7 @@
 </script>
 
 <div class="m-auto p-4 sm:max-w-xl md:max-w-3xl lg:max-w-5xl">
-	<h1 class="mb-8">All Voting Components <DarkMode /></h1>
+	<h1 class="mb-8">All Voting Components</h1>
 	{#each votingConfig as config (config.id)}
 		<TestBallotContextProvider>
 			<h1 class="mb-4">{config.label}</h1>
@@ -34,7 +33,7 @@
 				</Section>
 				<Section title="Submitted Ballot">
 					{#snippet icon()}
-						<LockOutline size="xl" />
+						<Icon icon="lock" />
 					{/snippet}
 					<TestDisplayVoteWrapper event={testEvent} {config} />
 				</Section>

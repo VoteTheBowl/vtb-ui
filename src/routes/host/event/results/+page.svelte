@@ -3,10 +3,10 @@
 	import DisplayVoteWrapper from '$lib/components/DisplayVoteWrapper.svelte';
 	import BasicPageLayout from '$lib/components/layouts/BasicPageLayout.svelte';
 	import Section from '$lib/components/Section.svelte';
+	import Switch from '$lib/components/Switch.svelte';
 	import { getBallotsContext, getEventContext } from '$lib/context';
 	import { getStorageContext } from '$lib/storage/storage.svelte';
 	import votingSystems from '$lib/voting-system/config';
-	import { Toggle } from 'flowbite-svelte';
 
 	const eventContext = getEventContext();
 	const ballotsContext = getBallotsContext();
@@ -62,9 +62,7 @@
 			</div>
 		</Section>
 		<Section title="Settings">
-			<Toggle class="ml-2 cursor-pointer" checked={event.show_results} onchange={toggleShowResults}>
-				Results {event.show_results ? 'Visible' : 'Hidden'}
-			</Toggle>
+			<Switch checked={event.show_results} onchange={toggleShowResults} label="Show Results" />
 		</Section>
 		{#if myBallot}
 			<DisplayVoteWrapper {event} ballot={myBallot} />

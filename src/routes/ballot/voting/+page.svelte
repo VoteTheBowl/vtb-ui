@@ -8,7 +8,6 @@
 	import { getBallotContext, getEventContext } from '$lib/context';
 	import { resolve } from '$app/paths';
 	import { goto } from '$app/navigation';
-	import { Button } from 'flowbite-svelte';
 	import UpdateContext from '../UpdateContext.svelte';
 
 	const ballotID = $derived(Number(page.url.searchParams.get('b')));
@@ -51,8 +50,11 @@
 				</Section>
 			{/if}
 		{:else if event.closed}
-			<p>This event has concluded.</p>
-			<Button href="/ballot/results?b={ballotID}">Go to results</Button>
+			<p>
+				This event has concluded. <a href={resolve(`/ballot/results?b=${ballotID}`)}
+					>Go to results</a
+				>.
+			</p>
 		{:else}
 			<p>
 				Thank you for registering to the {event.name}. You will be able to vote when the host opens

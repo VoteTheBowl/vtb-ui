@@ -2,7 +2,7 @@ import { dev } from '$app/env';
 import { env } from '$env/dynamic/public';
 import { handleErrorWithSentry } from '@sentry/sveltekit';
 import * as Sentry from '@sentry/sveltekit';
-import type { HandleFetch } from '@sveltejs/kit';
+import type { HandleFetch, HandleClientError } from '@sveltejs/kit';
 
 if (!dev) {
 	Sentry.init({
@@ -24,5 +24,12 @@ export const handleFetch: HandleFetch = async ({ event, request, fetch }) => {
 	return await fetch(request);
 };
 
+const handleClientError: HandleClientError = async ({ error, message }) => {
+	return {
+		message,
+		error
+	};
+};
+
 // If you have a custom error handler, pass it to `handleErrorWithSentry`
-export const handleError = handleErrorWithSentry();
+export const handleError = dev ? handleClientError : handleErrorWithSentry();

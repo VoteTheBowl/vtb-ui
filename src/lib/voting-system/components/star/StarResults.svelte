@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { Star } from 'flowbite-svelte';
 	import type { StarSubmission } from './types';
 	import seedrandom from 'seedrandom';
 	import type { ResultComponentProps } from '$lib/voting-system/types';
 	import type { BallotResponseData } from '$lib/api/events';
+	import Icon from '$lib/components/Icon.svelte';
 
 	let { event, ballots }: ResultComponentProps = $props();
 
@@ -215,7 +215,7 @@
 		<p class="text-xl">
 			{vote.choice} - {vote.total}
 		</p>
-		<Star fillPercent={100} size={20} ariaLabel="Star icon" />
+		<Icon icon="star" class="fill-amber-300! stroke-none!" />
 		{#if firstPlace && vote.choice === firstPlace.winner}
 			<p class="font-bold text-green-600">(Winner)</p>
 		{/if}

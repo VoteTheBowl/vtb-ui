@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { EventsAPI, type EventResponseData } from '$lib/api/events';
-	import { Input, Label, Button, Alert } from 'flowbite-svelte';
 	import { resolve } from '$app/paths';
 	import { APIError } from '$lib/api/base';
 	import { getStorageContext } from '$lib/storage/storage.svelte';
@@ -9,6 +8,8 @@
 	import { page } from '$app/state';
 	import { getBallotURL } from '$lib/util';
 	import { getBallotContext, getEventContext } from '$lib/context';
+	import Button from '$lib/components/Button.svelte';
+	import { fade } from 'svelte/transition';
 
 	let eventID = Number(page.url.searchParams.get('e'));
 	let shareToken = page.url.searchParams.get('s');
@@ -99,14 +100,20 @@
 				</p>
 
 				<form class="space-y-6" onsubmit={(htmlEvent) => handleSubmit(htmlEvent, e)}>
-					{#if error}
-						<Alert color="red">
-							{error}
-						</Alert>
-					{/if}
+					<div aria-live="assertive" role="alert">
+						{#if error}
+							<p
+								class="in:fade rounded-xl border border-red-500 bg-red-300 p-2 text-red-700"
+								in:fade
+							>
+								{error}
+							</p>
+						{/if}
+					</div>
+
 					<div>
-						<Label for="name" class="mb-2">Name</Label>
-						<Input
+						<label for="name" class="mb-2">Name</label>
+						<input
 							id="name"
 							placeholder="Enter your name"
 							bind:value={voterName}

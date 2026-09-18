@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { RefreshOutline } from 'flowbite-svelte-icons';
 	import type { StarSubmission } from './types';
 	import type { VotingComponentProps } from '$lib/voting-system/types';
 	import { onMount } from 'svelte';
 	import Star from './Star.svelte';
 	import { getSubmissionContext } from '$lib/voting-system/context';
+	import Icon from '$lib/components/Icon.svelte';
 
 	let { event }: VotingComponentProps = $props();
 
@@ -40,7 +40,7 @@
 							class="flex cursor-pointer items-center justify-center"
 							onclick={() => onRatingClick(choice, index + 1)}
 						>
-							<Star {index} {choice} rating={ratingObj.rating} />
+							<Star {index} rating={ratingObj.rating} />
 						</button>
 					{/each}
 					{#if ratingObj.rating > 0}
@@ -48,7 +48,7 @@
 							class="flex cursor-pointer items-center justify-center p-2 pt-1.5 pb-0.5"
 							onclick={() => onRatingClick(choice, 0)}
 						>
-							<RefreshOutline class="h-5 w-5 shrink-0 dark:text-white " />
+							<Icon icon="refresh-ccw" />
 						</button>
 					{/if}
 				</div>

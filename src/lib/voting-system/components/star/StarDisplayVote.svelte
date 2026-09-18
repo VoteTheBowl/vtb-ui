@@ -15,7 +15,7 @@
 				<div class="relative flex items-center">
 					{#each Array(5), index (index)}
 						{#if index < ratingObj.rating}
-							<Star {index} {choice} rating={ratingObj.rating} />
+							<Star {index} rating={ratingObj.rating} />
 						{:else if index === 0}
 							<p class="p-3 text-xl font-bold">No Rating</p>
 						{/if}

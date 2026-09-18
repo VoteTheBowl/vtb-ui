@@ -1,7 +1,6 @@
 <script lang="ts">
 	import type { Submission } from './types';
 	import type { BallotResponseData, EventResponseData } from '$lib/api/events';
-	import { P } from 'flowbite-svelte';
 
 	let { event, ballots }: { event: EventResponseData; ballots: BallotResponseData[] } = $props();
 
@@ -21,7 +20,7 @@
 		</p>
 		<h4 class="border-b-2">Totals</h4>
 	{/if}
-	<P class="my-2 text-xl">
+	<p class="my-2 text-xl">
 		<span class="text-xl font-bold">{vote.choice}</span>: {vote.count}
-	</P>
+	</p>
 {/each}

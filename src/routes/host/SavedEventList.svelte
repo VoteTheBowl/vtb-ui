@@ -5,8 +5,9 @@
 	import { getEventStage, getEventURL } from '$lib/util';
 	import dayjs from 'dayjs';
 	import { onMount } from 'svelte';
-	import Section from './Section.svelte';
+	import Section from '../../lib/components/Section.svelte';
 	import { resolve } from '$app/paths';
+	import { fade } from 'svelte/transition';
 
 	let events: EventResponseData[] = $state([]);
 
@@ -18,27 +19,38 @@
 
 		if (bWeight == 0) return 1;
 
+		if (aWeight == 0) return -1;
+
 		return bWeight - aWeight;
 	}
+
+	const fetchEvent = async (client: EventsAPI, id: number, token: string) => {
+		try {
+			return await client.getEvent(id, token);
+		} catch (e) {
+			const status = (e as APIError).status;
+			if (status == 404 || status == 403) {
+				storage.deleteEvent(id);
+			} else {
+				throw e;
+			}
+		}
+	};
 
 	onMount(async () => {
 		const eventApi = new EventsAPI();
 
 		const localEvents = storage.data.events;
 
+		let queues: Promise<EventResponseData | undefined>[] = [];
+
 		for (const key in localEvents) {
 			const keyAsNumber = Number(key);
 
-			try {
-				const event = await eventApi.getEvent(keyAsNumber, localEvents[keyAsNumber].token);
-				events.push(event);
-			} catch (e) {
-				const status = (e as APIError).status;
-				if (status == 404 || status == 403) {
-					storage.deleteEvent(keyAsNumber);
-				}
-			}
+			queues.push(fetchEvent(eventApi, keyAsNumber, localEvents[keyAsNumber].token));
 		}
+
+		events = (await Promise.all(queues)).filter((e) => e !== undefined);
 	});
 </script>
 
@@ -49,11 +61,11 @@
 		<ul>
 			{#each events.toSorted(sortEvents) as event (event.id)}
 				{@const eventStage = getEventStage(event)}
-				<li>
+				<li in:fade>
 					<a
 						href={resolve(getEventURL(event))}
 						class="relative flex flex-row items-center justify-between border-b-2 border-b-transparent
-						pt-3 pb-2 transition-colors duration-300 hover:border-b-black dark:hover:border-b-white"
+						pt-3 pb-2 no-underline transition-colors duration-300 hover:border-b-black dark:hover:border-b-white"
 					>
 						<span>{event.name}</span>
 						<span>

@@ -1,10 +1,9 @@
 <script lang="ts">
 	import '../app.css';
-	import { defaultTheme } from '$lib/themes';
 	import { InfoAPI } from '$lib/api/info';
 	import { onMount } from 'svelte';
 	import StorageProvider from '$lib/storage/StorageProvider.svelte';
-	import { DarkMode, ThemeProvider } from 'flowbite-svelte';
+	import ThemeContextProvider from '$lib/components/ThemeContextProvider.svelte';
 
 	let { children } = $props();
 
@@ -16,10 +15,8 @@
 	});
 </script>
 
-<ThemeProvider theme={defaultTheme}>
+<ThemeContextProvider>
 	<StorageProvider>
 		{@render children()}
 	</StorageProvider>
-</ThemeProvider>
-
-<DarkMode class="invisible" aria-hidden />
+</ThemeContextProvider>

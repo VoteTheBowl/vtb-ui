@@ -1,14 +1,10 @@
 <script lang="ts">
-	import { Star } from 'flowbite-svelte';
+	import Icon from '$lib/components/Icon.svelte';
 
-	let { index, choice, rating }: { index: number; choice: string; rating: number } = $props();
+	let { index, rating }: { index: number; rating: number } = $props();
 </script>
 
-<Star
-	svgClass="*:!stroke-amber-400"
-	iconIndex={index}
-	groupId={choice.trim().toLowerCase().replace(/\s+/g, '-')}
-	fillPercent={rating > index ? 100 : 0}
-	size={50}
-	ariaLabel={`Rate ${index + 1} star${index == 0 ? '' : 's'}`}
+<Icon
+	icon="star"
+	class="h-10 w-10 stroke-amber-400! stroke-[0.5]! {rating > index ? 'fill-amber-300!' : ''}"
 />
