@@ -3,6 +3,7 @@
 	import { InfoAPI } from '$lib/api/info';
 	import { onMount } from 'svelte';
 	import StorageProvider from '$lib/storage/StorageProvider.svelte';
+	import ThemeContextProvider from '$lib/components/ThemeContextProvider.svelte';
 
 	let { children } = $props();
 
@@ -14,6 +15,8 @@
 	});
 </script>
 
-<StorageProvider>
-	{@render children()}
-</StorageProvider>
+<ThemeContextProvider>
+	<StorageProvider>
+		{@render children()}
+	</StorageProvider>
+</ThemeContextProvider>

@@ -4,6 +4,7 @@
 	import { fade } from 'svelte/transition';
 	import type { Snippet } from 'svelte';
 	import type { ClassValue } from 'svelte/elements';
+	import ThemeSwitch from '../ThemeSwitch.svelte';
 
 	let {
 		children,
@@ -24,7 +25,7 @@
 
 <header>
 	<div class="bg-primary-900 text-white dark:text-gray-200">
-		<div class="relative m-auto mx-auto p-4 sm:max-w-lg">
+		<div class="relative m-auto mx-auto p-4 pr-12 sm:max-w-lg">
 			<h1 class="flex min-h-9 items-center gap-4 leading-none">
 				<a href={resolve('/')}>
 					<span class="sr-only">Vote The Bowl</span>
@@ -33,6 +34,7 @@
 				{title}
 				<span class="sr-only"> - {subtitle}</span>
 			</h1>
+			<ThemeSwitch class="absolute top-1/2 right-0 -translate-x-1/2 -translate-y-1/2" />
 		</div>
 	</div>
 	{#if subtitle}

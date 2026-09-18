@@ -73,7 +73,6 @@
 								? ` - ${dayjs(event.closed).format('MMM D, YYYY')}`
 								: ''}
 						</span>
-						{dayjs(event.closed || 0).unix()}
 					</a>
 				</li>
 			{/each}

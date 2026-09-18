@@ -5,7 +5,16 @@
 		icon,
 		class: classes
 	}: {
-		icon: 'star' | 'check-circle' | 'clipboard' | 'lock' | 'refresh-ccw' | 'x-circle' | 'x';
+		icon:
+			| 'star'
+			| 'check-circle'
+			| 'clipboard'
+			| 'lock'
+			| 'refresh-ccw'
+			| 'x-circle'
+			| 'x'
+			| 'moon'
+			| 'sun';
 		class?: string;
 	} = $props();
 </script>

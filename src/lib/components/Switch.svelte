@@ -23,11 +23,11 @@
 	<div class="flex cursor-pointer flex-row items-center gap-2 rounded-md">
 		<span>{label}</span>
 		<div
-			class="relative box-content h-5 w-11 rounded-full border-2 border-black bg-white
+			class="relative box-content h-5 w-9 rounded-full border-2 border-black bg-white
             group-focus-within:outline-2 group-focus-within:outline-blue-500 dark:border-white dark:bg-gray-800"
 		>
 			<div
-				class="absolute top-1/2 h-5 w-6 -translate-y-1/2 rounded-full border-2 border-white bg-black transition-all
+				class="absolute top-1/2 h-5 w-5 -translate-y-1/2 rounded-full border-2 border-white bg-black transition-all
                 dark:border-3 dark:border-gray-800 dark:bg-white {checked
 					? 'right-0'
 					: 'right-full translate-x-full'}"
