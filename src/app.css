@@ -68,7 +68,8 @@
 	button,
 	option,
 	a,
-	li {
+	li,
+	input {
 		@apply font-[averia] text-lg transition-colors duration-150 dark:text-white;
 	}
 

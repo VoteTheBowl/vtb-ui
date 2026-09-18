@@ -19,27 +19,38 @@
 
 		if (bWeight == 0) return 1;
 
+		if (aWeight == 0) return -1;
+
 		return bWeight - aWeight;
 	}
+
+	const fetchEvent = async (client: EventsAPI, id: number, token: string) => {
+		try {
+			return await client.getEvent(id, token);
+		} catch (e) {
+			const status = (e as APIError).status;
+			if (status == 404 || status == 403) {
+				storage.deleteEvent(id);
+			} else {
+				throw e;
+			}
+		}
+	};
 
 	onMount(async () => {
 		const eventApi = new EventsAPI();
 
 		const localEvents = storage.data.events;
 
+		let queues: Promise<EventResponseData | undefined>[] = [];
+
 		for (const key in localEvents) {
 			const keyAsNumber = Number(key);
 
-			try {
-				const event = await eventApi.getEvent(keyAsNumber, localEvents[keyAsNumber].token);
-				events.push(event);
-			} catch (e) {
-				const status = (e as APIError).status;
-				if (status == 404 || status == 403) {
-					storage.deleteEvent(keyAsNumber);
-				}
-			}
+			queues.push(fetchEvent(eventApi, keyAsNumber, localEvents[keyAsNumber].token));
 		}
+
+		events = (await Promise.all(queues)).filter((e) => e !== undefined);
 	});
 </script>
 
@@ -62,6 +73,7 @@
 								? ` - ${dayjs(event.closed).format('MMM D, YYYY')}`
 								: ''}
 						</span>
+						{dayjs(event.closed || 0).unix()}
 					</a>
 				</li>
 			{/each}

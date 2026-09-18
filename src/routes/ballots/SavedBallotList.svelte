@@ -17,26 +17,51 @@
 
 	const storage = getStorageContext();
 
+	function sortBallotItems(a: BallotItem, b: BallotItem) {
+		const aWeight = a.event.closed ? dayjs(a.event.closed).unix() : 0;
+		const bWeight = b.event.closed ? dayjs(b.event.closed).unix() : 0;
+
+		if (bWeight == 0) return 1;
+
+		if (aWeight == 0) return -1;
+
+		return bWeight - aWeight;
+	}
+
+	async function fetchEvent(client: EventsAPI, ballotID: number, eventID: number, token: string) {
+		try {
+			const event = await client.getEvent(eventID, token);
+			return {
+				id: ballotID,
+				event
+			};
+		} catch (e) {
+			const status = (e as APIError).status;
+			if (status == 404 || status == 403) storage.deleteBallot(ballotID);
+			else throw e;
+		}
+	}
+
 	onMount(async () => {
 		const eventApi = new EventsAPI();
 		const localBallots = storage.data.ballots;
 
+		let promises: Promise<BallotItem | undefined>[] = [];
+
 		for (const key in localBallots) {
 			const keyAsNumber = Number(key);
-			try {
-				const event = await eventApi.getEvent(
+
+			promises.push(
+				fetchEvent(
+					eventApi,
+					keyAsNumber,
 					localBallots[keyAsNumber].eventID,
 					localBallots[keyAsNumber].token
-				);
-				ballots.push({
-					id: keyAsNumber,
-					event
-				});
-			} catch (e) {
-				const status = (e as APIError).status;
-				if (status == 404 || status == 403) storage.deleteBallot(keyAsNumber);
-			}
+				)
+			);
 		}
+
+		ballots = (await Promise.all(promises)).filter((bi) => bi !== undefined);
 	});
 </script>
 
@@ -45,7 +70,7 @@
 		<p>No past ballots found.</p>
 	{:else if ballots.length}
 		<ul>
-			{#each ballots as ballot (ballot.id)}
+			{#each ballots.toSorted(sortBallotItems) as ballot (ballot.id)}
 				{@const eventStage = getEventStage(ballot.event)}
 				<li>
 					<a
