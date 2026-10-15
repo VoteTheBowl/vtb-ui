@@ -86,7 +86,7 @@
 					{copied ? 'Invitation copied to clipboard' : 'Copy invitation to clipboard'}
 				</div>
 			</Button>
-			<div class="rounded-lg border p-2 text-center break-all">
+			<div class="rounded-lg border p-2 text-center break-all select-all">
 				{shareURL}
 			</div>
 		</Section>

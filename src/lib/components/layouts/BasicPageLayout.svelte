@@ -1,6 +1,5 @@
 <script lang="ts">
-	import logo from '$lib/assets/logo.png';
-	import { resolve } from '$app/paths';
+	import { asset, resolve } from '$app/paths';
 	import { fade } from 'svelte/transition';
 	import type { Snippet } from 'svelte';
 	import type { ClassValue } from 'svelte/elements';
@@ -28,8 +27,8 @@
 		<div class="relative m-auto mx-auto p-4 pr-12 sm:max-w-lg">
 			<h1 class="flex min-h-9 items-center gap-4 leading-none">
 				<a href={resolve('/')}>
-					<span class="sr-only">Vote The Bowl</span>
-					<img src={logo} alt="" aria-hidden="true" class="h-8 w-8 rounded-full" />
+					<span class="sr-only h-0 w-0">Vote The Bowl</span>
+					<img src={asset('/favicon.svg')} alt="" aria-hidden="true" class="h-10 w-10" />
 				</a>
 				{title}
 				<span class="sr-only"> - {subtitle}</span>

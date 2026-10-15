@@ -76,7 +76,7 @@
 <svelte:head>
 	<meta property="og:site_name" content="Vote The Bowl" />
 	<meta property="og:title" content="Register for the {eventContext.event?.name}" />
-	<meta property="og:image" content={page.url.origin + '/favicon.png'} />
+	<meta property="og:image" content={page.url.origin + '/favicon.svg'} />
 	<meta
 		property="og:description"
 		content="You are invited to register for the {eventContext.event?.name}."
