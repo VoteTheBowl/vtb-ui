@@ -20,12 +20,18 @@
 	}
 </script>
 
-<label class="group max-w-fit cursor-pointer rounded-md {classes}">
-	<span class="sr-only">Dark Mode</span>
-	<input type="checkbox" role="switch" {checked} {onchange} class="group h-0 w-0 focus:outline-0" />
+<label class="max-w-fit cursor-pointer rounded-md {classes}">
+	<span class="sr-only select-none">Dark Mode</span>
+	<input
+		type="checkbox"
+		role="switch"
+		{checked}
+		{onchange}
+		class="peer h-0 w-0 select-none focus:outline-0"
+	/>
 	<div
 		class="relative box-content h-8 w-8 overflow-clip rounded-full bg-blue-300 outline-blue-500
-            transition-colors duration-400 group-focus-within:outline-2 dark:bg-gray-800"
+            transition-colors duration-(--theme-duration) peer-focus-visible:outline-2 dark:bg-gray-800"
 	>
 		{#if checked}
 			<div

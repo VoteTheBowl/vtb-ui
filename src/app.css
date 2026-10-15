@@ -23,6 +23,8 @@
 	--color-secondary-700: #eb4f27;
 	--color-secondary-800: #cc4522;
 	--color-secondary-900: #a5371b;
+
+	--theme-duration: 350ms;
 }
 
 @layer base {
@@ -71,7 +73,7 @@
 	a,
 	li,
 	input {
-		@apply font-[averia] text-lg transition-colors duration-150 dark:text-white;
+		@apply font-[averia] text-lg transition-colors duration-(--theme-duration) dark:text-white;
 	}
 
 	a {
@@ -99,7 +101,7 @@
 	.h3,
 	h4,
 	.h4 {
-		@apply font-[unkempt] font-bold transition-colors duration-150 dark:text-white;
+		@apply font-[unkempt] font-bold transition-colors duration-(--theme-duration) dark:text-white;
 	}
 
 	h1,
