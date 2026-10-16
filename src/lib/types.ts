@@ -1,4 +1,4 @@
-import type { BallotResponseData, EventResponseData } from '$lib/api/events';
+import type { BallotResponseData, EventResponseData } from '#lib/api/events.js';
 
 export type ResultContext = { ballots: BallotResponseData[] };
 export type EventContext = { event: null | EventResponseData };

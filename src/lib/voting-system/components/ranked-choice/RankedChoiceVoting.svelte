@@ -2,9 +2,9 @@
 	import { dndzone, type DndEvent, type Item } from 'svelte-dnd-action';
 	import { flip } from 'svelte/animate';
 	import { onMount } from 'svelte';
-	import type { VotingComponentProps } from '$lib/voting-system/types';
+	import type { VotingComponentProps } from '#lib/voting-system/types.js';
 	import type { RankedSubmission } from './types';
-	import { getSubmissionContext } from '$lib/voting-system/context';
+	import { getSubmissionContext } from '#lib/voting-system/context.js';
 
 	let { event }: VotingComponentProps = $props();
 

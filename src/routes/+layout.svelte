@@ -1,9 +1,9 @@
 <script lang="ts">
 	import '../app.css';
-	import { InfoAPI } from '$lib/api/info';
+	import { InfoAPI } from '#lib/api/info.js';
 	import { onMount } from 'svelte';
-	import StorageProvider from '$lib/storage/StorageProvider.svelte';
-	import ThemeContextProvider from '$lib/components/ThemeContextProvider.svelte';
+	import StorageProvider from '#lib/storage/StorageProvider.svelte';
+	import ThemeContextProvider from '#lib/components/ThemeContextProvider.svelte';
 
 	let { children } = $props();
 

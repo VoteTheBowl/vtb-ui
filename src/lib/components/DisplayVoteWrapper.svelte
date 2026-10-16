@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type { EventResponseData, BallotResponseData } from '$lib/api/events';
-	import votingSystems from '$lib/voting-system/config';
+	import type { EventResponseData, BallotResponseData } from '#lib/api/events.js';
+	import votingSystems from '#lib/voting-system/config.js';
 	import Section from './Section.svelte';
 	import Icon from './Icon.svelte';
 

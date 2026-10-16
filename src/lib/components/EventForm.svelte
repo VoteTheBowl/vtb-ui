@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { EventsAPI } from '$lib/api/events';
+	import { EventsAPI } from '#lib/api/events.js';
 	import { resolve } from '$app/paths';
-	import votingSystems from '$lib/voting-system/config';
-	import { getStorageContext } from '$lib/storage/storage.svelte';
+	import votingSystems from '#lib/voting-system/config.js';
+	import { getStorageContext } from '#lib/storage/storage.svelte.js';
 	import Button from './Button.svelte';
 	import Icon from './Icon.svelte';
 
@@ -47,7 +47,7 @@
 
 		storage.saveEvent(response.id, response.name, response.host_token);
 
-		await goto(resolve(`/host/event/registration?e=${response.id}`));
+		await goto(resolve(`host/event/registration?e=${response.id}`));
 	};
 </script>
 

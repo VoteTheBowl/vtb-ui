@@ -1,9 +1,9 @@
 <script lang="ts">
 	import type { StarSubmission } from './types';
 	import seedrandom from 'seedrandom';
-	import type { ResultComponentProps } from '$lib/voting-system/types';
-	import type { BallotResponseData } from '$lib/api/events';
-	import Icon from '$lib/components/Icon.svelte';
+	import type { ResultComponentProps } from '#lib/voting-system/types.js';
+	import type { BallotResponseData } from '#lib/api/events.js';
+	import Icon from '#lib/components/Icon.svelte';
 
 	let { event, ballots }: ResultComponentProps = $props();
 

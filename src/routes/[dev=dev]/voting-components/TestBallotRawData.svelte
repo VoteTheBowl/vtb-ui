@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Icon from '$lib/components/Icon.svelte';
-	import { getSubmissionContext } from '$lib/voting-system/context';
+	import Icon from '#lib/components/Icon.svelte';
+	import { getSubmissionContext } from '#lib/voting-system/context.js';
 
 	let submissionContext = getSubmissionContext();
 </script>

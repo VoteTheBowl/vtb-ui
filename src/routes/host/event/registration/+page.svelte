@@ -2,14 +2,14 @@
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
-	import { EventsAPI } from '$lib/api/events';
-	import Button from '$lib/components/Button.svelte';
-	import Icon from '$lib/components/Icon.svelte';
-	import BasicPageLayout from '$lib/components/layouts/BasicPageLayout.svelte';
-	import Modal from '$lib/components/Modal.svelte';
-	import Section from '$lib/components/Section.svelte';
-	import { getBallotsContext, getEventContext } from '$lib/context';
-	import { getStorageContext } from '$lib/storage/storage.svelte';
+	import { EventsAPI } from '#lib/api/events.js';
+	import Button from '#lib/components/Button.svelte';
+	import Icon from '#lib/components/Icon.svelte';
+	import BasicPageLayout from '#lib/components/layouts/BasicPageLayout.svelte';
+	import Modal from '#lib/components/Modal.svelte';
+	import Section from '#lib/components/Section.svelte';
+	import { getBallotsContext, getEventContext } from '#lib/context.js';
+	import { getStorageContext } from '#lib/storage/storage.svelte.js';
 	import QRCode from '@castlenine/svelte-qrcode';
 	import { fade } from 'svelte/transition';
 
@@ -43,15 +43,13 @@
 		if (!eventContext.event) return;
 
 		const api = new EventsAPI();
+
 		eventContext.event = await api.updateEvent(
 			eventContext.event.id,
 			storage.getEvent(eventContext.event.id).token,
-			{
-				allow_registration: false,
-				allow_voting: true
-			}
+			{ allow_registration: false, allow_voting: true }
 		);
-		goto(resolve(`/host/event/voting?e=${eventContext.event.id}`), { replaceState: true });
+		goto(resolve(`host/event/voting?e=${eventContext.event.id}`), { replaceState: true });
 	};
 </script>
 

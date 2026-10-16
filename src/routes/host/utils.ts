@@ -1,14 +1,15 @@
 import { goto } from '$app/navigation';
 import { resolve } from '$app/paths';
-import { EventsAPI, type EventResponseData } from '$lib/api/events';
-import type { StorageManager } from '$lib/storage/storage.svelte';
+import { EventsAPI, type EventResponseData } from '#lib/api/events.js';
+import type { StorageManager } from '#lib/storage/storage.svelte.js';
+import type { ReadonlyURLSearchParams } from '$app/state';
 
 function reroute(message: string = '') {
-	goto(resolve('/host/'), { replaceState: true, state: { message } });
+	goto(resolve('host/'), { replaceState: true, state: { message } });
 }
 
 export async function getEventFromParamOrReroute(
-	searchParams: URLSearchParams,
+	searchParams: ReadonlyURLSearchParams,
 	storage: StorageManager,
 	client: EventsAPI
 ) {

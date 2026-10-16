@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { DisplayOnlyVotingComponentProps } from '$lib/voting-system/types';
+	import type { DisplayOnlyVotingComponentProps } from '#lib/voting-system/types.js';
 	import type { Submission } from './types';
 
 	const { ballot }: DisplayOnlyVotingComponentProps = $props();

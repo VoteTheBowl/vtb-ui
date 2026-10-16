@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { RESULTS_REFRESH_DELAY } from '../const';
-	import votingSystems from '$lib/voting-system/config';
-	import { EventsAPI, type BallotResponseData, type EventResponseData } from '$lib/api/events';
+	import votingSystems from '#lib/voting-system/config.js';
+	import { EventsAPI, type BallotResponseData, type EventResponseData } from '#lib/api/events.js';
 
 	const { event, token }: { event: EventResponseData; token: string } = $props();
 	const config = $derived(votingSystems.find((value) => value.id === event.electoral_system));

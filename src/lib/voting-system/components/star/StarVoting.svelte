@@ -1,10 +1,10 @@
 <script lang="ts">
 	import type { StarSubmission } from './types';
-	import type { VotingComponentProps } from '$lib/voting-system/types';
+	import type { VotingComponentProps } from '#lib/voting-system/types.js';
 	import { onMount } from 'svelte';
 	import Star from './Star.svelte';
-	import { getSubmissionContext } from '$lib/voting-system/context';
-	import Icon from '$lib/components/Icon.svelte';
+	import { getSubmissionContext } from '#lib/voting-system/context.js';
+	import Icon from '#lib/components/Icon.svelte';
 
 	let { event }: VotingComponentProps = $props();
 

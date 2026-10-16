@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type { ResultComponentProps } from '$lib/voting-system/types';
-	import type { BallotResponseData, EventResponseData } from '$lib/api/events';
+	import type { ResultComponentProps } from '#lib/voting-system/types.js';
+	import type { BallotResponseData, EventResponseData } from '#lib/api/events.js';
 	import type { RankedSubmission } from './types';
 
 	let { event, ballots }: ResultComponentProps = $props();

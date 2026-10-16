@@ -1,4 +1,4 @@
-import type { EventResponseData, BallotResponseData } from '$lib/api/events';
+import type { EventResponseData, BallotResponseData } from '#lib/api/events.js';
 
 export type VotingComponentProps = {
 	event: EventResponseData;

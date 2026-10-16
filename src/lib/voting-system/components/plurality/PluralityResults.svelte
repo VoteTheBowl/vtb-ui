@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Submission } from './types';
-	import type { BallotResponseData, EventResponseData } from '$lib/api/events';
+	import type { BallotResponseData, EventResponseData } from '#lib/api/events.js';
 
 	let { event, ballots }: { event: EventResponseData; ballots: BallotResponseData[] } = $props();
 

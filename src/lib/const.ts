@@ -1,4 +1,4 @@
-import { env } from '$env/dynamic/public';
+import { PUBLIC_REFRESH_DELAY, PUBLIC_VOTER_REFRESH_DELAY } from '$app/env/public';
 
-export const RESULTS_REFRESH_DELAY = Number(env.PUBLIC_REFRESH_DELAY ?? 3000);
-export const VOTER_REFRESH_DELAY = Number(env.PUBLIC_VOTER_REFRESH_DELAY ?? 5000);
+export const RESULTS_REFRESH_DELAY = Number(PUBLIC_REFRESH_DELAY ?? 3000);
+export const VOTER_REFRESH_DELAY = Number(PUBLIC_VOTER_REFRESH_DELAY ?? 5000);

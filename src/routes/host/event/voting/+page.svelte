@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
-	import { EventsAPI } from '$lib/api/events';
-	import Button from '$lib/components/Button.svelte';
-	import BasicPageLayout from '$lib/components/layouts/BasicPageLayout.svelte';
-	import Modal from '$lib/components/Modal.svelte';
-	import Section from '$lib/components/Section.svelte';
-	import { getBallotsContext, getEventContext } from '$lib/context';
-	import { getStorageContext } from '$lib/storage/storage.svelte';
+	import { EventsAPI } from '#lib/api/events.js';
+	import Button from '#lib/components/Button.svelte';
+	import BasicPageLayout from '#lib/components/layouts/BasicPageLayout.svelte';
+	import Modal from '#lib/components/Modal.svelte';
+	import Section from '#lib/components/Section.svelte';
+	import { getBallotsContext, getEventContext } from '#lib/context.js';
+	import { getStorageContext } from '#lib/storage/storage.svelte.js';
 
 	const eventContext = getEventContext();
 	const ballotsContext = getBallotsContext();
@@ -34,9 +34,9 @@
 			eventContext.event.id,
 			storage.getEvent(eventContext.event.id).token
 		);
-		eventContext.event.closed = response.closed;
 
-		goto(resolve(`/host/event/results?e=${eventContext.event.id}`), { replaceState: true });
+		eventContext.event.closed = response.closed;
+		goto(resolve(`host/event/results?e=${eventContext.event.id}`), { replaceState: true });
 	};
 </script>
 

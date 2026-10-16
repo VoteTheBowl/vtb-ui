@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import { BallotAPI, EventsAPI } from '$lib/api/events';
-	import { VOTER_REFRESH_DELAY } from '$lib/const';
-	import { getBallotContext, getEventContext } from '$lib/context';
-	import { getStorageContext } from '$lib/storage/storage.svelte';
+	import { BallotAPI, EventsAPI } from '#lib/api/events.js';
+	import { VOTER_REFRESH_DELAY } from '#lib/const.js';
+	import { getBallotContext, getEventContext } from '#lib/context.js';
+	import { getStorageContext } from '#lib/storage/storage.svelte.js';
 	import { onDestroy, onMount } from 'svelte';
 
 	const ballotID = $derived(Number(page.url.searchParams.get('b')));

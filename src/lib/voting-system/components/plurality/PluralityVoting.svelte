@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { getSubmissionContext } from '$lib/voting-system/context';
-	import type { VotingComponentProps } from '$lib/voting-system/types';
+	import { getSubmissionContext } from '#lib/voting-system/context.js';
+	import type { VotingComponentProps } from '#lib/voting-system/types.js';
 
 	let { event }: VotingComponentProps = $props();
 

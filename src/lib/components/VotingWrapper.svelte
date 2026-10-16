@@ -1,7 +1,7 @@
 <script lang="ts">
-	import votingSystems from '$lib/voting-system/config';
-	import { BallotAPI, type BallotResponseData, type EventResponseData } from '$lib/api/events';
-	import { setSubmissionContext, type SubmissionContext } from '$lib/voting-system/context';
+	import votingSystems from '#lib/voting-system/config.js';
+	import { BallotAPI, type BallotResponseData, type EventResponseData } from '#lib/api/events.js';
+	import { setSubmissionContext, type SubmissionContext } from '#lib/voting-system/context.js';
 	import Button from './Button.svelte';
 	import Modal from './Modal.svelte';
 
