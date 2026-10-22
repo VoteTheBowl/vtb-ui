@@ -1,16 +1,17 @@
 <script lang="ts">
-	import type { EventResponseData, BallotResponseData } from '$lib/api/events';
+	import type { EventResponseData } from '$lib/api/events';
 	import votingSystems from '$lib/voting-system/config';
 	import Section from './Section.svelte';
 	import Icon from './Icon.svelte';
+	import type { Submissions } from '$lib/voting-system/types';
 
 	let {
 		event,
-		ballot = $bindable(),
+		submission,
 		title = 'Your Submitted Ballot'
 	}: {
 		event: EventResponseData;
-		ballot: BallotResponseData;
+		submission: Submissions;
 		title?: string;
 	} = $props();
 
@@ -22,7 +23,7 @@
 		<Icon icon="lock" />
 	{/snippet}
 	{#if config}
-		<config.displayOnlyVote {event} {ballot} />
+		<config.displayOnlyVote {event} {submission} />
 	{:else}
 		Config Error!
 	{/if}

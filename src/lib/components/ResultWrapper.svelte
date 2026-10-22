@@ -2,30 +2,30 @@
 	import { onMount } from 'svelte';
 	import { RESULTS_REFRESH_DELAY } from '../const';
 	import votingSystems from '$lib/voting-system/config';
-	import { EventsAPI, type BallotResponseData, type EventResponseData } from '$lib/api/events';
+	import { EventsAPI, type EventResponseData } from '$lib/api/events';
 
-	const { event, token }: { event: EventResponseData; token: string } = $props();
+	let { event, token }: { event: EventResponseData; token: string } = $props();
 	const config = $derived(votingSystems.find((value) => value.id === event.electoral_system));
-	let ballots: BallotResponseData[] = $state([]);
 
 	let timeoutID: NodeJS.Timeout;
 
-	async function getBallots() {
+	async function getEvent() {
 		const api = new EventsAPI();
-		ballots = await api.listBallots(event.id, token);
+		event = await api.getEvent(event.id, token);
+
 		clearTimeout(timeoutID);
-		timeoutID = setTimeout(getBallots, RESULTS_REFRESH_DELAY);
+		timeoutID = setTimeout(getEvent, RESULTS_REFRESH_DELAY);
 	}
 
 	onMount(() => {
-		getBallots();
+		getEvent();
 
 		return () => clearTimeout(timeoutID);
 	});
 </script>
 
-{#if config}
-	<config.results {event} {ballots} />
+{#if config && event.result}
+	<config.results result={event.result} />
 {:else}
 	Config Error!
 {/if}

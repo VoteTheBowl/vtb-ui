@@ -16,7 +16,8 @@
 		allow_voting: true,
 		show_results: true,
 		share_token: 'test-token',
-		closed: '2023-01-01T00:00:00Z'
+		closed: '2023-01-01T00:00:00Z',
+		result: null
 	};
 </script>
 

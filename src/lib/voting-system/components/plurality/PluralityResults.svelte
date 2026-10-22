@@ -1,26 +1,18 @@
 <script lang="ts">
-	import type { Submission } from './types';
-	import type { BallotResponseData, EventResponseData } from '$lib/api/events';
+	import type { ResultComponentProps } from '$lib/voting-system/types';
+	import type { PluralityResultType } from './types';
 
-	let { event, ballots }: { event: EventResponseData; ballots: BallotResponseData[] } = $props();
-
-	let votes: { choice: string; count: number }[] = $derived(
-		event.choices.map((choice) => ({
-			choice,
-			count: ballots.filter((ballot) => (ballot.vote as Submission)?.choice === choice).length
-		})) || []
-	);
+	let { result }: ResultComponentProps<PluralityResultType> = $props();
 </script>
 
-{#each votes.sort((a, b) => b.count - a.count) as vote, index (vote.choice)}
+{#each Object.entries(result).sort((a, b) => b[1] - a[1]) as vote, index (vote[0])}
 	{#if index === 0}
 		<p class="mb-4">
-			The winner is <span class="text-xl font-bold italic">{vote.choice}</span> with ({vote.count})
-			votes.
+			The winner is <span class="text-xl font-bold italic">{vote[0]}</span> with ({vote[1]}) votes.
 		</p>
 		<h4 class="border-b-2">Totals</h4>
 	{/if}
 	<p class="my-2 text-xl">
-		<span class="text-xl font-bold">{vote.choice}</span>: {vote.count}
+		<span class="text-xl font-bold">{vote[0]}</span>: {vote[1]}
 	</p>
 {/each}

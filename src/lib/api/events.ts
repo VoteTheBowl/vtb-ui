@@ -1,3 +1,4 @@
+import type { Results, Submissions } from '$lib/voting-system/types';
 import { BaseAPI } from './base';
 
 export type EventCreateRequestData = {
@@ -20,6 +21,7 @@ export type EventResponseData = {
 	share_token: string;
 	show_results: boolean;
 	closed: null | string;
+	result: Results;
 };
 
 export type EventCreateResponseData = EventResponseData & {
@@ -35,7 +37,7 @@ export type EventUpdateBody = {
 export type BallotResponseData = {
 	id: number;
 	voter_name: string;
-	vote: Record<string, unknown> | unknown[] | null;
+	vote: Submissions;
 	created: string;
 	submitted: null | string;
 };
@@ -75,6 +77,12 @@ export class EventsAPI extends BaseAPI {
 		return this.patch(`/${eventID}`, body, {
 			'X-API-Key': token
 		}) as Promise<EventResponseData>;
+	};
+
+	calculateEventResult = async (eventID: number, token: string) => {
+		return this.post(`/${eventID}/calculate`, undefined, {
+			'X-API-Key': token
+		}) as Promise<Results>;
 	};
 }
 

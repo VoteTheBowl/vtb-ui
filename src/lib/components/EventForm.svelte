@@ -17,8 +17,9 @@
 	const isFormValid = $derived(eventName.trim() !== '' && dishes.length > 1);
 
 	const addDish = () => {
-		if (newDish.trim()) {
-			dishes = [...dishes, newDish.trim()];
+		const trimmedDish = newDish.trim();
+		if (trimmedDish && !dishes.includes(trimmedDish)) {
+			dishes = [...dishes, trimmedDish];
 			newDish = '';
 		}
 	};

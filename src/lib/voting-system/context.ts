@@ -1,7 +1,9 @@
 import { createContext } from 'svelte';
+import type { StarSubmissionType } from './components/star/types';
+import type { PluralitySubmissionType } from './components/plurality/types';
 
 export interface SubmissionContext {
-	submission: Record<string, unknown> | unknown[] | null;
+	submission: StarSubmissionType | PluralitySubmissionType | null;
 	submissionIsValid: boolean;
 }
 
