@@ -6,5 +6,5 @@
 </script>
 
 <p class="text-xl">
-	You Picked: <span class="text-2xl font-bold">{submission?.choice}</span>
+	You Picked: <span class="text-2xl font-bold">{submission}</span>
 </p>

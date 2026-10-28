@@ -8,7 +8,7 @@
 	let submissionContext = getSubmissionContext();
 
 	$effect(() => {
-		submissionContext.submission = { choice: selectedChoice };
+		submissionContext.submission = selectedChoice;
 		submissionContext.submissionIsValid = selectedChoice !== '';
 	});
 </script>
