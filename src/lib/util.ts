@@ -12,7 +12,7 @@ export function getEventURL(event: EventResponseData): Pathname {
 export function getBallotURL(event: EventResponseData, ballotID: number): Pathname {
 	if (event?.closed) return `/ballot/results?b=${ballotID}`;
 	else if (event?.allow_registration == true && event?.allow_voting == false)
-		return `/ballot?b=${ballotID}`;
+		return `/ballot/voting?b=${ballotID}`;
 	else if (event?.allow_voting == true) return `/ballot/voting?b=${ballotID}`;
 	else return '/';
 }
