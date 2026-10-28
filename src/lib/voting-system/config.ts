@@ -6,9 +6,9 @@ import type {
 } from './types';
 
 //Ranked Choice
-/* import RankedChoiceVoting from './components/ranked-choice/RankedChoiceVoting.svelte';
+import RankedChoiceVoting from './components/ranked-choice/RankedChoiceVoting.svelte';
 import RankedChoiceResults from './components/ranked-choice/RankedChoiceResults.svelte';
-import RankedChoiceDisplayVote from './components/ranked-choice/RankedChoiceDisplayVote.svelte'; */
+import RankedChoiceDisplayVote from './components/ranked-choice/RankedChoiceDisplayVote.svelte';
 
 //Plurality
 import PluralityVoting from './components/plurality/PluralityVoting.svelte';
@@ -29,13 +29,13 @@ export type VotingConfigItem = {
 };
 
 const config: VotingConfigItem[] = [
-	/* 	{
+	{
 		id: 'RC',
 		label: 'Ranked Choice',
 		voting: RankedChoiceVoting,
 		results: RankedChoiceResults,
 		displayOnlyVote: RankedChoiceDisplayVote
-	}, */
+	},
 	{
 		id: 'PL',
 		label: 'Plurality',
