@@ -23,7 +23,7 @@ export default defineConfig({
 			prerender: {
 				handleUnseenRoutes: (details) => {
 					if (details.routes.every((route) => route.includes('[dev=dev]'))) {
-						console.log('Dropping [dev=dev] routes.');
+						console.warn('Dropping [dev=dev] routes.');
 					} else {
 						throw Error('Could not prerender unseen routes:\n' + details.routes.join('\n'));
 					}
