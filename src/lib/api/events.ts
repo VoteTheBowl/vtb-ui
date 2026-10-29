@@ -1,10 +1,11 @@
+import type { VotingSystem } from '$lib/voting-system/config';
 import type { Results, Submissions } from '$lib/voting-system/types';
 import { BaseAPI } from './base';
 
 export type EventCreateRequestData = {
 	name: string;
 	choices: string[];
-	electoral_system: string;
+	electoral_system: VotingSystem;
 	allow_registration?: boolean;
 	allow_voting?: boolean;
 };
@@ -17,7 +18,7 @@ export type EventResponseData = {
 	choices: string[];
 	allow_registration: boolean;
 	allow_voting: boolean;
-	electoral_system: string;
+	electoral_system: VotingSystem;
 	share_token: string;
 	show_results: boolean;
 	closed: null | string;

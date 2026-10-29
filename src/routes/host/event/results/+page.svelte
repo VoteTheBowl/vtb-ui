@@ -12,7 +12,9 @@
 	const ballotsContext = getBallotsContext();
 	const storage = getStorageContext();
 	const config = $derived(
-		votingSystems.find((value) => value.id === eventContext.event?.electoral_system)
+		eventContext.event?.electoral_system
+			? votingSystems[eventContext.event.electoral_system]
+			: undefined
 	);
 	const myBallot = $derived(
 		ballotsContext.ballots?.find((b) => {

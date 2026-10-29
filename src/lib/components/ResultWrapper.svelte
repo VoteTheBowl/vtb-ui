@@ -5,7 +5,7 @@
 	import { EventsAPI, type EventResponseData } from '$lib/api/events';
 
 	let { event, token }: { event: EventResponseData; token: string } = $props();
-	const config = $derived(votingSystems.find((value) => value.id === event.electoral_system));
+	const config = $derived(votingSystems[event.electoral_system]);
 
 	let timeoutID: NodeJS.Timeout;
 

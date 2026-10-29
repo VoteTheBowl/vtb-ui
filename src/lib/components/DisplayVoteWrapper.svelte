@@ -15,7 +15,7 @@
 		title?: string;
 	} = $props();
 
-	const config = $derived(votingSystems.find((value) => value.id === event.electoral_system));
+	const config = $derived(votingSystems[event.electoral_system]);
 </script>
 
 <Section {title}>
