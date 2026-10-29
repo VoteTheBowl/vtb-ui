@@ -37,6 +37,6 @@
 			</Section>
 		{/if}
 
-		<DisplayVoteWrapper title="Your Submitted Ballot" {event} {ballot} />
+		<DisplayVoteWrapper title="Your Submitted Ballot" {event} submission={ballot.vote} />
 	{/if}
 </BasicPageLayout>

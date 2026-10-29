@@ -34,6 +34,10 @@
 			eventContext.event.id,
 			storage.getEvent(eventContext.event.id).token
 		);
+		eventContext.event.result = await api.calculateEventResult(
+			eventContext.event.id,
+			storage.getEvent(eventContext.event.id).token
+		);
 		eventContext.event.closed = response.closed;
 
 		goto(resolve(`/host/event/results?e=${eventContext.event.id}`), { replaceState: true });

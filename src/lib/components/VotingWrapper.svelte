@@ -16,7 +16,8 @@
 		token: string;
 		onSubmitVote: (value: BallotResponseData) => void;
 	} = $props();
-	const config = $derived(votingSystems.find((value) => value.id === event.electoral_system));
+
+	const config = $derived(votingSystems[event.electoral_system]);
 	const submissionContext: SubmissionContext = $state({
 		submission: {},
 		submissionIsValid: false

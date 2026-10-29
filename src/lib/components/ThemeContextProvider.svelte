@@ -1,4 +1,4 @@
-<script module>
+<script module lang="ts">
 	import { browser } from '$app/env';
 	import { createContext } from 'svelte';
 

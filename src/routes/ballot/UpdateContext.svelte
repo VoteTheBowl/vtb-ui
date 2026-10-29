@@ -14,6 +14,8 @@
 
 	let timeout: string | number | NodeJS.Timeout | undefined;
 
+	$inspect(eventContext.event);
+
 	onMount(async () => {
 		if (isNaN(ballotID)) {
 			//Error

@@ -12,7 +12,9 @@
 	const ballotsContext = getBallotsContext();
 	const storage = getStorageContext();
 	const config = $derived(
-		votingSystems.find((value) => value.id === eventContext.event?.electoral_system)
+		eventContext.event?.electoral_system
+			? votingSystems[eventContext.event.electoral_system]
+			: undefined
 	);
 	const myBallot = $derived(
 		ballotsContext.ballots?.find((b) => {
@@ -49,13 +51,12 @@
 	title="Results"
 	subtitle={eventContext.event?.name}
 >
-	{#if eventContext.event && ballotsContext.ballots}
+	{#if eventContext.event && ballotsContext.ballots && eventContext.event.result}
 		{@const event = eventContext.event}
-		{@const ballots = ballotsContext.ballots}
 		<Section title="Results">
 			<div class="mb-4">
 				{#if config}
-					<config.results {event} {ballots} />
+					<config.results result={eventContext.event.result} />
 				{:else}
 					Config Error!
 				{/if}
@@ -65,7 +66,7 @@
 			<Switch checked={event.show_results} onchange={toggleShowResults} label="Show Results" />
 		</Section>
 		{#if myBallot}
-			<DisplayVoteWrapper {event} ballot={myBallot} />
+			<DisplayVoteWrapper {event} submission={myBallot.vote} />
 		{/if}
 	{/if}
 </BasicPageLayout>

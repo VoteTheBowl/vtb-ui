@@ -9,14 +9,5 @@
 </script>
 
 {#if submissionContext.submission}
-	<config.displayOnlyVote
-		{event}
-		ballot={{
-			id: 0,
-			voter_name: 'Test Voter',
-			vote: submissionContext.submission,
-			created: 'Some Time',
-			submitted: submissionContext.submissionIsValid ? 'Another Time' : null
-		}}
-	/>
+	<config.displayOnlyVote {event} submission={submissionContext.submission} />
 {/if}

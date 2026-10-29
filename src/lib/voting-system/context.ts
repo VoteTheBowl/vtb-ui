@@ -1,7 +1,10 @@
 import { createContext } from 'svelte';
+import type { StarSubmissionType } from './components/star/types';
+import type { PluralitySubmissionType } from './components/plurality/types';
+import type { RankedSubmissionType } from './components/ranked-choice/types';
 
 export interface SubmissionContext {
-	submission: Record<string, unknown> | unknown[] | null;
+	submission: StarSubmissionType | PluralitySubmissionType | RankedSubmissionType | null;
 	submissionIsValid: boolean;
 }
 

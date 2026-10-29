@@ -12,13 +12,14 @@
 	let eventName = $state('');
 	let dishes: string[] = $state([]);
 	let newDish = $state('');
-	let votingSystem: string = $state(votingSystems[0].id);
+	let votingSystem: string = $state('ST');
 
 	const isFormValid = $derived(eventName.trim() !== '' && dishes.length > 1);
 
 	const addDish = () => {
-		if (newDish.trim()) {
-			dishes = [...dishes, newDish.trim()];
+		const trimmedDish = newDish.trim();
+		if (trimmedDish && !dishes.includes(trimmedDish)) {
+			dishes = [...dishes, trimmedDish];
 			newDish = '';
 		}
 	};
@@ -95,8 +96,8 @@
 	<div>
 		<label for="voting-system" class="mb-2">Voting System</label>
 		<select id="voting-system" bind:value={votingSystem}>
-			{#each votingSystems as config (config.id)}
-				<option value={config.id}>{config.label}</option>
+			{#each Object.entries(votingSystems) as [id, config] (id)}
+				<option value={id}>{config.label}</option>
 			{/each}
 		</select>
 	</div>

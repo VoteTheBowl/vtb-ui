@@ -16,13 +16,14 @@
 		allow_voting: true,
 		show_results: true,
 		share_token: 'test-token',
-		closed: '2023-01-01T00:00:00Z'
+		closed: '2023-01-01T00:00:00Z',
+		result: null
 	};
 </script>
 
 <div class="m-auto p-4 sm:max-w-xl md:max-w-3xl lg:max-w-5xl">
 	<h1 class="mb-8">All Voting Components</h1>
-	{#each votingConfig as config (config.id)}
+	{#each Object.entries(votingConfig) as [id, config] (id)}
 		<TestBallotContextProvider>
 			<h1 class="mb-4">{config.label}</h1>
 			<div

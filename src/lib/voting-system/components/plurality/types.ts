@@ -1,1 +1,3 @@
-export type Submission = { choice: string } | null;
+export type PluralitySubmissionType = string;
+
+export type PluralityResultType = Record<string, number>;

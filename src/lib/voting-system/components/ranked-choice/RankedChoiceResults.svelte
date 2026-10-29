@@ -1,104 +1,27 @@
 <script lang="ts">
 	import type { ResultComponentProps } from '$lib/voting-system/types';
-	import type { BallotResponseData, EventResponseData } from '$lib/api/events';
-	import type { RankedSubmission } from './types';
+	import type { RankedResultType } from './types';
 
-	let { event, ballots }: ResultComponentProps = $props();
-
-	const calculateWinner = (
-		choiceData: EventResponseData['choices'],
-		ballotData: BallotResponseData[]
-	) => {
-		let ballots = ballotData.map((b) => {
-			const v = b.vote as RankedSubmission;
-			return v ? [...v] : [];
-		});
-		let choices = [...choiceData];
-
-		const rounds: Record<string, number>[] = [];
-
-		while (true) {
-			// Tally votes
-
-			const tallies: Record<string, number> = Object.fromEntries(
-				choices.map((choice) => [choice, 0])
-			);
-			tallies['Exhausted'] = 0;
-
-			ballots.forEach((b) => {
-				if (b.length > 0) {
-					tallies[b[0]]++;
-				} else {
-					tallies['Exhausted']++;
-				}
-			});
-
-			rounds.push(tallies);
-
-			// Identify round winner and loser (first choices only)
-
-			let roundWinner = choices[0];
-			let roundLosers = [choices[0]];
-
-			choices.forEach((choice) => {
-				if (tallies[choice] > tallies[roundWinner]) {
-					roundWinner = choice;
-				}
-				if (tallies[choice] < tallies[roundLosers[0]]) {
-					roundLosers = [choice];
-				}
-				if (tallies[choice] === tallies[roundLosers[0]]) {
-					roundLosers.push(choice);
-				}
-			});
-
-			// Purge roundLosers from the ballots (and the choice list)
-
-			ballots.forEach((b, i) => {
-				ballots[i] = b.filter((i) => !roundLosers.includes(i));
-			});
-			choices = choices.filter((c) => !roundLosers.includes(c));
-
-			// Check for a tie and/or an overall winner
-
-			if (choices.length === 0) {
-				return { roundData: rounds, overallWinner: '__TIE_FLAG__' };
-			}
-
-			// Winner only needs to take over 50% of non-exhausted votes
-			const validVoteCount = ballots.length - tallies['Exhausted'];
-
-			if (tallies[roundWinner] / validVoteCount > 0.5) {
-				return { roundData: rounds, overallWinner: roundWinner };
-			}
-		}
-	};
-
-	let { roundData, overallWinner } = $derived.by(() => {
-		if (ballots.length > 0) {
-			return calculateWinner(event.choices, ballots);
-		} else {
-			return { roundData: [], overallWinner: null };
-		}
-	});
+	let { result }: ResultComponentProps<RankedResultType> = $props();
 </script>
 
 <p class="mb-4 font-bold">
-	{#if overallWinner === '__TIE_FLAG__'}
+	{#if result.winner === '__TIE_FLAG__'}
 		It's a tie!
 	{:else}
-		{overallWinner} wins!
+		{result.winner} wins!
 	{/if}
 </p>
 
 <div class="flex flex-col-reverse">
-	{#each roundData as voteCount, i (i)}
+	{#each result.rounds as { tally, exhausted }, i (i)}
 		<div class="round mt-2 w-3xs rounded-lg bg-gray-200 p-2">
 			<div class="mb-2 text-sm font-light text-gray-600 uppercase">Round {i + 1}</div>
 			<div class="text-gray-700">
-				{#each Object.keys(voteCount) as candidate (candidate)}
-					<div>{candidate}: {voteCount[candidate]}</div>
+				{#each Object.keys(tally) as candidate (candidate)}
+					<div>{candidate}: {tally[candidate]}</div>
 				{/each}
+				<div>exhausted votes: {exhausted}</div>
 			</div>
 		</div>
 	{/each}

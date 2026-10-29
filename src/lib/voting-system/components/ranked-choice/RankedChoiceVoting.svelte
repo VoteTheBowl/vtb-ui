@@ -3,7 +3,7 @@
 	import { flip } from 'svelte/animate';
 	import { onMount } from 'svelte';
 	import type { VotingComponentProps } from '$lib/voting-system/types';
-	import type { RankedSubmission } from './types';
+	import type { RankedSubmissionType } from './types';
 	import { getSubmissionContext } from '$lib/voting-system/context';
 
 	let { event }: VotingComponentProps = $props();
@@ -20,7 +20,7 @@
 
 	function handleFinalize(e: CustomEvent<DndEvent>) {
 		items = e.detail.items;
-		submissionContext.submission = items.map((i) => i.id) as RankedSubmission;
+		submissionContext.submission = items.map((i) => i.id) as RankedSubmissionType;
 	}
 
 	onMount(() => {
@@ -29,7 +29,7 @@
 				return { id: choiceStr, title: choiceStr };
 			})
 			.sort(() => Math.random() - 0.5);
-		submissionContext.submission = items.map((i) => i.id) as RankedSubmission;
+		submissionContext.submission = items.map((i) => i.id) as RankedSubmissionType;
 		submissionContext.submissionIsValid = true;
 	});
 </script>
