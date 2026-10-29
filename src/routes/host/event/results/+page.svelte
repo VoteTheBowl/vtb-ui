@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { EventsAPI } from '$lib/api/events';
-	import DisplayVoteWrapper from '$lib/components/DisplayVoteWrapper.svelte';
-	import BasicPageLayout from '$lib/components/layouts/BasicPageLayout.svelte';
-	import Section from '$lib/components/Section.svelte';
-	import Switch from '$lib/components/Switch.svelte';
-	import { getBallotsContext, getEventContext } from '$lib/context';
-	import { getStorageContext } from '$lib/storage/storage.svelte';
-	import votingSystems from '$lib/voting-system/config';
+	import { EventsAPI } from '#lib/api/events.js';
+	import DisplayVoteWrapper from '#lib/components/DisplayVoteWrapper.svelte';
+	import BasicPageLayout from '#lib/components/layouts/BasicPageLayout.svelte';
+	import Section from '#lib/components/Section.svelte';
+	import Switch from '#lib/components/Switch.svelte';
+	import { getBallotsContext, getEventContext } from '#lib/context.js';
+	import { getStorageContext } from '#lib/storage/storage.svelte.js';
+	import votingSystems from '#lib/voting-system/config.js';
 
 	const eventContext = getEventContext();
 	const ballotsContext = getBallotsContext();

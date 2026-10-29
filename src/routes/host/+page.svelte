@@ -1,5 +1,5 @@
 <script>
-	import BasicPageLayout from '$lib/components/layouts/BasicPageLayout.svelte';
+	import BasicPageLayout from '#lib/components/layouts/BasicPageLayout.svelte';
 	import SavedEventList from './SavedEventList.svelte';
 </script>
 

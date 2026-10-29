@@ -1,5 +1,5 @@
-import type { VotingSystem } from '$lib/voting-system/config';
-import type { Results, Submissions } from '$lib/voting-system/types';
+import type { VotingSystem } from '#lib/voting-system/config.js';
+import type { Results, Submissions } from '#lib/voting-system/types.js';
 import { BaseAPI } from './base';
 
 export type EventCreateRequestData = {

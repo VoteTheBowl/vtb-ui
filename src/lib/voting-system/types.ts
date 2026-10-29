@@ -1,4 +1,4 @@
-import type { EventResponseData } from '$lib/api/events';
+import type { EventResponseData } from '#lib/api/events.js';
 import type { PluralityResultType, PluralitySubmissionType } from './components/plurality/types';
 import type { RankedResultType } from './components/ranked-choice/types';
 import type { StarResultType, StarSubmissionType } from './components/star/types';

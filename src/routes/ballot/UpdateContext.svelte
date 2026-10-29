@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import { BallotAPI, EventsAPI } from '$lib/api/events';
-	import { VOTER_REFRESH_DELAY } from '$lib/const';
-	import { getBallotContext, getEventContext } from '$lib/context';
-	import { getStorageContext } from '$lib/storage/storage.svelte';
+	import { BallotAPI, EventsAPI } from '#lib/api/events.js';
+	import { PUBLIC_VOTER_REFRESH_DELAY } from '$app/env/public';
+	import { getBallotContext, getEventContext } from '#lib/context.js';
+	import { getStorageContext } from '#lib/storage/storage.svelte.js';
 	import { onDestroy, onMount } from 'svelte';
 
 	const ballotID = $derived(Number(page.url.searchParams.get('b')));
@@ -13,8 +13,6 @@
 	const storage = getStorageContext();
 
 	let timeout: string | number | NodeJS.Timeout | undefined;
-
-	$inspect(eventContext.event);
 
 	onMount(async () => {
 		if (isNaN(ballotID)) {
@@ -29,7 +27,7 @@
 
 			timeout = setInterval(async () => {
 				eventContext.event = await eventsClient.getEvent(eventID, token);
-			}, VOTER_REFRESH_DELAY);
+			}, PUBLIC_VOTER_REFRESH_DELAY);
 		}
 	});
 

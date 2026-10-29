@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import type { Pathname } from '$app/types';
+	import type { Path } from '$app/types';
 	import type { Snippet } from 'svelte';
 	import type { HTMLButtonAttributes } from 'svelte/elements';
 
@@ -15,7 +15,7 @@
 	}: {
 		variant?: 'primary' | 'secondary' | 'danger';
 		type?: HTMLButtonAttributes['type'];
-		href?: Pathname;
+		href?: Path;
 		onclick?: () => void;
 		disabled?: boolean;
 		children: Snippet;

@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { setBallotContext, setEventContext } from '$lib/context';
-	import type { BallotContext, EventContext } from '$lib/types';
+	import { setBallotContext, setEventContext } from '#lib/context.js';
+	import type { BallotContext, EventContext } from '#lib/types.js';
 
 	const { children } = $props();
 

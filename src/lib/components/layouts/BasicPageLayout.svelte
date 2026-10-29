@@ -28,7 +28,8 @@
 			<h1 class="flex min-h-9 items-center gap-4 leading-none">
 				<a href={resolve('/')}>
 					<span class="sr-only h-0 w-0">Vote The Bowl</span>
-					<img src={asset('/favicon.svg')} alt="" aria-hidden="true" class="h-10 w-10" />
+
+					<img src={asset('favicon.svg')} alt="" aria-hidden="true" class="h-10 w-10" />
 				</a>
 				{title}
 				<span class="sr-only"> - {subtitle}</span>

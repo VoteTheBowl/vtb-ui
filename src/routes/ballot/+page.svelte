@@ -1,14 +1,14 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { EventsAPI, type EventResponseData } from '$lib/api/events';
+	import { EventsAPI, type EventResponseData } from '#lib/api/events.js';
 	import { resolve } from '$app/paths';
-	import { APIError } from '$lib/api/base';
-	import { getStorageContext } from '$lib/storage/storage.svelte';
-	import BasicPageLayout from '$lib/components/layouts/BasicPageLayout.svelte';
+	import { APIError } from '#lib/api/base.js';
+	import { getStorageContext } from '#lib/storage/storage.svelte.js';
+	import BasicPageLayout from '#lib/components/layouts/BasicPageLayout.svelte';
 	import { page } from '$app/state';
-	import { getBallotURL } from '$lib/util';
-	import { getBallotContext, getEventContext } from '$lib/context';
-	import Button from '$lib/components/Button.svelte';
+	import { getBallotURL } from '#lib/util.js';
+	import { getBallotContext, getEventContext } from '#lib/context.js';
+	import Button from '#lib/components/Button.svelte';
 	import { fade } from 'svelte/transition';
 
 	let eventID = Number(page.url.searchParams.get('e'));
@@ -68,15 +68,18 @@
 			eventContext.event = event;
 			ballotContext.ballot = simpleBallot;
 
-			await goto(resolve(`/ballot/voting?b=${ballot.id}`), { replaceState: true });
+			await goto(resolve(`ballot/voting?b=${ballot.id}`), { replaceState: true });
 		}
 	};
 </script>
 
 <svelte:head>
 	<meta property="og:site_name" content="Vote The Bowl" />
+
 	<meta property="og:title" content="Register for the {eventContext.event?.name}" />
+
 	<meta property="og:image" content={page.url.origin + '/favicon.svg'} />
+
 	<meta
 		property="og:description"
 		content="You are invited to register for the {eventContext.event?.name}."

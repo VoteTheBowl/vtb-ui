@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getThemePreferenceContext } from '$lib/components/ThemeContextProvider.svelte';
+	import { getThemePreferenceContext } from '#lib/components/ThemeContextProvider.svelte';
 	import { fly } from 'svelte/transition';
 	import Icon from './Icon.svelte';
 

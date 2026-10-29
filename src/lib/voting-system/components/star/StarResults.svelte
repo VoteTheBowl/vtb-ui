@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Icon from '$lib/components/Icon.svelte';
-	import type { ResultComponentProps } from '$lib/voting-system/types';
+	import Icon from '#lib/components/Icon.svelte';
+	import type { ResultComponentProps } from '#lib/voting-system/types.js';
 	import type { StarResultType } from './types';
 
 	let { result }: ResultComponentProps<StarResultType> = $props();

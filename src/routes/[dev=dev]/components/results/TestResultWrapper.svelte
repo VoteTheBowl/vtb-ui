@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type { VotingConfigItem } from '$lib/voting-system/config';
-	import type { Results } from '$lib/voting-system/types';
+	import type { VotingConfigItem } from '#lib/voting-system/config.js';
+	import type { Results } from '#lib/voting-system/types.js';
 
 	const { result, config }: { result?: Results; config: VotingConfigItem } = $props();
 </script>

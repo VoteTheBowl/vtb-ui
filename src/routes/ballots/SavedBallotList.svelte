@@ -1,8 +1,8 @@
 <script lang="ts">
-	import type { APIError } from '$lib/api/base';
-	import { EventsAPI, type EventResponseData } from '$lib/api/events';
-	import { getStorageContext } from '$lib/storage/storage.svelte';
-	import { getBallotURL, getEventStage } from '$lib/util';
+	import type { APIError } from '#lib/api/base.js';
+	import { EventsAPI, type EventResponseData } from '#lib/api/events.js';
+	import { getStorageContext } from '#lib/storage/storage.svelte.js';
+	import { getBallotURL, getEventStage } from '#lib/util.js';
 	import { onMount } from 'svelte';
 	import Section from '../../lib/components/Section.svelte';
 	import dayjs from 'dayjs';
