@@ -1,7 +1,7 @@
 <script lang="ts">
-	import Section from '$lib/components/Section.svelte';
-	import votingConfig, { type VotingSystem } from '$lib/voting-system/config';
-	import type { Results } from '$lib/voting-system/types';
+	import Section from '#lib/components/Section.svelte';
+	import votingConfig, { type VotingSystem } from '#lib/voting-system/config.js';
+	import type { Results } from '#lib/voting-system/types.js';
 
 	type TestResult = { title: string; result: Results };
 

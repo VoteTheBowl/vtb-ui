@@ -23,5 +23,5 @@
 	class="h-6 w-6 fill-none stroke-current stroke-2 {classes}"
 	style="stroke-linecap: round; stroke-linejoin: round;"
 >
-	<use href={asset(`/feather-sprite.svg#${icon}`)} />
+	<use href={asset(`feather-sprite.svg`) + `#${icon}`}></use>
 </svg>

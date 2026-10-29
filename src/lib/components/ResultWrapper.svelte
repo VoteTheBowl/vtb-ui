@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { RESULTS_REFRESH_DELAY } from '../const';
-	import votingSystems from '$lib/voting-system/config';
-	import { EventsAPI, type EventResponseData } from '$lib/api/events';
+	import { PUBLIC_REFRESH_DELAY } from '$app/env/public';
+	import votingSystems from '#lib/voting-system/config.js';
+	import { EventsAPI, type EventResponseData } from '#lib/api/events.js';
 
 	let { event, token }: { event: EventResponseData; token: string } = $props();
 	const config = $derived(votingSystems[event.electoral_system]);
@@ -14,7 +14,7 @@
 		event = await api.getEvent(event.id, token);
 
 		clearTimeout(timeoutID);
-		timeoutID = setTimeout(getEvent, RESULTS_REFRESH_DELAY);
+		timeoutID = setTimeout(getEvent, PUBLIC_REFRESH_DELAY);
 	}
 
 	onMount(() => {

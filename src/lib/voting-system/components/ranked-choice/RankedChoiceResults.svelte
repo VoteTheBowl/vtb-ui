@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ResultComponentProps } from '$lib/voting-system/types';
+	import type { ResultComponentProps } from '#lib/voting-system/types.js';
 	import type { RankedResultType } from './types';
 
 	let { result }: ResultComponentProps<RankedResultType> = $props();

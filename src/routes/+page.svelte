@@ -1,8 +1,8 @@
 <script lang="ts">
-	import BasicPageLayout from '$lib/components/layouts/BasicPageLayout.svelte';
-	import EventForm from '$lib/components/EventForm.svelte';
-	import { getStorageContext } from '$lib/storage/storage.svelte';
-	import Button from '$lib/components/Button.svelte';
+	import BasicPageLayout from '#lib/components/layouts/BasicPageLayout.svelte';
+	import EventForm from '#lib/components/EventForm.svelte';
+	import { getStorageContext } from '#lib/storage/storage.svelte.js';
+	import Button from '#lib/components/Button.svelte';
 
 	const storage = getStorageContext();
 </script>

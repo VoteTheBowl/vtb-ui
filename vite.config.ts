@@ -1,3 +1,5 @@
+import adapter from '@sveltejs/adapter-static';
+import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 import { sentrySvelteKit } from '@sentry/sveltekit';
 import tailwindcss from '@tailwindcss/vite';
 import { sveltekit } from '@sveltejs/kit/vite';
@@ -12,7 +14,23 @@ export default defineConfig({
 			telemetry: false
 		}),
 		tailwindcss(),
-		sveltekit()
+		sveltekit({
+			// Consult https://svelte.dev/docs/kit/integrations
+			// for more information about preprocessors
+			preprocess: vitePreprocess(),
+			paths: { relative: false },
+			adapter: adapter(),
+			prerender: {
+				handleUnseenRoutes: (details) => {
+					if (details.routes.every((route) => route.includes('[dev=dev]'))) {
+						console.log('Dropping [dev=dev] routes.');
+					} else {
+						throw Error('Could not prerender unseen routes:\n' + details.routes.join('\n'));
+					}
+				}
+			},
+			experimental: {}
+		})
 	],
 	define: {
 		'import.meta.env.VITE_APP_VERSION': JSON.stringify(pkg.version)

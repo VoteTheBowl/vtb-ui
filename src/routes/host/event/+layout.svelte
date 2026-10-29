@@ -1,12 +1,12 @@
 <script lang="ts">
-	import type { EventContext } from '$lib/types';
+	import type { EventContext } from '#lib/types.js';
 	import { onDestroy, onMount } from 'svelte';
 	import { getEventFromParamOrReroute } from '../utils';
 	import { page } from '$app/state';
-	import { getStorageContext } from '$lib/storage/storage.svelte';
-	import { setBallotsContext, setEventContext, type BallotsContext } from '$lib/context';
-	import { EventsAPI } from '$lib/api/events';
-	import { RESULTS_REFRESH_DELAY } from '$lib/const';
+	import { getStorageContext } from '#lib/storage/storage.svelte.js';
+	import { setBallotsContext, setEventContext, type BallotsContext } from '#lib/context.js';
+	import { EventsAPI } from '#lib/api/events.js';
+	import { PUBLIC_REFRESH_DELAY } from '$app/env/public';
 
 	const { children } = $props();
 
@@ -31,7 +31,7 @@
 
 			intervalID = setInterval(async () => {
 				ballotsContext.ballots = await client.listBallots(eID, storage.getEvent(eID).token);
-			}, RESULTS_REFRESH_DELAY);
+			}, PUBLIC_REFRESH_DELAY);
 		} else {
 			clearInterval(intervalID);
 		}

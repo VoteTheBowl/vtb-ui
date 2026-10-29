@@ -1,5 +1,5 @@
 import type { BallotResponseData } from './api/events';
-import type { BallotContext, EventContext } from '$lib/types';
+import type { BallotContext, EventContext } from '#lib/types.js';
 import { createContext } from 'svelte';
 
 export type BallotsContext = {

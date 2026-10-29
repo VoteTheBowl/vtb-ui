@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import VotingWrapper from '$lib/components/VotingWrapper.svelte';
-	import { getStorageContext } from '$lib/storage/storage.svelte';
-	import type { BallotResponseData } from '$lib/api/events';
-	import Section from '$lib/components/Section.svelte';
-	import BasicPageLayout from '$lib/components/layouts/BasicPageLayout.svelte';
-	import { getBallotContext, getEventContext } from '$lib/context';
+	import VotingWrapper from '#lib/components/VotingWrapper.svelte';
+	import { getStorageContext } from '#lib/storage/storage.svelte.js';
+	import type { BallotResponseData } from '#lib/api/events.js';
+	import Section from '#lib/components/Section.svelte';
+	import BasicPageLayout from '#lib/components/layouts/BasicPageLayout.svelte';
+	import { getBallotContext, getEventContext } from '#lib/context.js';
 	import { resolve } from '$app/paths';
 	import { goto } from '$app/navigation';
 	import UpdateContext from '../UpdateContext.svelte';
@@ -18,7 +18,7 @@
 
 	function onSubmitVote(value: BallotResponseData) {
 		ballotContext.ballot = value;
-		goto(resolve(`/ballot/results?b=${ballotID}`));
+		goto(resolve(`ballot/results?b=${ballotID}`));
 	}
 </script>
 
@@ -31,11 +31,9 @@
 		{#if event.allow_voting && !event.closed}
 			{#if ballot.submitted !== null}
 				<p class="mb-8">
-					You have already voted! Please go to the <a
-						href={resolve(`/ballot/results?b=${ballotID}`)}
-					>
-						results
-					</a> page to see your ballot and the event results.
+					You have already voted! Please go to the
+					<a href={resolve(`ballot/results?b=${ballotID}`)}>results</a>
+					page to see your ballot and the event results.
 				</p>
 			{:else}
 				<p class="mb-8">Submit your ballot below!</p>
@@ -51,9 +49,9 @@
 			{/if}
 		{:else if event.closed}
 			<p>
-				This event has concluded. <a href={resolve(`/ballot/results?b=${ballotID}`)}
-					>Go to results</a
-				>.
+				This event has concluded.
+				<a href={resolve(`ballot/results?b=${ballotID}`)}>Go to results</a>
+				.
 			</p>
 		{:else}
 			<p>

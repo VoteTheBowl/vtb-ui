@@ -1,11 +1,11 @@
 <script lang="ts">
-	import type { EventResponseData } from '$lib/api/events';
-	import Section from '$lib/components/Section.svelte';
-	import votingConfig from '$lib/voting-system/config';
+	import type { EventResponseData } from '#lib/api/events.js';
+	import Section from '#lib/components/Section.svelte';
+	import votingConfig from '#lib/voting-system/config.js';
 	import TestDisplayVoteWrapper from './TestDisplayVoteWrapper.svelte';
 	import TestBallotContextProvider from './TestBallotContextProvider.svelte';
 	import TestBallotRawData from './TestBallotRawData.svelte';
-	import Icon from '$lib/components/Icon.svelte';
+	import Icon from '#lib/components/Icon.svelte';
 
 	const testEvent: EventResponseData = {
 		id: 1,

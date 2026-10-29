@@ -1,7 +1,7 @@
-import type { Pathname } from '$app/types';
+import type { Path } from '$app/types';
 import type { EventResponseData } from './api/events';
 
-export function getEventURL(event: EventResponseData): Pathname {
+export function getEventURL(event: EventResponseData): Path {
 	if (event?.closed) return `/host/event/results?e=${event.id}`;
 	else if (event?.allow_registration == true && event?.allow_voting == false)
 		return `/host/event/registration?e=${event.id}`;
@@ -9,7 +9,7 @@ export function getEventURL(event: EventResponseData): Pathname {
 	else return '/host';
 }
 
-export function getBallotURL(event: EventResponseData, ballotID: number): Pathname {
+export function getBallotURL(event: EventResponseData, ballotID: number): Path {
 	if (event?.closed) return `/ballot/results?b=${ballotID}`;
 	else if (event?.allow_registration == true && event?.allow_voting == false)
 		return `/ballot/voting?b=${ballotID}`;

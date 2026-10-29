@@ -1,6 +1,6 @@
 <script>
 	import { resolve } from '$app/paths';
-	import BasicPageLayout from '$lib/components/layouts/BasicPageLayout.svelte';
+	import BasicPageLayout from '#lib/components/layouts/BasicPageLayout.svelte';
 </script>
 
 <BasicPageLayout title="Vote The Bowl">
