@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { DisplayOnlyVotingComponentProps } from '#lib/voting-system/types.js';
+	import ChoiceLabel from '../ChoiceLabel.svelte';
 	import Star from './Star.svelte';
 	import type { StarSubmissionType } from './types';
 
@@ -7,11 +8,11 @@
 </script>
 
 <div class="items-between flex-col">
-	{#each event.choices as choice, index (index + choice)}
-		{#if submission && choice in submission}
-			{@const rating = submission[choice]}
+	{#each event.choices as { string_id, label, alias } (string_id)}
+		{#if submission && string_id in submission}
+			{@const rating = submission[string_id]}
 			<div class="my-2 w-full flex-col items-center justify-between gap-4">
-				<p>{choice}</p>
+				<ChoiceLabel hideLabel={event.hide_choice_labels} {label} {alias} />
 				<div class="relative flex items-center">
 					{#each Array(5), index (index)}
 						{#if index < rating}

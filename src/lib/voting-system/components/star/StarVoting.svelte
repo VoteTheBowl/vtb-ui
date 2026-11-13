@@ -5,6 +5,7 @@
 	import Star from './Star.svelte';
 	import { getSubmissionContext } from '#lib/voting-system/context.js';
 	import Icon from '#lib/components/Icon.svelte';
+	import ChoiceLabel from '../ChoiceLabel.svelte';
 
 	let { event }: VotingComponentProps = $props();
 
@@ -17,7 +18,7 @@
 	}
 
 	onMount(() => {
-		event.choices.forEach((choice) => (ratings[choice] = 0));
+		event.choices.forEach(({ string_id }) => (ratings[string_id] = 0));
 		submissionContext.submission = ratings;
 		submissionContext.submissionIsValid = true;
 	});
@@ -26,16 +27,16 @@
 <p>Rate each item from 0-5 stars. You may rate multiple items with the same number of stars.</p>
 
 <div class="items-between flex-col">
-	{#each event.choices as choice, index (index + choice)}
-		{#if choice in ratings}
-			{@const rating = ratings[choice]}
+	{#each event.choices as { string_id, label, alias } (string_id)}
+		{#if string_id in ratings}
+			{@const rating = ratings[string_id]}
 			<div class="my-2 w-full flex-col items-center justify-between gap-4">
-				<p>{choice}</p>
+				<ChoiceLabel hideLabel={event.hide_choice_labels} {label} {alias} />
 				<div class="relative flex items-center">
 					{#each Array(5), index (index)}
 						<button
 							class="flex cursor-pointer items-center justify-center"
-							onclick={() => onRatingClick(choice, index + 1)}
+							onclick={() => onRatingClick(string_id, index + 1)}
 						>
 							<Star {index} {rating} />
 						</button>
@@ -43,7 +44,7 @@
 					{#if rating > 0}
 						<button
 							class="flex cursor-pointer items-center justify-center p-2 pt-1.5 pb-0.5"
-							onclick={() => onRatingClick(choice, 0)}
+							onclick={() => onRatingClick(string_id, 0)}
 						>
 							<Icon icon="refresh-ccw" />
 						</button>

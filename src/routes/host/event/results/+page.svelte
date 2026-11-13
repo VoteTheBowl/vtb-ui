@@ -69,7 +69,7 @@
 		<Section title="Results">
 			<div class="mb-4">
 				{#if config}
-					<config.results result={eventContext.event.result} />
+					<config.results event={eventContext.event} />
 				{:else}
 					Config Error!
 				{/if}

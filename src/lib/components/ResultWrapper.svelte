@@ -25,7 +25,7 @@
 </script>
 
 {#if config && event.result}
-	<config.results result={event.result} />
+	<config.results {event} />
 {:else}
 	Config Error!
 {/if}

@@ -10,9 +10,8 @@ export type VotingComponentProps = {
 export type Results = PluralityResultType | StarResultType | RankedResultType | null;
 export type Submissions = PluralitySubmissionType | StarSubmissionType | null;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type ResultComponentProps<T = any> = {
-	result: T;
+export type ResultComponentProps = {
+	event: EventResponseData;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
