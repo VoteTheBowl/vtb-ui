@@ -6,20 +6,24 @@
 	import { getStorageContext } from '#lib/storage/storage.svelte.js';
 	import Button from './Button.svelte';
 	import Icon from './Icon.svelte';
+	import Section from './Section.svelte';
+	import TextInput from './TextInput.svelte';
 
 	const storage = getStorageContext();
 
-	let eventName = $state('');
-	let dishes: string[] = $state([]);
+	let eventName: string = $state('');
+	let choices: string[] = $state([]);
+	let hideChoiceLabels: boolean = $state(false);
+	let aliasPrefix: string = $state('Chilli');
 	let newDish = $state('');
 	let votingSystem: string = $state('ST');
 
-	const isFormValid = $derived(eventName.trim() !== '' && dishes.length > 1);
+	const isFormValid = $derived(eventName.trim() !== '' && choices.length > 1);
 
 	const addDish = () => {
 		const trimmedDish = newDish.trim();
-		if (trimmedDish && !dishes.includes(trimmedDish)) {
-			dishes = [...dishes, trimmedDish];
+		if (trimmedDish && !choices.includes(trimmedDish)) {
+			choices = [...choices, trimmedDish];
 			newDish = '';
 		}
 	};
@@ -32,16 +36,21 @@
 	};
 
 	const removeDish = (index: number) => {
-		dishes = dishes.filter((_, i) => i !== index);
+		choices = choices.filter((_, i) => i !== index);
 	};
 
 	const handleSubmit = async (event: SubmitEvent) => {
 		event.preventDefault();
 
+		const normalizedChoices = choices.map((label, index) => ({
+			label,
+			alias: hideChoiceLabels && aliasPrefix ? `${aliasPrefix} ${index + 1}` : undefined
+		}));
+
 		const api = new EventsAPI();
 		const response = await api.createEvent({
 			name: eventName,
-			choices: dishes,
+			choices: normalizedChoices,
 			electoral_system: votingSystem,
 			allow_registration: true
 		});
@@ -52,54 +61,109 @@
 	};
 </script>
 
-<h2 class="subheading mb-4">Create an event</h2>
-
-<form class="space-y-6" onsubmit={handleSubmit}>
-	<div>
-		<label for="event-name" class="mb-2">Event Name</label>
-		<input id="event-name" placeholder="Enter event name" bind:value={eventName} required />
-	</div>
-
-	<div>
-		<label class="mb-2" for="dish">Dishes</label>
+<Section title="Create an event">
+	<form class="space-y-6" onsubmit={handleSubmit}>
 		<div>
-			<div class="flex gap-2">
-				<input
-					id="dish"
-					placeholder="Add a dish"
-					bind:value={newDish}
-					onkeydown={handleKeyPressOnDishInput}
-				/>
-				<div>
-					<Button variant="secondary" onclick={addDish}>Add</Button>
+			<label for="event-name" class="mb-2">Event Name</label>
+			<TextInput
+				id="event-name"
+				placeholder="Bob's Redhot Chilli Cookoff"
+				value={eventName}
+				oninput={(e) => {
+					eventName = e.currentTarget.value;
+				}}
+				required
+			/>
+		</div>
+
+		<div>
+			<label for="voting-system" class="mb-2">Voting System</label>
+			<select id="voting-system" bind:value={votingSystem}>
+				{#each Object.entries(votingSystems) as [id, config] (id)}
+					<option value={id}>{config.label}</option>
+				{/each}
+			</select>
+		</div>
+
+		<div>
+			<div>
+				<label for="dish" class="flex items-baseline gap-2">
+					Choices
+					<div
+						class="w-full border-t-2 border-gray-400 transition-colors duration-(--theme-duration) dark:border-gray-500"
+					></div>
+				</label>
+				<div
+					class="ml-1 border-l-2 border-gray-400 pt-2 pl-3 transition-colors duration-(--theme-duration) dark:border-gray-500"
+				>
+					<div class="mb-6 flex items-stretch gap-2">
+						<input
+							id="dish"
+							placeholder="Add Choice"
+							bind:value={newDish}
+							onkeydown={handleKeyPressOnDishInput}
+						/>
+						<Button variant="secondary" onclick={addDish}>
+							<span class="sr-only">Add Choice</span>
+							<Icon icon="plus" />
+						</Button>
+					</div>
+					{#if choices.length > 0}
+						<ul class="space-y-2">
+							{#each choices as choice, i (choice + i)}
+								<li
+									class="flex items-center justify-between rounded bg-gray-200 pl-3 text-xl dark:bg-gray-700 dark:text-white"
+								>
+									<span>
+										{choice}
+										{#if hideChoiceLabels}
+											<span class="ml-2 text-lg text-gray-600 italic dark:text-gray-300">
+												({aliasPrefix}
+												{i + 1})
+											</span>
+										{/if}
+									</span>
+									<div>
+										<Button
+											variant="danger"
+											class="rounded-l-none rounded-r p-2!"
+											onclick={() => removeDish(i)}
+										>
+											<Icon icon="x-circle" />
+										</Button>
+									</div>
+								</li>
+							{/each}
+						</ul>
+					{/if}
 				</div>
 			</div>
-			{#if dishes.length > 0}
-				<ul class="space-y-2 py-4">
-					{#each dishes as dish, i (dish + i)}
-						<li
-							class="flex items-center justify-between rounded bg-gray-50 p-2 dark:bg-gray-700 dark:text-white"
-						>
-							<span>{dish}</span>
-							<div>
-								<Button variant="danger" class="p-2!" onclick={() => removeDish(i)}>
-									<Icon icon="x-circle" />
-								</Button>
-							</div>
-						</li>
-					{/each}
-				</ul>
+		</div>
+
+		<div>
+			<label class="mb-2 flex cursor-pointer items-center gap-2">
+				<input
+					class="h-6 w-6 cursor-pointer"
+					type="checkbox"
+					checked={hideChoiceLabels}
+					onchange={() => (hideChoiceLabels = !hideChoiceLabels)}
+				/>
+				Hide Choice Labels
+			</label>
+			{#if hideChoiceLabels}
+				<div>
+					<label for="alias" class="mb-2">Alias</label>
+					<TextInput
+						id="alias"
+						value={aliasPrefix}
+						required
+						oninput={(e) => {
+							aliasPrefix = e.currentTarget.value;
+						}}
+					/>
+				</div>
 			{/if}
 		</div>
-	</div>
-
-	<div>
-		<label for="voting-system" class="mb-2">Voting System</label>
-		<select id="voting-system" bind:value={votingSystem}>
-			{#each Object.entries(votingSystems) as [id, config] (id)}
-				<option value={id}>{config.label}</option>
-			{/each}
-		</select>
-	</div>
-	<Button type="submit" class="flex-1" disabled={!isFormValid}>Create Event</Button>
-</form>
+		<Button type="submit" class="flex-1" disabled={!isFormValid}>Create Event</Button>
+	</form>
+</Section>

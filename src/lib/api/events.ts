@@ -1,10 +1,11 @@
 import type { VotingSystem } from '#lib/voting-system/config.js';
 import type { Results, Submissions } from '#lib/voting-system/types.js';
 import { BaseAPI } from './base';
+import type { ChoiceInput } from './declarations';
 
 export type EventCreateRequestData = {
 	name: string;
-	choices: string[];
+	choices: ChoiceInput[];
 	electoral_system: VotingSystem;
 	allow_registration?: boolean;
 	allow_voting?: boolean;

@@ -14,7 +14,8 @@
 			| 'x-circle'
 			| 'x'
 			| 'moon'
-			| 'sun';
+			| 'sun'
+			| 'plus';
 		class?: string;
 	} = $props();
 </script>
