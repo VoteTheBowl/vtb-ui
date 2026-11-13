@@ -2,8 +2,9 @@
 	const {
 		hideLabel,
 		label,
-		alias
-	}: { hideLabel: boolean; label: string; alias: string | undefined } = $props();
+		alias,
+		class: classes
+	}: { hideLabel: boolean; label: string; alias: string | undefined; class?: string } = $props();
 </script>
 
 <p>
@@ -11,7 +12,7 @@
 		{alias}
 	{:else if alias}
 		{label}
-		<span class="text-base whitespace-nowrap text-gray-600 italic dark:text-gray-400">
+		<span class="text-base whitespace-nowrap text-gray-600 italic dark:text-gray-400 {classes}">
 			({alias})
 		</span>
 	{:else}

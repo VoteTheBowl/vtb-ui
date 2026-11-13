@@ -21,9 +21,11 @@
 
 <div class="flex flex-col-reverse">
 	{#each result.rounds as { tally, exhausted }, i (i)}
-		<div class="round mt-2 w-3xs rounded-lg bg-gray-200 p-2">
-			<div class="mb-2 text-sm font-light text-gray-600 uppercase">Round {i + 1}</div>
-			<div class="text-gray-700">
+		<div class="round mt-2 w-3xs rounded-lg bg-gray-200 p-2 dark:bg-gray-700">
+			<div class="mb-2 text-sm font-light text-gray-600 uppercase dark:text-white">
+				Round {i + 1}
+			</div>
+			<div class="text-gray-700 dark:text-white">
 				{#each Object.keys(tally) as candidate (candidate)}
 					{@const choice = event.choices.find(({ string_id }) => candidate === string_id)}
 					{#if choice}
