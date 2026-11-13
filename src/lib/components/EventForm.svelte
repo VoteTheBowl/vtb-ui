@@ -52,7 +52,8 @@
 			name: eventName,
 			choices: normalizedChoices,
 			electoral_system: votingSystem,
-			allow_registration: true
+			allow_registration: true,
+			hide_choice_labels: hideChoiceLabels
 		});
 
 		storage.saveEvent(response.id, response.name, response.host_token);

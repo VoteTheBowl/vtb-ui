@@ -1,7 +1,7 @@
 import type { VotingSystem } from '#lib/voting-system/config.js';
 import type { Results, Submissions } from '#lib/voting-system/types.js';
 import { BaseAPI } from './base';
-import type { ChoiceInput } from './declarations';
+import type { Choice, ChoiceInput } from './declarations';
 
 export type EventCreateRequestData = {
 	name: string;
@@ -9,6 +9,7 @@ export type EventCreateRequestData = {
 	electoral_system: VotingSystem;
 	allow_registration?: boolean;
 	allow_voting?: boolean;
+	hide_choice_labels?: boolean;
 };
 
 export type EventStatus = 'RE' | 'VO' | 'CL';
@@ -16,12 +17,13 @@ export type EventStatus = 'RE' | 'VO' | 'CL';
 export type EventResponseData = {
 	id: number;
 	name: string;
-	choices: string[];
+	choices: Choice[];
 	allow_registration: boolean;
 	allow_voting: boolean;
 	electoral_system: VotingSystem;
 	share_token: string;
 	show_results: boolean;
+	hide_choice_labels: boolean;
 	closed: null | string;
 	result: Results;
 };
@@ -34,6 +36,7 @@ export type EventUpdateBody = {
 	allow_registration?: boolean;
 	allow_voting?: boolean;
 	show_results?: boolean;
+	hide_choice_labels?: boolean;
 };
 
 export type BallotResponseData = {
