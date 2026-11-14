@@ -33,6 +33,7 @@ jobs:
       - name: Build
         env:
           PUBLIC_API_HOST: ${{ vars.API_HOST }}
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
         run: pnpm build
       - name: Install Wrangler
         run: |
