@@ -18,7 +18,7 @@
 		role="switch"
 		bind:checked
 		{onchange}
-		class="group h-0 w-0 focus:outline-0"
+		class="group m-0 block h-0 w-0 appearance-none border-none bg-transparent p-0 select-none focus:outline-0"
 	/>
 	<div class="flex cursor-pointer flex-row items-center gap-2 rounded-md">
 		<span>{label}</span>

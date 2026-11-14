@@ -27,7 +27,7 @@
 		role="switch"
 		{checked}
 		{onchange}
-		class="peer h-0 w-0 select-none focus:outline-0"
+		class="peer m-0 block h-0 w-0 appearance-none border-none bg-transparent p-0 select-none focus:outline-0"
 	/>
 	<div
 		class="relative box-content h-8 w-8 overflow-clip rounded-full bg-blue-300 outline-blue-500
