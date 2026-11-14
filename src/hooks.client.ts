@@ -1,6 +1,5 @@
-import type { HandleFetch, HandleClientError } from '@sveltejs/kit/hooks';
+import type { HandleClientError } from '@sveltejs/kit/hooks';
 import { dev } from '$app/env';
-import { PUBLIC_API_URL } from '$app/env/public';
 import { handleErrorWithSentry } from '@sentry/sveltekit';
 import * as Sentry from '@sentry/sveltekit';
 
@@ -16,13 +15,6 @@ if (!dev) {
 		}
 	});
 }
-
-export const handleFetch: HandleFetch = async ({ event, request, fetch }) => {
-	if (event.url.pathname.startsWith('/api') && PUBLIC_API_URL) {
-		request = new Request(`${PUBLIC_API_URL}${event.url.pathname}`, request);
-	}
-	return await fetch(request);
-};
 
 const handleClientError: HandleClientError = async (event) => {
 	return event;

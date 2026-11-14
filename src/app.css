@@ -85,12 +85,12 @@
 	}
 
 	input {
-		@apply block w-full rounded-lg border border-gray-500 p-2 text-xl dark:border-gray-300 dark:text-white;
+		@apply block w-full rounded-lg border border-black bg-gray-100 p-2 text-xl dark:border-white dark:bg-gray-900/35 dark:text-white;
 	}
 
 	option,
 	select {
-		@apply cursor-pointer rounded-lg border border-gray-500 p-2 text-xl dark:border-gray-300 dark:text-white;
+		@apply cursor-pointer rounded-lg border border-black bg-gray-100 p-2 text-xl dark:border-white dark:bg-gray-900/35 dark:text-white;
 	}
 
 	h1,

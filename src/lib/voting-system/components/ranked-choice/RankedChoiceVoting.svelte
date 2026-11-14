@@ -2,9 +2,11 @@
 	import { dndzone, type DndEvent, type Item } from 'svelte-dnd-action';
 	import { flip } from 'svelte/animate';
 	import { onMount } from 'svelte';
-	import type { VotingComponentProps } from '#lib/voting-system/types.js';
+	import type { VotingComponentProps } from '#lib/voting-system/types.ts';
 	import type { RankedSubmissionType } from './types';
-	import { getSubmissionContext } from '#lib/voting-system/context.js';
+	import { getSubmissionContext } from '#lib/voting-system/context.ts';
+	import ChoiceLabel from '../ChoiceLabel.svelte';
+	import type { Choice } from '#lib/api/declarations.d.ts';
 
 	let { event }: VotingComponentProps = $props();
 
@@ -19,17 +21,15 @@
 	}
 
 	function handleFinalize(e: CustomEvent<DndEvent>) {
-		items = e.detail.items;
-		submissionContext.submission = items.map((i) => i.id) as RankedSubmissionType;
+		items = e.detail.items as Choice[];
+		submissionContext.submission = items.map(({ id }) => id) as RankedSubmissionType;
 	}
 
 	onMount(() => {
 		items = event.choices
-			.map((choiceStr) => {
-				return { id: choiceStr, title: choiceStr };
-			})
+			.map(({ string_id }) => ({ id: string_id }))
 			.sort(() => Math.random() - 0.5);
-		submissionContext.submission = items.map((i) => i.id) as RankedSubmissionType;
+		submissionContext.submission = items.map(({ id }) => id) as RankedSubmissionType;
 		submissionContext.submissionIsValid = true;
 	});
 </script>
@@ -42,17 +42,23 @@
 	onconsider={handleSort}
 	onfinalize={handleFinalize}
 >
-	{#each items as item, index (item.id)}
+	{#each items as { id }, index (id)}
+		{@const choice = event.choices.find(({ string_id }) => string_id === id)}
+
 		<div
-			class="my-4 flex min-w-48 rounded-lg bg-gray-200 px-4 py-3.5 text-gray-500 dark:bg-gray-700 dark:text-gray-300"
+			class="text-gray-black my-4 flex min-w-48 items-baseline rounded-lg bg-gray-200 px-4 py-3.5 dark:bg-gray-700 dark:text-gray-300"
 			animate:flip={{ duration: flipDurationMs }}
 		>
-			<div class="pr-2 font-bold">
-				{index + 1}.
-			</div>
-			<div>
-				{item.title}
-			</div>
+			{#if choice}
+				<div class="pr-2 font-bold">
+					{index + 1}.
+				</div>
+				<ChoiceLabel
+					hideLabel={event.hide_choice_labels}
+					label={choice.label}
+					alias={choice.alias}
+				/>
+			{/if}
 		</div>
 	{/each}
 </section>

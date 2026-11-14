@@ -44,6 +44,19 @@
 			eventContext.event.show_results = true;
 		}
 	};
+	const toggleHideChoiceLabels = async () => {
+		if (!eventContext.event) return;
+
+		const api = new EventsAPI();
+		const token = storage.getEvent(eventContext.event.id).token;
+		if (eventContext.event.hide_choice_labels) {
+			await api.updateEvent(eventContext.event.id, token, { hide_choice_labels: false });
+			eventContext.event.hide_choice_labels = false;
+		} else {
+			await api.updateEvent(eventContext.event.id, token, { hide_choice_labels: true });
+			eventContext.event.hide_choice_labels = true;
+		}
+	};
 </script>
 
 <BasicPageLayout
@@ -56,14 +69,23 @@
 		<Section title="Results">
 			<div class="mb-4">
 				{#if config}
-					<config.results result={eventContext.event.result} />
+					<config.results event={eventContext.event} />
 				{:else}
 					Config Error!
 				{/if}
 			</div>
 		</Section>
 		<Section title="Settings">
-			<Switch checked={event.show_results} onchange={toggleShowResults} label="Show Results" />
+			<div class="flex flex-col gap-3">
+				<Switch checked={event.show_results} onchange={toggleShowResults} label="Show Results" />
+				{#if event.choices[0].alias}
+					<Switch
+						checked={event.hide_choice_labels}
+						onchange={toggleHideChoiceLabels}
+						label="Hide Choice Labels"
+					/>
+				{/if}
+			</div>
 		</Section>
 		{#if myBallot}
 			<DisplayVoteWrapper {event} submission={myBallot.vote} />
