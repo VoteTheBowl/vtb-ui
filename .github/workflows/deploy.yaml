@@ -34,16 +34,6 @@ jobs:
         env:
           PUBLIC_API_HOST: ${{ vars.API_HOST }}
         run: pnpm build
-
-  deploy:
-    needs: build
-
-    environment:
-      name: production
-      deployment: false
-
-    runs-on: ubuntu-latest
-    steps:
       - name: Deploy
         uses: cloudflare/wrangler-action@v4
         with:
