@@ -99,7 +99,25 @@
 			</div>
 		</Section>
 		{#if myBallot}
-			<DisplayVoteWrapper {event} submission={myBallot.vote} />
+			<DisplayVoteWrapper
+				title="Your Ballot ({myBallot.voter_name})"
+				{event}
+				submission={myBallot.vote}
+			/>
+		{/if}
+		{#if ballotsContext.ballots.length}
+			<Section title="All Ballots" class="*:p-2">
+				<div class="flex flex-col gap-4">
+					{#each ballotsContext.ballots as ballot (ballot.id)}
+						<DisplayVoteWrapper
+							title="{ballot.voter_name}'s Ballot"
+							headerElement="h4"
+							{event}
+							submission={ballot.vote}
+						/>
+					{/each}
+				</div>
+			</Section>
 		{/if}
 	{:else if eventContext.event && !eventContext.event.result}
 		<Button onclick={tabulateResults}>Tabulate Results</Button>

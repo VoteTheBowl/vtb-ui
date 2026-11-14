@@ -5,21 +5,29 @@
 
 	const {
 		title,
+		headerElement = 'h3',
 		children,
 		icon,
 		class: className
-	}: { title: string; children: Snippet; icon?: Snippet; class?: ClassValue } = $props();
+	}: {
+		title: string;
+		headerElement?: string;
+		children: Snippet;
+		icon?: Snippet;
+		class?: ClassValue;
+	} = $props();
 </script>
 
 <div class="min-w-80 pt-4.5 {icon ? 'pr-4.5' : ''} {className}" in:fade>
 	<div
 		class="relative rounded-2xl border-3 border-black p-4 transition-colors duration-(--theme-duration) dark:border-white"
 	>
-		<h3
+		<svelte:element
+			this={headerElement}
 			class="(--theme-duration) absolute bottom-full translate-y-1/3 bg-white px-2 transition-colors dark:bg-gray-800"
 		>
 			{title}
-		</h3>
+		</svelte:element>
 
 		{#if icon}
 			<div

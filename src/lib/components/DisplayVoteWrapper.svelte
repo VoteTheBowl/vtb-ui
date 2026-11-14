@@ -8,17 +8,19 @@
 	let {
 		event,
 		submission,
-		title = 'Your Submitted Ballot'
+		title = 'Your Submitted Ballot',
+		headerElement
 	}: {
 		event: EventResponseData;
 		submission: Submissions;
 		title?: string;
+		headerElement?: string;
 	} = $props();
 
 	const config = $derived(votingSystems[event.electoral_system]);
 </script>
 
-<Section {title}>
+<Section {title} {headerElement}>
 	{#snippet icon()}
 		<Icon icon="lock" />
 	{/snippet}
