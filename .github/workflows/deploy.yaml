@@ -37,8 +37,6 @@ jobs:
       - name: Install Wrangler
         run: |
           pnpm add -D wrangler
-          pnpm install --frozen-lockfile --dry-run
-          pnpm approve-builds --all
           pnpm install --frozen-lockfile
 
       - name: Deploy
