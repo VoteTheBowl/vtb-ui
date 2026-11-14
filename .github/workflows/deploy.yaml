@@ -30,10 +30,15 @@ jobs:
           version: 12
           runtime: node@26
           cache: true
-      - name: Build UI
+      - name: Build
         env:
           PUBLIC_API_HOST: ${{ vars.API_HOST }}
         run: pnpm build
+      - name: Install Wrangler
+        run: |
+          pnpm add -D wrangler
+          pnpm approve-builds --all
+          pnpm install --frozen-lockfile
       - name: Deploy
         uses: cloudflare/wrangler-action@v4
         with:
