@@ -44,4 +44,4 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: deploy --assets build --no-bundle --name=votethebowl-ui --compatibility-date=$(date +"%Y-%m-%d")
+          command: pages deploy ./build --project-name=votethebowl-ui --branch-main
