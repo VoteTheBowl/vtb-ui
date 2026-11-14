@@ -1,3 +1,4 @@
+import { PUBLIC_API_HOST } from '$app/env/public';
 type ParseReturn = 'JSON'; // Add other parsing options as needed
 
 export class APIError extends Error {
@@ -14,6 +15,7 @@ export class APIError extends Error {
 type ResponseJSON = { [key: string]: unknown } | [unknown];
 
 export class BaseAPI {
+	private apiHost: string = PUBLIC_API_HOST;
 	private baseUrl: string = '/api';
 	endpoint: string = '';
 	fetch: typeof globalThis.fetch;
@@ -56,7 +58,7 @@ export class BaseAPI {
 	): Promise<ResponseJSON | Response> => {
 		let response = undefined;
 		try {
-			response = await this.fetch(this.baseUrl + this.endpoint + endpoint, {
+			response = await this.fetch(this.apiHost + this.baseUrl + this.endpoint + endpoint, {
 				headers
 			});
 		} catch (error) {
@@ -74,7 +76,7 @@ export class BaseAPI {
 	): Promise<ResponseJSON | Response> => {
 		let response = undefined;
 		try {
-			response = await this.fetch(this.baseUrl + this.endpoint + endpoint, {
+			response = await this.fetch(this.apiHost + this.baseUrl + this.endpoint + endpoint, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -97,7 +99,7 @@ export class BaseAPI {
 	): Promise<ResponseJSON | Response> => {
 		let response = undefined;
 		try {
-			response = await this.fetch(this.baseUrl + this.endpoint + endpoint, {
+			response = await this.fetch(this.apiHost + this.baseUrl + this.endpoint + endpoint, {
 				method: 'PATCH',
 				headers: {
 					'Content-Type': 'application/json',
