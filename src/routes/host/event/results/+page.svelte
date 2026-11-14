@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { EventsAPI } from '#lib/api/events.js';
+	import Button from '#lib/components/Button.svelte';
 	import DisplayVoteWrapper from '#lib/components/DisplayVoteWrapper.svelte';
 	import BasicPageLayout from '#lib/components/layouts/BasicPageLayout.svelte';
 	import Section from '#lib/components/Section.svelte';
@@ -57,6 +58,16 @@
 			eventContext.event.hide_choice_labels = true;
 		}
 	};
+	const tabulateResults = async () => {
+		if (!eventContext.event) return;
+
+		const api = new EventsAPI();
+
+		eventContext.event.result = await api.calculateEventResult(
+			eventContext.event.id,
+			storage.getEvent(eventContext.event.id).token
+		);
+	};
 </script>
 
 <BasicPageLayout
@@ -90,5 +101,7 @@
 		{#if myBallot}
 			<DisplayVoteWrapper {event} submission={myBallot.vote} />
 		{/if}
+	{:else if eventContext.event && !eventContext.event.result}
+		<Button onclick={tabulateResults}>Tabulate Results</Button>
 	{/if}
 </BasicPageLayout>
